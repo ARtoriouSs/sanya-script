@@ -1,28 +1,34 @@
 grammar SanyaScript;
 
 // parser rules
-sanyaScript: (defvar | assignment | print)* EOF;
+sanyaScript: statement* EOF;
 
-assignment: (defvar | ID) EQUALS (cast)? (value | ID);
+statement: defvar
+         | assignment
+         | print;
 
-defvar: (defnode | defarc | defgraph);
-defnode: NODE_TYPE ID;
-defarc: ARC_TYPE ID;
-defgraph: GRAPH_TYPE ID;
+assignment: defvar EQUALS (cast)? value;
 
-arc: (simpleArc | simpleUndirectedArc | weightedArc | weightedUndirectedArc);
-simpleArc: '->';
-simpleUndirectedArc: '<->';
-weightedArc: WEIGHTED_ARC_START INT WEIGHTED_ARC_END;
-weightedUndirectedArc: WEIGHTED_UNDIRECTED_ARC_START INT WEIGHTED_ARC_END;
-
-value: (nodeValue | arcValue | graphValue);
-nodeValue: INT;
-arcValue: (nodeValue | ID) arc (nodeValue | ID);
-graphValue: '[' ((value | ID) ',')* (value | ID) ']';
-
-type: (NODE_TYPE | ARC_TYPE | GRAPH_TYPE);
 cast: '(' type ')';
+
+defvar: NODE_TYPE ID  # defnode
+      | ARC_TYPE ID   # defarc
+      | GRAPH_TYPE ID # defgraph
+      | ID            # redef;
+
+arc: '->'                                               # simpleArc
+   | '<->'                                              # simpleUndirectedArc
+   | WEIGHTED_ARC_START INT WEIGHTED_ARC_END            # weightedArc
+   | WEIGHTED_UNDIRECTED_ARC_START INT WEIGHTED_ARC_END # weightedUndirectedArc;
+
+value: INT                        # nodeValue
+     | (INT | ID) arc (INT | ID)  # arcValue
+     | '[' (value ',')* value ']' # graphValue
+     | ID                         # idValue;
+
+type: NODE_TYPE
+    | ARC_TYPE
+    | GRAPH_TYPE;
 
 print: PRINT ID;
 

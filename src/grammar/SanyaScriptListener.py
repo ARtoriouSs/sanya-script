@@ -17,6 +17,15 @@ class SanyaScriptListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SanyaScriptParser#statement.
+    def enterStatement(self, ctx:SanyaScriptParser.StatementContext):
+        pass
+
+    # Exit a parse tree produced by SanyaScriptParser#statement.
+    def exitStatement(self, ctx:SanyaScriptParser.StatementContext):
+        pass
+
+
     # Enter a parse tree produced by SanyaScriptParser#assignment.
     def enterAssignment(self, ctx:SanyaScriptParser.AssignmentContext):
         pass
@@ -26,12 +35,12 @@ class SanyaScriptListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SanyaScriptParser#defvar.
-    def enterDefvar(self, ctx:SanyaScriptParser.DefvarContext):
+    # Enter a parse tree produced by SanyaScriptParser#cast.
+    def enterCast(self, ctx:SanyaScriptParser.CastContext):
         pass
 
-    # Exit a parse tree produced by SanyaScriptParser#defvar.
-    def exitDefvar(self, ctx:SanyaScriptParser.DefvarContext):
+    # Exit a parse tree produced by SanyaScriptParser#cast.
+    def exitCast(self, ctx:SanyaScriptParser.CastContext):
         pass
 
 
@@ -62,12 +71,12 @@ class SanyaScriptListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SanyaScriptParser#arc.
-    def enterArc(self, ctx:SanyaScriptParser.ArcContext):
+    # Enter a parse tree produced by SanyaScriptParser#redef.
+    def enterRedef(self, ctx:SanyaScriptParser.RedefContext):
         pass
 
-    # Exit a parse tree produced by SanyaScriptParser#arc.
-    def exitArc(self, ctx:SanyaScriptParser.ArcContext):
+    # Exit a parse tree produced by SanyaScriptParser#redef.
+    def exitRedef(self, ctx:SanyaScriptParser.RedefContext):
         pass
 
 
@@ -107,15 +116,6 @@ class SanyaScriptListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SanyaScriptParser#value.
-    def enterValue(self, ctx:SanyaScriptParser.ValueContext):
-        pass
-
-    # Exit a parse tree produced by SanyaScriptParser#value.
-    def exitValue(self, ctx:SanyaScriptParser.ValueContext):
-        pass
-
-
     # Enter a parse tree produced by SanyaScriptParser#nodeValue.
     def enterNodeValue(self, ctx:SanyaScriptParser.NodeValueContext):
         pass
@@ -143,21 +143,21 @@ class SanyaScriptListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SanyaScriptParser#idValue.
+    def enterIdValue(self, ctx:SanyaScriptParser.IdValueContext):
+        pass
+
+    # Exit a parse tree produced by SanyaScriptParser#idValue.
+    def exitIdValue(self, ctx:SanyaScriptParser.IdValueContext):
+        pass
+
+
     # Enter a parse tree produced by SanyaScriptParser#type.
     def enterType(self, ctx:SanyaScriptParser.TypeContext):
         pass
 
     # Exit a parse tree produced by SanyaScriptParser#type.
     def exitType(self, ctx:SanyaScriptParser.TypeContext):
-        pass
-
-
-    # Enter a parse tree produced by SanyaScriptParser#cast.
-    def enterCast(self, ctx:SanyaScriptParser.CastContext):
-        pass
-
-    # Exit a parse tree produced by SanyaScriptParser#cast.
-    def exitCast(self, ctx:SanyaScriptParser.CastContext):
         pass
 
 
