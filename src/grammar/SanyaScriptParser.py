@@ -173,6 +173,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitSanyaScript" ):
                 listener.exitSanyaScript(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSanyaScript" ):
+                return visitor.visitSanyaScript(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -257,6 +263,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssignment" ):
                 listener.exitAssignment(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignment" ):
+                return visitor.visitAssignment(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -343,6 +355,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitDefvar" ):
                 listener.exitDefvar(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefvar" ):
+                return visitor.visitDefvar(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -401,6 +419,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitDefnode" ):
                 listener.exitDefnode(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefnode" ):
+                return visitor.visitDefnode(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -445,6 +469,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitDefarc" ):
                 listener.exitDefarc(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefarc" ):
+                return visitor.visitDefarc(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -488,6 +518,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDefgraph" ):
                 listener.exitDefgraph(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefgraph" ):
+                return visitor.visitDefgraph(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -542,6 +578,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArc" ):
                 listener.exitArc(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArc" ):
+                return visitor.visitArc(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -600,6 +642,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitSimpleArc" ):
                 listener.exitSimpleArc(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleArc" ):
+                return visitor.visitSimpleArc(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -636,6 +684,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSimpleUndirectedArc" ):
                 listener.exitSimpleUndirectedArc(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleUndirectedArc" ):
+                return visitor.visitSimpleUndirectedArc(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -681,6 +735,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWeightedArc" ):
                 listener.exitWeightedArc(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWeightedArc" ):
+                return visitor.visitWeightedArc(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -730,6 +790,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWeightedUndirectedArc" ):
                 listener.exitWeightedUndirectedArc(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWeightedUndirectedArc" ):
+                return visitor.visitWeightedUndirectedArc(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -782,6 +848,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitValue" ):
                 listener.exitValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitValue" ):
+                return visitor.visitValue(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -839,6 +911,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitNodeValue" ):
                 listener.exitNodeValue(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNodeValue" ):
+                return visitor.visitNodeValue(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -891,6 +969,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArcValue" ):
                 listener.exitArcValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArcValue" ):
+                return visitor.visitArcValue(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -968,6 +1052,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitGraphValue" ):
                 listener.exitGraphValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGraphValue" ):
+                return visitor.visitGraphValue(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1055,6 +1145,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitType" ):
                 listener.exitType(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitType" ):
+                return visitor.visitType(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1101,6 +1197,12 @@ class SanyaScriptParser ( Parser ):
             if hasattr( listener, "exitCast" ):
                 listener.exitCast(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCast" ):
+                return visitor.visitCast(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1146,6 +1248,12 @@ class SanyaScriptParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrint" ):
                 listener.exitPrint(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrint" ):
+                return visitor.visitPrint(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
