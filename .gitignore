@@ -1,1 +1,6 @@
 __pycache__
+
+# ignore generated grammar files
+src/grammar/*.interp
+src/grammar/*.tokens
+src/grammar/*.py
