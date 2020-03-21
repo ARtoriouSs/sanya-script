@@ -1,2 +1,3 @@
 def undef(name):
-    print(f"undefined variable or function {name}")
+    print(f"unresolved name \"{name}\"")
+    exit(1)

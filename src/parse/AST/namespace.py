@@ -12,3 +12,12 @@ class Namespace:
 
     def add_fun(self, fun):
         self.funs.append(fun)
+
+    def has(self, name):
+        return self.has_var(name) | self.has_fun(name)
+
+    def has_var(self, name):
+        return True if name in self.vars else False
+
+    def has_fun(self, name):
+        return True if name in self.funs else False
