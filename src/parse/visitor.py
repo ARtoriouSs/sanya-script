@@ -3,6 +3,8 @@ from parse.grammar.SanyaScriptParser import SanyaScriptParser
 from parse.AST.block import Block
 from parse.AST.statements.defvar import Defvar
 from parse.AST.statements.assignment import Assignment
+from parse.var import Var
+import parse.errors
 
 class Visitor(SanyaScriptVisitor):
     def __init__(self):
@@ -17,13 +19,13 @@ class Visitor(SanyaScriptVisitor):
         return self.visit(ctx.getChild(0))
 
     def visitDefnode(self, ctx):
-        return Defvar("node", ctx.ID().getText())
+        return self._add_var("node", ctx.ID().getText())
 
     def visitDefarc(self, ctx):
-        return Defvar("arc", ctx.ID().getText())
+        return self._add_var("arc", ctx.ID().getText())
 
     def visitDefgraph(self, ctx):
-        return Defvar("graph", ctx.ID().getText())
+        return self._add_var("graph", ctx.ID().getText())
 
     def visitAssign(self, ctx):
         pass
@@ -32,4 +34,12 @@ class Visitor(SanyaScriptVisitor):
         pass
 
     def visitPrint(self, ctx):
-        pass
+        name = ctx.ID().getText()
+        if self.block.namespace.has(name):
+            Print(name)
+        else:
+            errors.undef(name)
+
+    def _add_var(self, type, name):
+        self.block.namespace.add_var(Var(type, name))
+        return Defvar(type, name)

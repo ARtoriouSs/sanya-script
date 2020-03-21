@@ -4,8 +4,8 @@ class Namespace:
             self.vars = parent.vars
             self.funs = parent.funs
         else:
-            self.variables = []
-            self.functions = []
+            self.vars = []
+            self.funs = []
 
     def add_var(self, var):
         self.vars.append(var)
