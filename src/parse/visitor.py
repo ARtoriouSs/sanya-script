@@ -1,8 +1,8 @@
 from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parse.grammar.SanyaScriptParser import SanyaScriptParser
 from parse.AST.block import Block
-from parse.AST.defvar import Defvar
-from parse.AST.assignment import Assignment
+from parse.AST.statements.defvar import Defvar
+from parse.AST.statements.assignment import Assignment
 
 class Visitor(SanyaScriptVisitor):
     def __init__(self):
