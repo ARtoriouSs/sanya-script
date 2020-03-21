@@ -1,5 +1,1 @@
 node a
-graph g
-g = (graph) a
-
-print g

@@ -7,14 +7,14 @@ statement: defvar
          | assignment
          | print;
 
-assignment: defvar EQUALS (cast)? value;
+assignment: defvar EQUALS (cast)? value # assign
+          | ID EQUALS (cast)? value;    # reassign
 
 cast: '(' type ')';
 
 defvar: NODE_TYPE ID  # defnode
       | ARC_TYPE ID   # defarc
-      | GRAPH_TYPE ID # defgraph
-      | ID            # redef;
+      | GRAPH_TYPE ID # defgraph;
 
 arc: '->'                                               # simpleArc
    | '<->'                                              # simpleUndirectedArc
