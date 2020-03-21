@@ -1,1 +1,3 @@
-from lxml import etree
+from src.runtime import *
+a = Node()
+a.print()

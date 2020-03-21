@@ -38,7 +38,7 @@ class Visitor(SanyaScriptVisitor):
     def visitPrint(self, ctx):
         name = ctx.ID().getText()
         if self.block.namespace.has(name):
-            Print(name)
+            return Print(name)
         else:
             errors.undef(name)
 
