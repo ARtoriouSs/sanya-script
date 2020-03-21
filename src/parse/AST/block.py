@@ -1,5 +1,6 @@
 from parse.AST.namespace import Namespace
 
+
 class Block:
     def __init__(self, namespace = None):
         self.namespace = namespace or Namespace()

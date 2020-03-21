@@ -7,6 +7,7 @@ from parse.AST.statements.print import Print
 from parse.var import Var
 import parse.errors as errors
 
+
 class Visitor(SanyaScriptVisitor):
     def __init__(self):
         self.block = Block()
