@@ -1,17 +1,17 @@
-from grammar.SanyaScriptVisitor import SanyaScriptVisitor
-from grammar.SanyaScriptParser import SanyaScriptParser
-from domain.ast import AST
-from domain.defvar import Defvar
-from domain.assignment import Assignment
+from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
+from parse.grammar.SanyaScriptParser import SanyaScriptParser
+from parse.AST.block import Block
+from parse.AST.defvar import Defvar
+from parse.AST.assignment import Assignment
 
 class Visitor(SanyaScriptVisitor):
     def __init__(self):
-        self.ast = AST()
+        self.block = Block()
 
     def visitSanyaScript(self, ctx):
         for statement in ctx.statement():
-            self.ast.add_statement(self.visitStatement(statement))
-        return self.ast
+            self.block.add_statement(self.visitStatement(statement))
+        return self.block
 
     def visitStatement(self, ctx):
         return self.visit(ctx.getChild(0))
