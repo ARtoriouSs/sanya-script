@@ -5,13 +5,15 @@ from parse.AST.statements.assignment import Assignment
 from parse.AST.statements.print import Print
 from parse.var import Var
 import parse.errors as errors
-
+import copy
 from src.parse.AST.id import Id
+from src.parse.AST.namespace import Namespace
 from src.parse.value_visitor import ValueVisitor
 
 
 class Visitor(SanyaScriptVisitor):
-    def __init__(self):
+    def __init__(self, namespace = None):
+        self.namespace = copy.copy(namespace) or Namespace()
         self.block = Block()
 
     def visitSanyaScript(self, ctx):
@@ -33,14 +35,14 @@ class Visitor(SanyaScriptVisitor):
 
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
-        value = ValueVisitor(self.block).visit(ctx.value())
+        value = self._value_visitor().visit(ctx.value())
         cast = self.visitCast(ctx.cast())
         return Assignment(target, value, cast)
 
     def visitReassign(self, ctx):
         name = ctx.ID().getText()
-        target = Id(name) if self.block.namespace.has(name) else errors.undef(name)
-        value = ValueVisitor(self.block).visit(ctx.value())
+        target = Id(name) if self.namespace.has_var(name) else errors.undef(name)
+        value = self._value_visitor().visit(ctx.value())
         cast = self.visitCast(ctx.cast())
         return Assignment(target, value, cast)
 
@@ -49,8 +51,11 @@ class Visitor(SanyaScriptVisitor):
 
     def visitPrint(self, ctx):
         name = ctx.ID().getText()
-        return Print(name) if self.block.namespace.has(name) else errors.undef(name)
+        return Print(name) if self.namespace.has_var(name) else errors.undef(name)
 
     def _add_var(self, type, name):
-        self.block.namespace.add_var(Var(type, name))
+        self.namespace.add_var(Var(type, name))
         return Defvar(type, name)
+
+    def _value_visitor(self):
+        return ValueVisitor(self.block, self.namespace)

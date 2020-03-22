@@ -13,11 +13,16 @@ class Namespace:
     def add_fun(self, fun):
         self.funs.append(fun)
 
-    def has(self, name):
-        return self.has_var(name) | self.has_fun(name)
+    def find_var(self, name):
+        vars_ = [var for i, var in enumerate(self.vars) if var.name == name]
+        return vars_[0] if any(vars_) else None
 
-    def has_var(self, name, type = None):
-        return True if any(var.name == name for var in self.vars) else False
+    def find_fun(self, name):
+        funs = [fun for i, fun in enumerate(self.funs) if fun.name == name]
+        return funs[0] if any(funs) else None
+
+    def has_var(self, name):
+        return any([var for var in self.vars if var.name == name])
 
     def has_fun(self, name):
-        return True if any(var.name == name for var in self.vars) else False
+        return any([fun for fun in self.funs if fun.name == name])
