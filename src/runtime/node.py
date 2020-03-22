@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, value = 42):
+    def __init__(self, value = 0):
         self.value = value
 
     def print(self):

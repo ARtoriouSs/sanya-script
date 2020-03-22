@@ -33,14 +33,14 @@ class Visitor(SanyaScriptVisitor):
 
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
-        value = ValueVisitor().visit(ctx.value())
+        value = ValueVisitor(self.block).visit(ctx.value())
         cast = self.visitCast(ctx.cast())
         return Assignment(target, value, cast)
 
     def visitReassign(self, ctx):
         name = ctx.ID().getText()
         target = Id(name) if self.block.namespace.has(name) else errors.undef(name)
-        value = ValueVisitor().visit(ctx.value())
+        value = ValueVisitor(self.block).visit(ctx.value())
         cast = self.visitCast(ctx.cast())
         return Assignment(target, value, cast)
 

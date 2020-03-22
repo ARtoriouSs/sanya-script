@@ -16,7 +16,7 @@ class Namespace:
     def has(self, name):
         return self.has_var(name) | self.has_fun(name)
 
-    def has_var(self, name):
+    def has_var(self, name, type = None):
         return True if any(var.name == name for var in self.vars) else False
 
     def has_fun(self, name):

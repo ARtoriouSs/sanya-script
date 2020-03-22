@@ -6,6 +6,9 @@ import parse.errors as errors
 
 
 class ValueVisitor(SanyaScriptVisitor):
+    def __init__(self, block):
+        self.block = block
+
     def visitNodeValue(self, ctx):
         return Node(int(ctx.INT().getText()))
 
@@ -22,7 +25,14 @@ class ValueVisitor(SanyaScriptVisitor):
         return Id(ctx.ID().getText())
 
     def visitArcPart(self, ctx):
-        return Id(ctx.ID().getText()) if ctx.ID() else Node(int(ctx.INT().getText()))
+        if ctx.ID():
+            name = ctx.ID().getText()
+            if self.block.namespace.has_node(name):
+                return Id(name)
+            else:
+                errors.undef(name)
+        else:
+            return Node(int(ctx.INT().getText()))
 
     def visitSimpleArc(self, ctx):
         return ["directed", 0]
