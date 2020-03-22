@@ -4,11 +4,13 @@ grammar SanyaScript;
 sanyaScript: statement* EOF;
 
 statement: defvar
+         | deffun
+         | funCall
          | assignment
          | print;
 
-assignment: defvar EQUALS (cast)? value # assign
-          | ID EQUALS (cast)? value     # reassign;
+assignment: defvar '=' (cast)? value # assign
+          | ID '=' (cast)? value     # reassign;
 
 cast: '(' type ')';
 
@@ -16,15 +18,28 @@ defvar: NODE_TYPE ID  # defnode
       | ARC_TYPE ID   # defarc
       | GRAPH_TYPE ID # defgraph;
 
-arc: '->'            # simpleArc
-   | '<->'           # simpleUndirectedArc
-   | '-[' INT ']->'  # weightedArc
-   | '<-[' INT ']->' # weightedUndirectedArc;
+deffun: type ID '(' funArg? ')' '{' statement* 'return' value '}' # typeFun
+      | ID '(' funArg? ')' '{' statement* 'return' value '}'      # nullFun;
+
+funArg
+ : type ID            # paramArg
+ | type ID ',' funArg # paramArgs;
+
+funCall: ID '(' funValue? ')';
+
+funValue
+ : value              # paramValue
+ | value ',' funValue # paramValues;
 
 value: INT                        # nodeValue
      | arcPart arc arcPart        # arcValue
      | '[' (value ',')* value ']' # graphValue
      | ID                         # idValue;
+
+arc: '->'            # simpleArc
+   | '<->'           # simpleUndirectedArc
+   | '-[' INT ']->'  # weightedArc
+   | '<-[' INT ']->' # weightedUndirectedArc;
 
 arcPart: INT | ID;
 
@@ -32,19 +47,12 @@ type: NODE_TYPE
     | ARC_TYPE
     | GRAPH_TYPE;
 
-print: PRINT ID;
+print: 'print' ID;
 
 // lexer rules
 NODE_TYPE: 'node' ;
 ARC_TYPE: 'arc' ;
 GRAPH_TYPE: 'graph' ;
-
-PRINT: 'print' ;
-EQUALS: '=' ;
-PLUS: '+' ;
-MINUS: '-' ;
-MULT: '*' ;
-DIV: '/' ;
 
 INT: [1-9][0-9]* ;
 
