@@ -1,4 +1,4 @@
-# Generated from src/grammar/SanyaScript.g4 by ANTLR 4.7.1
+# Generated from src/parse/grammar/SanyaScript.g4 by ANTLR 4.7.1
 from antlr4 import *
 from io import StringIO
 from typing.io import TextIO

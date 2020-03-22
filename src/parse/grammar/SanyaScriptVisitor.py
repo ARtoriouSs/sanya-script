@@ -1,4 +1,4 @@
-# Generated from src/grammar/SanyaScript.g4 by ANTLR 4.7.1
+# Generated from src/parse/grammar/SanyaScript.g4 by ANTLR 4.7.1
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .SanyaScriptParser import SanyaScriptParser
@@ -19,8 +19,13 @@ class SanyaScriptVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SanyaScriptParser#assignment.
-    def visitAssignment(self, ctx:SanyaScriptParser.AssignmentContext):
+    # Visit a parse tree produced by SanyaScriptParser#assign.
+    def visitAssign(self, ctx:SanyaScriptParser.AssignContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SanyaScriptParser#reassign.
+    def visitReassign(self, ctx:SanyaScriptParser.ReassignContext):
         return self.visitChildren(ctx)
 
 

@@ -1,4 +1,4 @@
-# Generated from src/grammar/SanyaScript.g4 by ANTLR 4.7.1
+# Generated from src/parse/grammar/SanyaScript.g4 by ANTLR 4.7.1
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -235,33 +235,63 @@ class SanyaScriptParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def defvar(self):
-            return self.getTypedRuleContext(SanyaScriptParser.DefvarContext,0)
+
+        def getRuleIndex(self):
+            return SanyaScriptParser.RULE_assignment
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
 
+
+    class ReassignContext(AssignmentContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SanyaScriptParser.AssignmentContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(SanyaScriptParser.ID, 0)
         def EQUALS(self):
             return self.getToken(SanyaScriptParser.EQUALS, 0)
-
         def value(self):
             return self.getTypedRuleContext(SanyaScriptParser.ValueContext,0)
-
 
         def cast(self):
             return self.getTypedRuleContext(SanyaScriptParser.CastContext,0)
 
 
-        def ID(self):
-            return self.getToken(SanyaScriptParser.ID, 0)
-
-        def getRuleIndex(self):
-            return SanyaScriptParser.RULE_assignment
-
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAssignment" ):
-                return visitor.visitAssignment(self)
+            if hasattr( visitor, "visitReassign" ):
+                return visitor.visitReassign(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class AssignContext(AssignmentContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SanyaScriptParser.AssignmentContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def defvar(self):
+            return self.getTypedRuleContext(SanyaScriptParser.DefvarContext,0)
+
+        def EQUALS(self):
+            return self.getToken(SanyaScriptParser.EQUALS, 0)
+        def value(self):
+            return self.getTypedRuleContext(SanyaScriptParser.ValueContext,0)
+
+        def cast(self):
+            return self.getTypedRuleContext(SanyaScriptParser.CastContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssign" ):
+                return visitor.visitAssign(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -275,6 +305,7 @@ class SanyaScriptParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [SanyaScriptParser.NODE_TYPE, SanyaScriptParser.ARC_TYPE, SanyaScriptParser.GRAPH_TYPE]:
+                localctx = SanyaScriptParser.AssignContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 31
                 self.defvar()
@@ -292,6 +323,7 @@ class SanyaScriptParser ( Parser ):
                 self.value()
                 pass
             elif token in [SanyaScriptParser.ID]:
+                localctx = SanyaScriptParser.ReassignContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 38
                 self.match(SanyaScriptParser.ID)

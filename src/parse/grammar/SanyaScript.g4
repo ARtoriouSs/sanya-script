@@ -8,7 +8,7 @@ statement: defvar
          | print;
 
 assignment: defvar EQUALS (cast)? value # assign
-          | ID EQUALS (cast)? value;    # reassign
+          | ID EQUALS (cast)? value     # reassign;
 
 cast: '(' type ')';
 
