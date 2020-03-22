@@ -4,3 +4,5 @@ __pycache__
 src/grammar/*.interp
 src/grammar/*.tokens
 src/grammar/*.py
+
+result.py
