@@ -4,5 +4,8 @@ __pycache__
 src/parse/grammar/*
 !src/parse/grammar/SanyaScript.g4
 
+# test grammar
+test_grammar/
+
 # test compiled file
 result.py
