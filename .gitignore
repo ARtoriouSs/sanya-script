@@ -1,8 +1,8 @@
 __pycache__
 
-# ignore generated grammar files
-src/grammar/*.interp
-src/grammar/*.tokens
-src/grammar/*.py
+# generated grammar files
+src/parse/grammar/*
+!src/parse/grammar/SanyaScript.g4
 
+# test compiled file
 result.py
