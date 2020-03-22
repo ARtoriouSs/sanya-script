@@ -13,9 +13,9 @@ def serializedATN():
         buf.write("\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23")
         buf.write("\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30")
         buf.write("\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\6\3\6\3")
-        buf.write("\7\3\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\3\n\3\13")
-        buf.write("\3\13\3\13\3\13\3\13\3\13\3\f\3\f\3\f\3\r\3\r\3\r\3\r")
-        buf.write("\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\20")
+        buf.write("\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\n\3\n\3\13")
+        buf.write("\3\13\3\f\3\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\16\3\16\3")
+        buf.write("\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\20")
         buf.write("\3\20\3\21\3\21\3\22\3\22\3\23\3\23\3\24\3\24\3\25\3\25")
         buf.write("\7\25o\n\25\f\25\16\25r\13\25\3\26\3\26\7\26v\n\26\f\26")
         buf.write("\16\26y\13\26\3\27\6\27|\n\27\r\27\16\27}\3\27\3\27\3")
@@ -29,19 +29,19 @@ def serializedATN():
         buf.write("\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2")
         buf.write("\2!\3\2\2\2\2#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2")
         buf.write("\2\2+\3\2\2\2\2-\3\2\2\2\2/\3\2\2\2\3\61\3\2\2\2\5\63")
-        buf.write("\3\2\2\2\7\65\3\2\2\2\t8\3\2\2\2\13<\3\2\2\2\r>\3\2\2")
-        buf.write("\2\17@\3\2\2\2\21B\3\2\2\2\23G\3\2\2\2\25K\3\2\2\2\27")
-        buf.write("Q\3\2\2\2\31T\3\2\2\2\33X\3\2\2\2\35\\\3\2\2\2\37b\3\2")
+        buf.write("\3\2\2\2\7\65\3\2\2\2\t8\3\2\2\2\13<\3\2\2\2\r?\3\2\2")
+        buf.write("\2\17C\3\2\2\2\21G\3\2\2\2\23I\3\2\2\2\25K\3\2\2\2\27")
+        buf.write("M\3\2\2\2\31R\3\2\2\2\33V\3\2\2\2\35\\\3\2\2\2\37b\3\2")
         buf.write("\2\2!d\3\2\2\2#f\3\2\2\2%h\3\2\2\2\'j\3\2\2\2)l\3\2\2")
         buf.write("\2+s\3\2\2\2-{\3\2\2\2/\u0081\3\2\2\2\61\62\7*\2\2\62")
         buf.write("\4\3\2\2\2\63\64\7+\2\2\64\6\3\2\2\2\65\66\7/\2\2\66\67")
         buf.write("\7@\2\2\67\b\3\2\2\289\7>\2\29:\7/\2\2:;\7@\2\2;\n\3\2")
-        buf.write("\2\2<=\7]\2\2=\f\3\2\2\2>?\7.\2\2?\16\3\2\2\2@A\7_\2\2")
-        buf.write("A\20\3\2\2\2BC\7p\2\2CD\7q\2\2DE\7f\2\2EF\7g\2\2F\22\3")
-        buf.write("\2\2\2GH\7c\2\2HI\7t\2\2IJ\7e\2\2J\24\3\2\2\2KL\7i\2\2")
-        buf.write("LM\7t\2\2MN\7c\2\2NO\7r\2\2OP\7j\2\2P\26\3\2\2\2QR\7/")
-        buf.write("\2\2RS\7]\2\2S\30\3\2\2\2TU\7>\2\2UV\7/\2\2VW\7]\2\2W")
-        buf.write("\32\3\2\2\2XY\7_\2\2YZ\7/\2\2Z[\7@\2\2[\34\3\2\2\2\\]")
+        buf.write("\2\2<=\7/\2\2=>\7]\2\2>\f\3\2\2\2?@\7_\2\2@A\7/\2\2AB")
+        buf.write("\7@\2\2B\16\3\2\2\2CD\7>\2\2DE\7/\2\2EF\7]\2\2F\20\3\2")
+        buf.write("\2\2GH\7]\2\2H\22\3\2\2\2IJ\7.\2\2J\24\3\2\2\2KL\7_\2")
+        buf.write("\2L\26\3\2\2\2MN\7p\2\2NO\7q\2\2OP\7f\2\2PQ\7g\2\2Q\30")
+        buf.write("\3\2\2\2RS\7c\2\2ST\7t\2\2TU\7e\2\2U\32\3\2\2\2VW\7i\2")
+        buf.write("\2WX\7t\2\2XY\7c\2\2YZ\7r\2\2Z[\7j\2\2[\34\3\2\2\2\\]")
         buf.write("\7r\2\2]^\7t\2\2^_\7k\2\2_`\7p\2\2`a\7v\2\2a\36\3\2\2")
         buf.write("\2bc\7?\2\2c \3\2\2\2de\7-\2\2e\"\3\2\2\2fg\7/\2\2g$\3")
         buf.write("\2\2\2hi\7,\2\2i&\3\2\2\2jk\7\61\2\2k(\3\2\2\2lp\t\2\2")
@@ -70,12 +70,12 @@ class SanyaScriptLexer(Lexer):
     T__4 = 5
     T__5 = 6
     T__6 = 7
-    NODE_TYPE = 8
-    ARC_TYPE = 9
-    GRAPH_TYPE = 10
-    WEIGHTED_ARC_START = 11
-    WEIGHTED_UNDIRECTED_ARC_START = 12
-    WEIGHTED_ARC_END = 13
+    T__7 = 8
+    T__8 = 9
+    T__9 = 10
+    NODE_TYPE = 11
+    ARC_TYPE = 12
+    GRAPH_TYPE = 13
     PRINT = 14
     EQUALS = 15
     PLUS = 16
@@ -92,21 +92,18 @@ class SanyaScriptLexer(Lexer):
     modeNames = [ "DEFAULT_MODE" ]
 
     literalNames = [ "<INVALID>",
-            "'('", "')'", "'->'", "'<->'", "'['", "','", "']'", "'node'", 
-            "'arc'", "'graph'", "'-['", "'<-['", "']->'", "'print'", "'='", 
+            "'('", "')'", "'->'", "'<->'", "'-['", "']->'", "'<-['", "'['", 
+            "','", "']'", "'node'", "'arc'", "'graph'", "'print'", "'='", 
             "'+'", "'-'", "'*'", "'/'" ]
 
     symbolicNames = [ "<INVALID>",
-            "NODE_TYPE", "ARC_TYPE", "GRAPH_TYPE", "WEIGHTED_ARC_START", 
-            "WEIGHTED_UNDIRECTED_ARC_START", "WEIGHTED_ARC_END", "PRINT", 
-            "EQUALS", "PLUS", "MINUS", "MULT", "DIV", "INT", "ID", "WS", 
-            "COMMENT" ]
+            "NODE_TYPE", "ARC_TYPE", "GRAPH_TYPE", "PRINT", "EQUALS", "PLUS", 
+            "MINUS", "MULT", "DIV", "INT", "ID", "WS", "COMMENT" ]
 
     ruleNames = [ "T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", 
-                  "NODE_TYPE", "ARC_TYPE", "GRAPH_TYPE", "WEIGHTED_ARC_START", 
-                  "WEIGHTED_UNDIRECTED_ARC_START", "WEIGHTED_ARC_END", "PRINT", 
-                  "EQUALS", "PLUS", "MINUS", "MULT", "DIV", "INT", "ID", 
-                  "WS", "COMMENT" ]
+                  "T__7", "T__8", "T__9", "NODE_TYPE", "ARC_TYPE", "GRAPH_TYPE", 
+                  "PRINT", "EQUALS", "PLUS", "MINUS", "MULT", "DIV", "INT", 
+                  "ID", "WS", "COMMENT" ]
 
     grammarFileName = "SanyaScript.g4"
 

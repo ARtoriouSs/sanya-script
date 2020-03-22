@@ -89,6 +89,11 @@ class SanyaScriptVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SanyaScriptParser#arcPart.
+    def visitArcPart(self, ctx:SanyaScriptParser.ArcPartContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SanyaScriptParser#type.
     def visitType(self, ctx:SanyaScriptParser.TypeContext):
         return self.visitChildren(ctx)

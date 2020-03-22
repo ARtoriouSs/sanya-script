@@ -16,15 +16,17 @@ defvar: NODE_TYPE ID  # defnode
       | ARC_TYPE ID   # defarc
       | GRAPH_TYPE ID # defgraph;
 
-arc: '->'                                               # simpleArc
-   | '<->'                                              # simpleUndirectedArc
-   | WEIGHTED_ARC_START INT WEIGHTED_ARC_END            # weightedArc
-   | WEIGHTED_UNDIRECTED_ARC_START INT WEIGHTED_ARC_END # weightedUndirectedArc;
+arc: '->'            # simpleArc
+   | '<->'           # simpleUndirectedArc
+   | '-[' INT ']->'  # weightedArc
+   | '<-[' INT ']->' # weightedUndirectedArc;
 
 value: INT                        # nodeValue
-     | (INT | ID) arc (INT | ID)  # arcValue
+     | arcPart arc arcPart        # arcValue
      | '[' (value ',')* value ']' # graphValue
      | ID                         # idValue;
+
+arcPart: INT | ID;
 
 type: NODE_TYPE
     | ARC_TYPE
@@ -36,10 +38,6 @@ print: PRINT ID;
 NODE_TYPE: 'node' ;
 ARC_TYPE: 'arc' ;
 GRAPH_TYPE: 'graph' ;
-
-WEIGHTED_ARC_START: '-[' ;
-WEIGHTED_UNDIRECTED_ARC_START: '<-[' ;
-WEIGHTED_ARC_END: ']->' ;
 
 PRINT: 'print' ;
 EQUALS: '=' ;

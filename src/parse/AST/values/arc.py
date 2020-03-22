@@ -2,8 +2,8 @@ from parse.AST.values.value import Value
 
 
 class Arc(Value):
-    def __init__(self, start, end, weight = 42, type = "undirected"):
-        self.start = start
-        self.end = end
-        self.type = type
+    def __init__(self, source, target, weight = 42, type_ = "undirected"):
+        self.source = source
+        self.target = target
+        self.type = type_
         self.weight = weight

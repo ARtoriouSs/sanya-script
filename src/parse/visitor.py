@@ -6,7 +6,7 @@ from parse.AST.statements.print import Print
 from parse.var import Var
 import parse.errors as errors
 
-from src.parse.AST.statements.id import Id
+from src.parse.AST.id import Id
 from src.parse.value_visitor import ValueVisitor
 
 
