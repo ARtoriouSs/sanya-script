@@ -1,5 +1,5 @@
 node n = 3
 
-arc a = n -> 2
+arc a = (node) n -> 2
 
 print a

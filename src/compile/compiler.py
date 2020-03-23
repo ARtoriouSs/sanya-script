@@ -25,11 +25,12 @@ class Compiler:
     def _compile_assignment(self, statement):
         self.file.write(f"{statement.target.name} = {self._resolve_value(statement.value)}\n")
 
-    # TODO: casts (on runtime objects?)
     def _resolve_value(self, value):
         if value.kind() == "id":
-            return value.name
+            string = value.name
         elif value.kind() == "node":
-            return f"Node({value.value})"
+            string = f"Node({value.value})"
         elif value.kind() == "arc":
-            return f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
+            string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
+        string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
+        return string
