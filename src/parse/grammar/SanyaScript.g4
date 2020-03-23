@@ -9,8 +9,8 @@ statement: defvar
          | assignment
          | print;
 
-assignment: defvar '=' (cast)? value # assign
-          | ID '=' (cast)? value     # reassign;
+assignment: defvar '=' value # assign
+          | ID '=' value     # reassign;
 
 cast: '(' type ')';
 
@@ -31,10 +31,10 @@ funValue
  : value              # paramValue
  | value ',' funValue # paramValues;
 
-value: INT                        # nodeValue
-     | arcPart arc arcPart        # arcValue
-     | '[' (value ',')* value ']' # graphValue
-     | ID                         # idValue;
+value: (cast)? INT                        # nodeValue
+     | (cast)? arcPart arc arcPart        # arcValue
+     | (cast)? '[' (value ',')* value ']' # graphValue
+     | (cast)? ID                         # idValue;
 
 arc: '->'            # simpleArc
    | '<->'           # simpleUndirectedArc

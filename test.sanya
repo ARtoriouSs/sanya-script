@@ -1,3 +1,5 @@
-arc a
+node n = 3
 
-arc b = a -[3]-> 1
+arc a = n -> 2
+
+print a

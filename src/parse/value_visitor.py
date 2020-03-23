@@ -1,5 +1,7 @@
 from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
-from src.parse.AST.id import Id
+
+from src.parse.AST.values.graph import Graph
+from src.parse.AST.values.id import Id
 from src.parse.AST.values.node import Node
 from src.parse.AST.values.arc import Arc
 import parse.errors as errors
@@ -11,19 +13,25 @@ class ValueVisitor(SanyaScriptVisitor):
         self.block = block
 
     def visitNodeValue(self, ctx):
-        return Node(int(ctx.INT().getText()))
+        return Node(int(ctx.INT().getText())).cast(self.visitCast(ctx.cast()))
 
     def visitArcValue(self, ctx):
         source = self.visit(ctx.arcPart(0))
         target = self.visit(ctx.arcPart(1))
         type_, weight = self.visit(ctx.arc())
-        return Arc(source, target, weight, type_)
+        return Arc(source, target, weight, type_).cast(self.visitCast(ctx.cast()))
 
     def visitGraphValue(self, ctx):
-        pass
+        graph = Graph().cast(self.visitCast(ctx.cast()))
+        for value in ctx.value():
+            val = self.visit(value)
+            if val.kind() == "node": graph.nodes.append(val)
+            if val.kind() == "arc": graph.arcs.append(val)
+            if val.kind() == "graph": graph.merge(val)
+        return graph
 
     def visitIdValue(self, ctx):
-        return Id(ctx.ID().getText())
+        return Id(ctx.ID().getText()).cast(self.visitCast(ctx.cast()))
 
     def visitArcPart(self, ctx):
         if ctx.ID():
@@ -45,5 +53,9 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitWeightedArc(self, ctx):
         return ["directed", int(ctx.INT().getText())]
 
-    def VisitWeightedUndirectedArc(self, ctx):
+    def visitWeightedUndirectedArc(self, ctx):
         return ["undirected", int(ctx.INT().getText())]
+
+    def visitCast(self, ctx):
+        return ctx.type().getText() if ctx else None
+
