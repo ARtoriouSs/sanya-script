@@ -1,5 +1,1 @@
-node n = 3
-
-arc a = (node) n -> 2
-
-print a
+graph g = [1, (graph) 2, [5, 6]]

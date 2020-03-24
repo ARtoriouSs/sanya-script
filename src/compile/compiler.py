@@ -32,5 +32,21 @@ class Compiler:
             string = f"Node({value.value})"
         elif value.kind() == "arc":
             string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
+        elif value.kind() == "graph":
+            string = self._resolve_graph_value(value)
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
         return string
+
+    def _resolve_graph_value(self, value):
+        nodes = self._resolve_array(value.nodes)
+        arcs = self._resolve_array(value.arcs)
+        graphs = self._resolve_array(value.graphs)
+        return f"Graph([{nodes}], [{arcs}], [{graphs}])"
+
+    def _resolve_array(self, values):
+        result = ""
+        for i, value in enumerate(values):
+            if not i == 0: result += ", "
+            result += self._resolve_value(value)
+        return result
+

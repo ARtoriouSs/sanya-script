@@ -6,9 +6,9 @@ from parse.AST.statements.print import Print
 from parse.var import Var
 import parse.errors as errors
 import copy
-from src.parse.AST.id import Id
-from src.parse.AST.namespace import Namespace
-from src.parse.value_visitor import ValueVisitor
+from parse.AST.id import Id
+from parse.AST.namespace import Namespace
+from parse.value_visitor import ValueVisitor
 
 
 class Visitor(SanyaScriptVisitor):
