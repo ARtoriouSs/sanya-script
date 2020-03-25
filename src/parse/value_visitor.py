@@ -25,17 +25,10 @@ class ValueVisitor(SanyaScriptVisitor):
         graph = Graph().cast(self.visitCast(ctx.cast()))
         for value in ctx.value():
             val = self.visit(value)
-            if val.kind() == "node": graph.nodes.append(val)
-            if val.kind() == "arc": graph.arcs.append(val)
-            if val.kind() == "graph": graph.graphs.append(val)
+            graph.elements.append(val)
             if val.kind() == "id":
                 var = self.namespace.find_var(val.name)
-                if var:
-                    if var.type == "node": graph.nodes.append(val)
-                    if var.type == "arc": graph.arcs.append(val)
-                    if var.type == "graph": graph.graphs.append(val)
-                else:
-                    errors.undef(val.name)
+                graph.elements.append(val) if var else errors.undef(val.name)
         return graph
 
     def visitIdValue(self, ctx):

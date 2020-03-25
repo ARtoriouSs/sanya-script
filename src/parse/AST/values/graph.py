@@ -2,8 +2,6 @@ from parse.AST.values.value import Value
 
 
 class Graph(Value):
-    def __init__(self, nodes=(), arcs=(), graphs=(), cast=None):
-        self.nodes = list(nodes)
-        self.arcs = list(arcs)
-        self.graphs = list(graphs)
+    def __init__(self, elements=(), cast=None):
+        self.elements = list(elements)
         super().__init__(cast)

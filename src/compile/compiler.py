@@ -38,10 +38,7 @@ class Compiler:
         return string
 
     def _resolve_graph_value(self, value):
-        nodes = self._resolve_array(value.nodes)
-        arcs = self._resolve_array(value.arcs)
-        graphs = self._resolve_array(value.graphs)
-        return f"Graph([{nodes}], [{arcs}], [{graphs}])"
+        return f"Graph([{self._resolve_array(value.elements)}])"
 
     def _resolve_array(self, values):
         result = ""
