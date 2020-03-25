@@ -3,8 +3,8 @@ from .runtime_error import RuntimeError
 
 class Graph:
     def __init__(self, elements=()):
-        self.nodes = []
-        self.arcs = []
+        self.nodes = set()
+        self.arcs = set()
         self.set_elements(list(elements))
 
     def set_elements(self, elements):
@@ -17,18 +17,25 @@ class Graph:
             RuntimeError.cast_error("graph", type_)
 
     def print(self):
-        pass
+        for arc in self.arcs:
+            arc.print()
+        for node in self.nodes:
+            node.print()
 
     def _resolve_elements(self, elements):
         for element in elements:
             if element.__class__.__name__ == "Node":
-                self.nodes.append(element)
+                self.nodes.add(element)
             elif element.__class__.__name__ == "Arc":
-                self.arcs.append(element)
+                self._resolve_arc(element)
             elif element.__class__.__name__ == "Graph":
                 self._resolve_graph(element)
 
+    def _resolve_arc(self, arc):
+        self.arcs.add(arc)
+        self.nodes.update([arc.source, arc.target])
 
-    def _resolve_graphs(self, graph):
-        self.nodes += graph.nodes
-        self.arcs += graph.arcs
+    def _resolve_graph(self, graph):
+        self.nodes = self.nodes.union(graph.nodes)
+        for arc in graph.arcs:
+            self._resolve_arc(arc)

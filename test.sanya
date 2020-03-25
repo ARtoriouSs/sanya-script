@@ -1,1 +1,5 @@
-graph g = [1, (graph) 2, [5, 6]]
+node a = 1
+
+graph g = [[a, [[[a]]]]]
+
+print g

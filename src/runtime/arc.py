@@ -29,7 +29,7 @@ class Arc:
         if type_ == "arc":
             return self
         elif type_ == "graph":
-            return Graph(arcs=[self])
+            return Graph(tuple([self]))
         else:
             RuntimeError.cast_error("arc", type_)
 

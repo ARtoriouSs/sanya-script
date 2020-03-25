@@ -14,7 +14,7 @@ class Node:
         if type_ == "node":
             return self
         elif type_ == "graph":
-            return Graph(nodes=[self])
+            return Graph(tuple([self]))
         else:
             RuntimeError.cast_error("node", type_)
 
