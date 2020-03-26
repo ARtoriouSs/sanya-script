@@ -7,7 +7,8 @@ statement: defvar
          | deffun
          | funCall
          | assignment
-         | print;
+         | print
+         | returnStat;
 
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
@@ -18,18 +19,22 @@ defvar: NODE_TYPE ID  # defnode
       | ARC_TYPE ID   # defarc
       | GRAPH_TYPE ID # defgraph;
 
-deffun: type ID '(' funArg? ')' '{' statement* 'return' value '}' # typeFun
-      | ID '(' funArg? ')' '{' statement* 'return' value '}'      # nullFun;
+deffun: type ID '(' funArg? ')' '{' funBody '}'
+      | ID '(' funArg? ')' '{' funBody '}';
+
+funBody: statement*;
 
 funArg
- : type ID            # paramArg
- | type ID ',' funArg # paramArgs;
+ : type ID
+ | type ID ',' funArg;
 
-funCall: ID '(' funValue? ')';
+funCall: ID '(' paramValue? ')';
 
-funValue
- : value              # paramValue
- | value ',' funValue # paramValues;
+paramValue
+ : value
+ | value ',' paramValue;
+
+returnStat: 'return' value;
 
 value: (cast)? INT                        # nodeValue
      | (cast)? arcPart arc arcPart        # arcValue

@@ -6,9 +6,10 @@ from parse.AST.statements.print import Print
 from parse.var import Var
 import parse.errors as errors
 import copy
-from parse.AST.id import Id
+from parse.AST.statements.id import Id
 from parse.AST.namespace import Namespace
-from parse.value_visitor import ValueVisitor
+from parse.visitors.value_visitor import ValueVisitor
+from parse.visitors.function_visitor import FunctionVisitior
 
 
 class Visitor(SanyaScriptVisitor):
@@ -48,9 +49,18 @@ class Visitor(SanyaScriptVisitor):
         name = ctx.ID().getText()
         return Print(name) if self.namespace.has_var(name) else errors.undef(name)
 
+    def visitDeffun(self, ctx):
+        return self._funciton_visitor().visit(ctx)
+
+    def visitFunCall(self, ctx):
+        return self._funciton_visitor().visit(ctx)
+
     def _add_var(self, type, name):
         self.namespace.add_var(Var(type, name))
         return Defvar(type, name)
 
     def _value_visitor(self):
         return ValueVisitor(self.block, self.namespace)
+
+    def _funciton_visitor(self):
+        return FunctionVisitior(self.block, self.namespace)

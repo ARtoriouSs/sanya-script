@@ -1,5 +1,6 @@
-node a = 1
+node foo(node a) {
+    node b = 1
+    return b
+}
 
-graph g = [[a, [[[a]]]]]
-
-print g
+foo()
