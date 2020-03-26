@@ -3,6 +3,7 @@ from parse.AST.block import Block
 from parse.AST.statements.defvar import Defvar
 from parse.AST.statements.assignment import Assignment
 from parse.AST.statements.print import Print
+from parse.AST.statements.returnStat import ReturnStat
 from parse.var import Var
 import parse.errors as errors
 import copy
@@ -48,6 +49,9 @@ class Visitor(SanyaScriptVisitor):
     def visitPrint(self, ctx):
         name = ctx.ID().getText()
         return Print(name) if self.namespace.has_var(name) else errors.undef(name)
+
+    def visitReturnStat(self, ctx):
+        return ReturnStat(self._value_visitor().visit(ctx.value()))
 
     def visitDeffun(self, ctx):
         return self._funciton_visitor().visit(ctx)
