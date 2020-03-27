@@ -1,4 +1,4 @@
-from parse.AST.namespace import Namespace
+from parse.namespace import Namespace
 
 
 class Block:

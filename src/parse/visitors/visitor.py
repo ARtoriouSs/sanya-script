@@ -7,7 +7,7 @@ from parse.AST.statements.return_stat import ReturnStat
 import parse.errors as errors
 import copy
 from parse.AST.statements.id import Id
-from parse.AST.namespace import Namespace
+from parse.namespace import Namespace
 from parse.visitors.value_visitor import ValueVisitor
 from parse.visitors.function_visitor import FunctionVisitior
 
