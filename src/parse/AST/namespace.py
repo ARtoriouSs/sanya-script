@@ -22,15 +22,15 @@ class Namespace:
         self.funs.append(fun)
 
     def find_var(self, name):
-        vars_ = [var for i, var in enumerate(self.vars) if var.name == name]
+        vars_ = [var for var in self.vars if var.name == name]
         return vars_[0] if any(vars_) else None
 
     def find_fun(self, name, return_type=None, args=None):
-        funs = [fun for i, fun in enumerate(self.funs) if fun.name == name]
+        funs = [fun for fun in self.funs if fun.name == name]
         if return_type:
-            funs = [fun for i, fun in enumerate(funs) if fun.return_type == return_type]
+            funs = [fun for fun in funs if fun.return_type == return_type]
         if args is not None:
-            funs = [fun for i, fun in enumerate(funs) if self._compare_args(fun, args)]
+            funs = [fun for fun in funs if self._compare_args(fun, args)]
         return funs[0] if any(funs) else None
 
     def has_var(self, name):
