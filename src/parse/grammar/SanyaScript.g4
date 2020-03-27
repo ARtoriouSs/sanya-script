@@ -60,7 +60,7 @@ NODE_TYPE: 'node' ;
 ARC_TYPE: 'arc' ;
 GRAPH_TYPE: 'graph' ;
 
-INT: [1-9][0-9]* ;
+INT: '-'?[1-9][0-9]* ;
 
 ID: [a-z][a-zA-Z0-9]* ;
 WS: [ \t\r\n]+ -> skip ;
