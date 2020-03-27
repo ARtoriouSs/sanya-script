@@ -1,10 +1,9 @@
 from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
-
 from parse.AST.values.graph import Graph
 from parse.AST.values.id import Id
 from parse.AST.values.node import Node
 from parse.AST.values.arc import Arc
-import parse.errors as errors
+from parse.parse_error import ParseError
 
 
 class ValueVisitor(SanyaScriptVisitor):
@@ -28,7 +27,7 @@ class ValueVisitor(SanyaScriptVisitor):
             graph.elements.append(val)
             if val.kind() == "id":
                 var = self.namespace.find_var(val.name)
-                graph.elements.append(val) if var else errors.undef(val.name)
+                graph.elements.append(val) if var else ParseError.undef(val.name)
         return graph
 
     def visitIdValue(self, ctx):
@@ -39,9 +38,9 @@ class ValueVisitor(SanyaScriptVisitor):
             name = ctx.ID().getText()
             var = self.namespace.find_var(name)
             if var:
-                return Id(name) if var.type == "node" else errors.type_error(var.name, var.type, "node")
+                return Id(name) if var.type == "node" else ParseError.type_error(var.name, var.type, "node")
             else:
-                errors.undef(name)
+                ParseError.undef(name)
         else:
             return Node(int(ctx.INT().getText()))
 

@@ -4,7 +4,7 @@ from parse.AST.statements.defvar import Defvar
 from parse.AST.statements.assignment import Assignment
 from parse.AST.statements.print import Print
 from parse.AST.statements.return_stat import ReturnStat
-import parse.errors as errors
+from parse.parse_error import ParseError
 import copy
 from parse.AST.statements.id import Id
 from parse.namespace import Namespace
@@ -41,13 +41,13 @@ class Visitor(SanyaScriptVisitor):
 
     def visitReassign(self, ctx):
         name = ctx.ID().getText()
-        target = Id(name) if self.namespace.has_var(name) else errors.undef(name)
+        target = Id(name) if self.namespace.has_var(name) else ParseError.undef(name)
         value = self._value_visitor().visit(ctx.value())
         return Assignment(target, value)
 
     def visitPrint(self, ctx):
         name = ctx.ID().getText()
-        return Print(name) if self.namespace.has_var(name) else errors.undef(name)
+        return Print(name) if self.namespace.has_var(name) else ParseError.undef(name)
 
     def visitReturnStat(self, ctx):
         return ReturnStat(self._value_visitor().visit(ctx.value()))

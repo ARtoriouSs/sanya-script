@@ -2,7 +2,7 @@ from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parse.AST.fun_arg import FunArg
 from parse.AST.statements.deffun import Deffun
 from parse.AST.statements.fun_call import FunCall
-import parse.errors as errors
+from parse.parse_error import ParseError
 from parse.visitors.value_visitor import ValueVisitor
 
 
@@ -35,7 +35,7 @@ class FunctionVisitior(SanyaScriptVisitor):
     def visitFunCall(self, ctx):
         name = ctx.ID().getText()
         args = self.visit(ctx.paramValue()) if ctx.paramValue() else []
-        if not self.namespace.has_fun(name, args=args): errors.signature_not_found(name, self._arg_types(args))
+        if not self.namespace.has_fun(name, args=args): ParseError.signature_not_found(name, self._arg_types(args))
         return FunCall(name, args)
 
     def visitParamValue(self, ctx):
