@@ -31,7 +31,9 @@ class ValueVisitor(SanyaScriptVisitor):
         return graph
 
     def visitIdValue(self, ctx):
-        return Id(ctx.ID().getText()).cast(self.visitCast(ctx.cast()))
+        name = ctx.ID().getText()
+        if not self.namespace.has_var(name): ParseError.undef(name)
+        return Id(name).cast(self.visitCast(ctx.cast()))
 
     def visitArcPart(self, ctx):
         if ctx.ID():
@@ -58,4 +60,3 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitCast(self, ctx):
         return ctx.type().getText() if ctx else None
-
