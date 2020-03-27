@@ -1,6 +1,8 @@
-node foo(node a) {
+node foo(node a, arc b) {
     node b = 1
     return b
 }
 
-foo()
+node c = 2
+
+foo(1, c)

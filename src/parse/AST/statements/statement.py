@@ -1,3 +1,5 @@
+import re
+
 class Statement:
     def kind(self):
-        return self.__class__.__name__.lower()
+        return re.sub(r'(?<!^)(?=[A-Z])', '_', self.__class__.__name__).lower()

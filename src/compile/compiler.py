@@ -12,6 +12,8 @@ class Compiler:
                 self._compile_print(statement)
             elif statement.kind() == "assignment":
                 self._compile_assignment(statement)
+            elif statement.kind() == "return_stat":
+                self._compile_return_stat(statement)
 
     def _indent(self):
         return "    " * self.tab_spot
@@ -24,6 +26,9 @@ class Compiler:
 
     def _compile_assignment(self, statement):
         self.file.write(f"{statement.target.name} = {self._resolve_value(statement.value)}\n")
+
+    def _compile_return_stat(self, statement):
+        self.file.write(f"return {self._resolve_value(statement.value)}\n")
 
     def _resolve_value(self, value):
         if value.kind() == "id":

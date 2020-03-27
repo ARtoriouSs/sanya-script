@@ -3,8 +3,7 @@ from parse.AST.block import Block
 from parse.AST.statements.defvar import Defvar
 from parse.AST.statements.assignment import Assignment
 from parse.AST.statements.print import Print
-from parse.AST.statements.returnStat import ReturnStat
-from parse.var import Var
+from parse.AST.statements.return_stat import ReturnStat
 import parse.errors as errors
 import copy
 from parse.AST.statements.id import Id
@@ -59,9 +58,9 @@ class Visitor(SanyaScriptVisitor):
     def visitFunCall(self, ctx):
         return self._funciton_visitor().visit(ctx)
 
-    def _add_var(self, type, name):
-        self.namespace.add_var(Var(type, name))
-        return Defvar(type, name)
+    def _add_var(self, type_, name):
+        self.namespace.add_var(name, type_)
+        return Defvar(type_, name)
 
     def _value_visitor(self):
         return ValueVisitor(self.block, self.namespace)

@@ -39,7 +39,8 @@ returnStat: 'return' value;
 value: (cast)? INT                        # nodeValue
      | (cast)? arcPart arc arcPart        # arcValue
      | (cast)? '[' (value ',')* value ']' # graphValue
-     | (cast)? ID                         # idValue;
+     | (cast)? ID                         # idValue
+     | (cast)? funCall                    # funCallValue;
 
 arc: '->'            # simpleArc
    | '<->'           # simpleUndirectedArc
