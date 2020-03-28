@@ -1,4 +1,4 @@
-from parse.AST.statements.statement import Statement
+from parser.AST.statements.statement import Statement
 
 
 class FunCall(Statement):

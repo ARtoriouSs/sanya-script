@@ -1,8 +1,8 @@
 __pycache__
 
 # generated grammar files
-src/parse/grammar/*
-!src/parse/grammar/SanyaScript.g4
+src/parser/grammar/*
+!src/parser/grammar/SanyaScript.g4
 
 # test grammar
 test_grammar/

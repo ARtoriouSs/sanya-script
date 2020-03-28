@@ -1,4 +1,4 @@
-from compile.block_compiler import BlockCompiler
+from compiler.block_compiler import BlockCompiler
 
 
 class Compiler:

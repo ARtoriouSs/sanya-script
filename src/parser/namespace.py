@@ -1,5 +1,5 @@
-from parse.var import Var
-from parse.fun import Fun
+from parser.var import Var
+from parser.fun import Fun
 
 
 class Namespace:

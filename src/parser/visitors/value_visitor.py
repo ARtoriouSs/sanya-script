@@ -1,11 +1,11 @@
-from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
-from parse.parse_error import ParseError
-from parse.visitors.function_visitor import FunctionVisitior
-from parse.AST.values.graph import Graph
-from parse.AST.values.id import Id
-from parse.AST.values.node import Node
-from parse.AST.values.arc import Arc
-from parse.AST.values.fun_call import FunCall
+from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
+from parser.parse_error import ParseError
+from parser.visitors.function_visitor import FunctionVisitior
+from parser.AST.values.graph import Graph
+from parser.AST.values.id import Id
+from parser.AST.values.node import Node
+from parser.AST.values.arc import Arc
+from parser.AST.values.fun_call import FunCall
 
 
 class ValueVisitor(SanyaScriptVisitor):

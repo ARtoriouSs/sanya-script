@@ -1,7 +1,7 @@
 import sys
 
-from parse.parser import Parser
-from compile.compiler import Compiler
+from parser.parser import Parser
+from compiler.compiler import Compiler
 
 
 if __name__ == '__main__':

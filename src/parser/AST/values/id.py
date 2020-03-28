@@ -1,4 +1,4 @@
-from parse.AST.values.value import Value
+from parser.AST.values.value import Value
 
 
 class Id(Value):
