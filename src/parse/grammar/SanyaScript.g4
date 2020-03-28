@@ -13,20 +13,20 @@ statement: defvar
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
 
-cast: '(' type ')';
+cast: '(' type_ ')';
 
-defvar: NODE_TYPE ID  # defnode
-      | ARC_TYPE ID   # defarc
-      | GRAPH_TYPE ID # defgraph;
+defvar: 'node' ID  # defnode
+      | 'arc' ID   # defarc
+      | 'graph' ID # defgraph;
 
-deffun: type ID '(' funArg? ')' block
+deffun: type_ ID '(' funArg? ')' block
       | ID '(' funArg? ')' block;
 
 block: 'go' statement* 'end';
 
 funArg
- : type ID
- | type ID ',' funArg;
+ : type_ ID
+ | type_ ID ',' funArg;
 
 funCall: ID '(' paramValue? ')';
 
@@ -49,17 +49,13 @@ arc: '->'            # simpleArc
 
 arcPart: INT | ID;
 
-type: NODE_TYPE
-    | ARC_TYPE
-    | GRAPH_TYPE;
+type_: 'node'
+     | 'arc'
+     | 'graph';
 
 printStat: 'print' '(' value ')';
 
 // lexer rules
-NODE_TYPE: 'node' ;
-ARC_TYPE: 'arc' ;
-GRAPH_TYPE: 'graph' ;
-
 INT: '-'?[1-9][0-9]* ;
 
 ID: [a-z][a-zA-Z0-9]* ;

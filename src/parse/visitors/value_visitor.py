@@ -62,7 +62,7 @@ class ValueVisitor(SanyaScriptVisitor):
         return ["undirected", int(ctx.INT().getText())]
 
     def visitCast(self, ctx):
-        return ctx.type().getText() if ctx else None
+        return ctx.type_().getText() if ctx else None
 
     def _function_visitor(self):
         return FunctionVisitior(self.block, self.namespace)

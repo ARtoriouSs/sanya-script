@@ -11,7 +11,7 @@ class FunctionVisitior(SanyaScriptVisitor):
         self.block = block
 
     def visitDeffun(self, ctx):
-        return_type = ctx.type().getText() if ctx.type() else None
+        return_type = ctx.type_().getText() if ctx.type_() else None
         name = ctx.ID().getText()
         args = self.visit(ctx.funArg()) if ctx.funArg() else []
         body = self.visit(ctx.block())
@@ -19,7 +19,7 @@ class FunctionVisitior(SanyaScriptVisitor):
         return Deffun(name, args, body)
 
     def visitFunArg(self, ctx):
-        value = FunArg(ctx.type().getText(), ctx.ID().getText())
+        value = FunArg(ctx.type_().getText(), ctx.ID().getText())
         rest = self.visit(ctx.funArg()) if ctx.funArg() else []
         return [value] + rest
 
