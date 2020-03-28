@@ -1,2 +1,8 @@
-node a = 2
-print(1 -> a)
+node foo(node a, node b) go
+  node b = 1
+  return b
+end
+
+node c = 2
+
+foo(1, c)

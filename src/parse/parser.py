@@ -6,8 +6,8 @@ from parse.visitors.visitor import Visitor
 
 class Parser:
     @classmethod
-    def parse(self, filepath=None, code=None):
-        input_stream = FileStream(filepath) if filepath else InputStream(code)
+    def parse(self, filepath):
+        input_stream = FileStream(filepath)
         lexer = SanyaScriptLexer(input_stream)
         stream = CommonTokenStream(lexer)
         parser = SanyaScriptParser(stream)
