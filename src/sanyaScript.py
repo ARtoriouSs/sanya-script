@@ -4,7 +4,11 @@ from compile.compiler import Compiler
 
 
 if __name__ == '__main__':
+    if not len(sys.argv) == 3:
+        print("Error! Provide source and target files as argunents to this script")
+        exit(1)
+
     code_file = sys.argv[1]
     targer_file = sys.argv[2]
-    ast = Parser.parse(filepath=code_file)
+    ast = Parser.parse(code_file)
     Compiler(targer_file).compile(ast)

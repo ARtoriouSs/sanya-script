@@ -50,10 +50,6 @@ class Namespace:
 
     def _compare_args(self, fun, args):
         if not len(fun.args) == len(args): return False
-        for i in range(len(args)):
-            if args[i].kind() == "id":
-                var = self.find_var(args[i].name)
-                if var.type != fun.args[i].type: return False
-            else:
-                if not args[i].kind() == fun.args[i].type: return False
+        for i, arg in enumerate(args):
+            if not arg.return_type() == fun.args[i].type: return False
         return True

@@ -13,7 +13,7 @@ from parse.visitors.function_visitor import FunctionVisitior
 
 
 class Visitor(SanyaScriptVisitor):
-    def __init__(self, namespace = None):
+    def __init__(self, namespace=None):
         self.namespace = copy.copy(namespace) or Namespace()
         self.block = Block()
 

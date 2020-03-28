@@ -36,11 +36,7 @@ class BlockCompiler:
         self.__class__(self.file, self.indent + 1).compile(statement.body)
 
     def _compile_fun_call(self, statement):
-        self.file.write(f"{statement.name}({self._resolve_args(statement.args)})\n")
-
-    def _resolve_args(self, args):
-        args = [self._resolve_value(arg) for arg in args]
-        return ", ".join(args)
+        self.file.write(f"{statement.name}({self._resolve_array(statement.args)})\n")
 
     def _resolve_fun_args(self, args):
         args = [arg.name for arg in args]
@@ -64,8 +60,5 @@ class BlockCompiler:
         return f"Graph([{self._resolve_array(value.elements)}])"
 
     def _resolve_array(self, values):
-        result = ""
-        for i, value in enumerate(values):
-            if not i == 0: result += ", "
-            result += self._resolve_value(value)
-        return result
+        values_ = [self._resolve_value(value) for value in values]
+        return ", ".join(values_)

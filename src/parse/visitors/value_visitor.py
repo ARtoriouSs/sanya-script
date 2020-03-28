@@ -25,8 +25,7 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitGraphValue(self, ctx):
         graph = Graph().cast(self.visitCast(ctx.cast()))
         for value in ctx.value():
-            val = self.visit(value)
-            graph.elements.append(val)
+            graph.elements.append(self.visit(value))
         return graph
 
     def visitIdValue(self, ctx):
@@ -37,8 +36,7 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
-        fun = self.namespace.find_fun(fun_call.name)
-        return FunCall(fun_call, fun.type).cast(self.visitCast(ctx.cast()))
+        return FunCall(fun_call).cast(self.visitCast(ctx.cast()))
 
     def visitArcPart(self, ctx):
         if ctx.ID():
