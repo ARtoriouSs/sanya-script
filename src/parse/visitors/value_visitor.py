@@ -27,25 +27,24 @@ class ValueVisitor(SanyaScriptVisitor):
         for value in ctx.value():
             val = self.visit(value)
             graph.elements.append(val)
-            if val.kind() == "id":
-                var = self.namespace.find_var(val.name)
-                graph.elements.append(val) if var else ParseError.undef(val.name)
         return graph
 
     def visitIdValue(self, ctx):
         name = ctx.ID().getText()
-        if not self.namespace.has_var(name): ParseError.undef(name)
-        return Id(name).cast(self.visitCast(ctx.cast()))
+        var = self.namespace.find_var(name)
+        if var is None: ParseError.undef(name)
+        return Id(name, var.type).cast(self.visitCast(ctx.cast()))
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
-        return FunCall(fun_call).cast(self.visitCast(ctx.cast()))
+        fun = self.namespace.find_fun(fun_call.name)
+        return FunCall(fun_call, fun.type).cast(self.visitCast(ctx.cast()))
 
     def visitArcPart(self, ctx):
         if ctx.ID():
             name = ctx.ID().getText()
             var = self.namespace.find_var(name)
-            if var:
+            if var is not None:
                 return Id(name) if var.type == "node" else ParseError.type_error(var.name, var.type, "node")
             else:
                 ParseError.undef(name)

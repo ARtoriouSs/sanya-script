@@ -10,3 +10,6 @@ class Value:
     def cast(self, cast_type=None):
         self.cast_type = cast_type
         return self
+
+    def return_type(self):
+        return self.kind()

@@ -25,7 +25,6 @@ class FunctionVisitior(SanyaScriptVisitor):
 
     def visitBlock(self, ctx):
         from parse.visitors.visitor import Visitor
-
         return Visitor().visitSanyaScript(ctx)
 
     def visitFunCall(self, ctx):
