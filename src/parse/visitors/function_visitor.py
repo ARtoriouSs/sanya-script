@@ -1,8 +1,8 @@
 from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
+from parse.parse_error import ParseError
 from parse.AST.fun_arg import FunArg
 from parse.AST.statements.deffun import Deffun
 from parse.AST.statements.fun_call import FunCall
-from parse.parse_error import ParseError
 
 
 class FunctionVisitior(SanyaScriptVisitor):

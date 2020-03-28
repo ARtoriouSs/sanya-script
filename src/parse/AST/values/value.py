@@ -1,5 +1,6 @@
 import re
 
+
 class Value:
     def __init__(self, cast_type=None):
         self.cast_type = cast_type

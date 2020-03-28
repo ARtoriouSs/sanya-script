@@ -1,15 +1,16 @@
+import copy
+
 from parse.grammar.SanyaScriptVisitor import SanyaScriptVisitor
+from parse.visitors.value_visitor import ValueVisitor
+from parse.visitors.function_visitor import FunctionVisitior
+from parse.parse_error import ParseError
+from parse.namespace import Namespace
 from parse.AST.block import Block
 from parse.AST.statements.defvar import Defvar
 from parse.AST.statements.assignment import Assignment
 from parse.AST.statements.print import Print
 from parse.AST.statements.return_stat import ReturnStat
-from parse.parse_error import ParseError
-import copy
 from parse.AST.statements.id import Id
-from parse.namespace import Namespace
-from parse.visitors.value_visitor import ValueVisitor
-from parse.visitors.function_visitor import FunctionVisitior
 
 
 class Visitor(SanyaScriptVisitor):

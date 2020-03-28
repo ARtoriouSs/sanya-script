@@ -1,6 +1,3 @@
-from parse.namespace import Namespace
-
-
 class Block:
     def __init__(self):
         self.statements = []

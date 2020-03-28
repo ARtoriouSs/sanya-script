@@ -1,4 +1,5 @@
 from antlr4 import *
+
 from parse.grammar.SanyaScriptLexer import SanyaScriptLexer
 from parse.grammar.SanyaScriptParser import SanyaScriptParser
 from parse.visitors.visitor import Visitor

@@ -1,4 +1,5 @@
 import sys
+
 from parse.parser import Parser
 from compile.compiler import Compiler
 
