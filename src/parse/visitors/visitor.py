@@ -8,7 +8,7 @@ from parse.namespace import Namespace
 from parse.AST.block import Block
 from parse.AST.statements.defvar import Defvar
 from parse.AST.statements.assignment import Assignment
-from parse.AST.statements.print import Print
+from parse.AST.statements.print_stat import PrintStat
 from parse.AST.statements.return_stat import ReturnStat
 from parse.AST.statements.id import Id
 
@@ -53,8 +53,8 @@ class Visitor(SanyaScriptVisitor):
 
         return Assignment(target, value)
 
-    def visitPrint(self, ctx):
-        return Print(self._value_visitor().visit(ctx.value()))
+    def visitPrintStat(self, ctx):
+        return PrintStat(self._value_visitor().visit(ctx.value()))
 
     def visitReturnStat(self, ctx):
         return ReturnStat(self._value_visitor().visit(ctx.value()))

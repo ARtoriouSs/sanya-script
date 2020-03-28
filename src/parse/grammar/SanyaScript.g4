@@ -7,7 +7,7 @@ statement: defvar
          | deffun
          | funCall
          | assignment
-         | print
+         | printStat
          | returnStat;
 
 assignment: defvar '=' value # assign
@@ -53,7 +53,7 @@ type: NODE_TYPE
     | ARC_TYPE
     | GRAPH_TYPE;
 
-print: 'print' '(' value ')';
+printStat: 'print' '(' value ')';
 
 // lexer rules
 NODE_TYPE: 'node' ;
