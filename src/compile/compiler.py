@@ -14,6 +14,8 @@ class Compiler:
                 self._compile_assignment(statement)
             elif statement.kind() == "return_stat":
                 self._compile_return_stat(statement)
+            elif statement.kind() == "fun_call":
+                self._compile_fun_call(statement)
 
     def _indent(self):
         return "    " * self.tab_spot
@@ -30,6 +32,13 @@ class Compiler:
     def _compile_return_stat(self, statement):
         self.file.write(f"return {self._resolve_value(statement.value)}\n")
 
+    def _compile_fun_call(self, statement):
+        self.file.write(f"{statement.name}({self._resolve_args(statement.args)})\n")
+
+    def _resolve_args(self, args):
+        args = [self._resolve_value(arg) for arg in args]
+        return ", ".join(args)
+
     def _resolve_value(self, value):
         if value.kind() == "id":
             string = value.name
@@ -39,6 +48,8 @@ class Compiler:
             string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
         elif value.kind() == "graph":
             string = self._resolve_graph_value(value)
+        elif value.kind() == "fun_call":
+            string = self._compile_fun_call(value.fun_call)
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
         return string
 
@@ -51,4 +62,3 @@ class Compiler:
             if not i == 0: result += ", "
             result += self._resolve_value(value)
         return result
-

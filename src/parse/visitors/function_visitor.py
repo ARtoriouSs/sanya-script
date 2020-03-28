@@ -3,7 +3,6 @@ from parse.AST.fun_arg import FunArg
 from parse.AST.statements.deffun import Deffun
 from parse.AST.statements.fun_call import FunCall
 from parse.parse_error import ParseError
-from parse.visitors.value_visitor import ValueVisitor
 
 
 class FunctionVisitior(SanyaScriptVisitor):
@@ -44,6 +43,7 @@ class FunctionVisitior(SanyaScriptVisitor):
         return [value] + rest
 
     def _value_visitor(self):
+        from parse.visitors.value_visitor import ValueVisitor
         return ValueVisitor(self.block, self.namespace)
 
     def _arg_types(self, args):

@@ -3,7 +3,9 @@ from parse.AST.values.graph import Graph
 from parse.AST.values.id import Id
 from parse.AST.values.node import Node
 from parse.AST.values.arc import Arc
+from parse.AST.values.fun_call import FunCall
 from parse.parse_error import ParseError
+from parse.visitors.function_visitor import FunctionVisitior
 
 
 class ValueVisitor(SanyaScriptVisitor):
@@ -35,6 +37,10 @@ class ValueVisitor(SanyaScriptVisitor):
         if not self.namespace.has_var(name): ParseError.undef(name)
         return Id(name).cast(self.visitCast(ctx.cast()))
 
+    def visitFunCallValue(self, ctx):
+        fun_call = self._function_visitor().visit(ctx.funCall())
+        return FunCall(fun_call).cast(self.visitCast(ctx.cast()))
+
     def visitArcPart(self, ctx):
         if ctx.ID():
             name = ctx.ID().getText()
@@ -60,3 +66,6 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitCast(self, ctx):
         return ctx.type().getText() if ctx else None
+
+    def _function_visitor(self):
+        return FunctionVisitior(self.block, self.namespace)

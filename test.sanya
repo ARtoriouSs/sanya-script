@@ -1,4 +1,4 @@
-node foo(node a, arc b) {
+node foo(node a, node b) {
     node b = 1
     return b
 }
