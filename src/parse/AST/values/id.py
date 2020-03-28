@@ -8,4 +8,4 @@ class Id(Value):
         super().__init__(cast)
 
     def return_type(self):
-        return self.return_type
+        return self.cast_type or self.return_type

@@ -12,4 +12,4 @@ class Value:
         return self
 
     def return_type(self):
-        return self.kind()
+        return self.cast_type or self.kind()
