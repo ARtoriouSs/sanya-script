@@ -37,12 +37,19 @@ class Visitor(SanyaScriptVisitor):
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
         value = self._value_visitor().visit(ctx.value())
+        if target.type != value.return_type():
+            ParseError.type_error(target.name, value.return_type(), target.type)
         return Assignment(target, value)
 
     def visitReassign(self, ctx):
         name = ctx.ID().getText()
-        target = Id(name, var.type) if var is not None else ParseError.undef(name)
+        target = Id(name)
         value = self._value_visitor().visit(ctx.value())
+
+        var = self.namespace.find_var(name)
+        if var is None: ParseError.undef(name)
+        if var.type != value.return_type(): ParseError.type_error(name, value.return_type(), var.type)
+
         return Assignment(target, value)
 
     def visitPrint(self, ctx):

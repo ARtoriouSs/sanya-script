@@ -1,3 +1,4 @@
-node a = 1 -> 2
+node a = 1
 
-graph g = [a]
+a = 1 -> 2
+

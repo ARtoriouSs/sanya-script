@@ -4,7 +4,7 @@ from compile.compiler import Compiler
 
 
 if __name__ == '__main__':
-    if not len(sys.argv) == 3:
+    if len(sys.argv) != 3:
         print("Error! Provide source and target files as argunents to this script")
         exit(1)
 
