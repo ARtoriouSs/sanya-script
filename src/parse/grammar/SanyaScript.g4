@@ -19,10 +19,10 @@ defvar: NODE_TYPE ID  # defnode
       | ARC_TYPE ID   # defarc
       | GRAPH_TYPE ID # defgraph;
 
-deffun: type ID '(' funArg? ')' '{' funBody '}'
-      | ID '(' funArg? ')' '{' funBody '}';
+deffun: type ID '(' funArg? ')' block
+      | ID '(' funArg? ')' block;
 
-funBody: statement*;
+block: 'go' statement* 'end';
 
 funArg
  : type ID

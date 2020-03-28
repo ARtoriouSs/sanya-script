@@ -1,7 +1,7 @@
-node foo(node a, node b) {
-    node b = 1
-    return b
-}
+node foo(node a, node b) go
+  node b = 1
+  return b
+end
 
 node c = 2
 
