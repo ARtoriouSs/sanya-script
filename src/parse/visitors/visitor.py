@@ -46,8 +46,7 @@ class Visitor(SanyaScriptVisitor):
         return Assignment(target, value)
 
     def visitPrint(self, ctx):
-        name = ctx.ID().getText()
-        return Print(name) if self.namespace.has_var(name) else ParseError.undef(name)
+        return Print(self._value_visitor().visit(ctx.value()))
 
     def visitReturnStat(self, ctx):
         return ReturnStat(self._value_visitor().visit(ctx.value()))

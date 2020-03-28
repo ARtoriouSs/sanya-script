@@ -53,7 +53,7 @@ type: NODE_TYPE
     | ARC_TYPE
     | GRAPH_TYPE;
 
-print: 'print' ID;
+print: 'print' '(' value ')';
 
 // lexer rules
 NODE_TYPE: 'node' ;

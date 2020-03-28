@@ -23,7 +23,7 @@ class BlockCompiler:
         self.file.write(f"{statement.name} = {statement.type.capitalize()}()\n")
 
     def _compile_print(self, statement):
-        self.file.write(f"{statement.name}.print()\n")
+        self.file.write(f"{self._resolve_value(statement.value)}.print()\n")
 
     def _compile_assignment(self, statement):
         self.file.write(f"{statement.target.name} = {self._resolve_value(statement.value)}\n")
