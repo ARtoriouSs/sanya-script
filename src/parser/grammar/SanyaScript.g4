@@ -17,46 +17,49 @@ cast: '(' type_ ')';
 
 defvar: 'node' ID  # defnode
       | 'arc' ID   # defarc
-      | 'graph' ID # defgraph;
+      | 'graph' ID # defgraph
+      | 'num' ID   # defnum;
 
 deffun: type_ ID '(' funArg? ')' block
       | ID '(' funArg? ')' block;
 
 block: 'go' statement* 'end';
 
-funArg
- : type_ ID
- | type_ ID ',' funArg;
+funArg: type_ ID
+      | type_ ID ',' funArg;
 
 funCall: ID '(' paramValue? ')';
 
-paramValue
- : value
- | value ',' paramValue;
+paramValue: value
+          | value ',' paramValue;
 
 returnStat: 'return' value;
 
-value: (cast)? INT                        # nodeValue
-     | (cast)? arcPart arc arcPart        # arcValue
-     | (cast)? '[' (value ',')* value ']' # graphValue
-     | (cast)? ID                         # idValue
-     | (cast)? funCall                    # funCallValue;
+value: '(' value ')'                                # parValue
+     | left=value operation=('/' | '*') right=value # divMultValue
+     | left=value operation=('+' | '-') right=value # sumDiffValue
+     | cast? '^' NUM                                # nodeValue
+     | cast? '<' left=value arc right=value '>'     # arcValue
+     | cast? '[' (value ',')* value ']'             # graphValue
+     | cast? NUM                                    # numValue
+     | cast? ID                                     # idValue
+     | cast? funCall                                # funCallValue;
 
-arc: '->'            # simpleArc
-   | '<->'           # simpleUndirectedArc
-   | '-[' INT ']->'  # weightedArc
-   | '<-[' INT ']->' # weightedUndirectedArc;
-
-arcPart: INT | ID;
+arc: '->'               # simpleArc
+   | '<->'              # simpleUndirectedArc
+   | '-[' NUM ']->'     # weightedArc
+   | '<-[' NUM ']->'    # weightedUndirectedArc;
 
 type_: 'node'
      | 'arc'
-     | 'graph';
+     | 'graph'
+     | 'int'
+     | 'float';
 
 printStat: 'print' '(' value ')';
 
 // lexer rules
-INT: '-'?[1-9][0-9]* ;
+NUM: '-'?[1-9][0-9]*(.[0-9]*[1-9])? ;
 
 ID: [a-z][a-zA-Z0-9]* ;
 WS: [ \t\r\n]+ -> skip ;

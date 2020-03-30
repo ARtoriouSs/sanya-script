@@ -35,6 +35,9 @@ class Visitor(SanyaScriptVisitor):
     def visitDefgraph(self, ctx):
         return self._add_var("graph", ctx.ID().getText())
 
+    def visitDefnum(self, ctx):
+        return self._add_var("num", ctx.ID().getText())
+
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
         value = self._value_visitor().visit(ctx.value())

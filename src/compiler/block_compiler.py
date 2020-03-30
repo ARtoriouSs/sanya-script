@@ -8,7 +8,7 @@ class BlockCompiler:
             self.file.write("    " * self.indent)
             if statement.kind() == "defvar":
                 self._compile_defvar(statement)
-            elif statement.kind() == "print":
+            elif statement.kind() == "print_stat":
                 self._compile_print(statement)
             elif statement.kind() == "assignment":
                 self._compile_assignment(statement)
@@ -51,6 +51,8 @@ class BlockCompiler:
             string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
         elif value.kind() == "graph":
             string = self._resolve_graph_value(value)
+        elif value.kind() == "num":
+            string = f"Num({value.value})"
         elif value.kind() == "fun_call":
             string = self._compile_fun_call(value.fun_call)
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
