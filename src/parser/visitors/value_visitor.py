@@ -21,7 +21,7 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitParenthesizedValue(self, ctx):
         return self.visit(ctx.value()).cast(self.visitCast(ctx.cast()))
 
-    def visitDivMultValue(self, ctx);
+    def visitDivMultValue(self, ctx):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.getText
@@ -30,7 +30,7 @@ class ValueVisitor(SanyaScriptVisitor):
         elif operation == "/":
             return Division(left, right)
 
-    def visitSumSubstrValue(self, ctx);
+    def visitSumSubstrValue(self, ctx):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.getText
