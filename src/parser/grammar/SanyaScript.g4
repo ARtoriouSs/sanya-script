@@ -61,7 +61,7 @@ printStat: 'print' '(' value ')';
 println: 'println' '(' value ')';
 
 // lexer rules
-NUM: '-'?[1-9][0-9]*(.[0-9]*[1-9])? ;
+NUM: '-'?([1-9][0-9]*|'0')(.[0-9]+)? ;
 
 ID: [a-z][a-zA-Z0-9]* ;
 WS: [ \t\r\n]+ -> skip ;
