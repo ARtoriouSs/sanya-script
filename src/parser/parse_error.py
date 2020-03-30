@@ -12,6 +12,10 @@ class ParseError:
         cls._halt(f"function with name \"{name}\" and args ({', '.join(arg_types)}) is undefined")
 
     @classmethod
+    def arc_error(cls, given):
+        cls._halt(f"only nodes can be a part of arc, but {given} given")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)

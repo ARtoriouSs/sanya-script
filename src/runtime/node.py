@@ -19,4 +19,8 @@ class Node:
             RuntimeError.cast_error("node", type_)
 
     def print(self):
-        print(f"^{self.value}")
+        print(f"^{self.value}", end='')
+
+    def println(self):
+        self.print()
+        print()

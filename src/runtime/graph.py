@@ -18,9 +18,14 @@ class Graph:
 
     def print(self):
         for arc in self.arcs:
-            arc.print()
-        for node in self.nodes:
+            arc.println()
+        for i, node in enumerate(self.nodes):
+            if i != 0: print(", ", end="")
             node.print()
+
+    def println(self):
+        self.print()
+        print()
 
     def _resolve_elements(self, elements):
         for element in elements:

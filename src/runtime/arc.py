@@ -34,7 +34,13 @@ class Arc:
             RuntimeError.cast_error("arc", type_)
 
     def print(self):
-        print(f"{self.source.value} {'<' if not self._is_directed else ''}-[{self.weight}]-> {self.target.value}")
+        self.source.print()
+        print(f" {'<' if not self._is_directed else ''}-[{self.weight}]-> ", end="")
+        self.target.print()
+
+    def println(self):
+        self.print()
+        print()
 
     def _is_directed(self):
         return True if self.type == "directed" else False

@@ -8,6 +8,7 @@ statement: defvar
          | funCall
          | assignment
          | printStat
+         | println
          | returnStat;
 
 assignment: defvar '=' value # assign
@@ -39,7 +40,7 @@ value: '(' value ')'                                # parValue
      | left=value operation=('/' | '*') right=value # divMultValue
      | left=value operation=('+' | '-') right=value # sumDiffValue
      | cast? '^' NUM                                # nodeValue
-     | cast? '<' left=value arc right=value '>'     # arcValue
+     | cast? '<' target=value arc source=value '>'  # arcValue
      | cast? '[' (value ',')* value ']'             # graphValue
      | cast? NUM                                    # numValue
      | cast? ID                                     # idValue
@@ -57,6 +58,7 @@ type_: 'node'
      | 'float';
 
 printStat: 'print' '(' value ')';
+println: 'println' '(' value ')';
 
 // lexer rules
 NUM: '-'?[1-9][0-9]*(.[0-9]*[1-9])? ;

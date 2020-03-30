@@ -18,9 +18,11 @@ class ValueVisitor(SanyaScriptVisitor):
         return Node(float(ctx.NUM().getText())).cast(self.visitCast(ctx.cast()))
 
     def visitArcValue(self, ctx):
-        source = self.visit(ctx.arcPart(0))
-        target = self.visit(ctx.arcPart(1))
+        source = self.visit(ctx.source)
+        target = self.visit(ctx.target)
         type_, weight = self.visit(ctx.arc())
+        if source.return_type() != "node": ParseError.arc_error(source.return_type())
+        if target.return_type() != "node": ParseError.arc_error(target.return_type())
         return Arc(source, target, weight, type_).cast(self.visitCast(ctx.cast()))
 
     def visitGraphValue(self, ctx):
