@@ -1,7 +1,8 @@
-from .runtime_error import RuntimeError
+from .type import Type
+from ..runtime_error import RuntimeError
 
 
-class Graph:
+class Graph(Type):
     def __init__(self, elements=()):
         self.nodes = set()
         self.arcs = set()

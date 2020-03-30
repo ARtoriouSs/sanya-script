@@ -12,5 +12,11 @@ class Compiler:
     def preload(self):
         file_ = open(self.target, "w")
         file_.flush()
-        file_.write("from src.runtime import *\n")
+        self.import_runtime(file_)
         file_.close()
+
+    def import_runtime(self, file_):
+        file_.write("from src.runtime.types.num import Num\n")
+        file_.write("from src.runtime.types.node import Node\n")
+        file_.write("from src.runtime.types.arc import Arc\n")
+        file_.write("from src.runtime.types.graph import Graph\n")

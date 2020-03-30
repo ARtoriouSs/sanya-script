@@ -1,9 +1,10 @@
+from .type import Type
 from .graph import Graph
 from .node import Node
-from .runtime_error import RuntimeError
+from ..runtime_error import RuntimeError
 
 
-class Num:
+class Num(Type):
     def __init__(self, value=0.0):
         self.value = value
 
