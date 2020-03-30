@@ -36,9 +36,9 @@ paramValue: value
 
 returnStat: 'return' value;
 
-value: '(' value ')'                                # parValue
+value: cast? '(' value ')'                          # parenthesizedValue
      | left=value operation=('/' | '*') right=value # divMultValue
-     | left=value operation=('+' | '-') right=value # sumDiffValue
+     | left=value operation=('+' | '-') right=value # sumSubtrValue
      | cast? '^' NUM                                # nodeValue
      | cast? '<' target=value arc source=value '>'  # arcValue
      | cast? '[' (value ',')* value ']'             # graphValue

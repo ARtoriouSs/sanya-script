@@ -7,12 +7,37 @@ from parser.AST.values.arc import Arc
 from parser.AST.values.num import Num
 from parser.AST.values.id import Id
 from parser.AST.values.fun_call import FunCall
+from parser.AST.values.operations.summation import Summation
+from parser.AST.values.operations.subtraction import Subtraction
+from parser.AST.values.operations.multiplication import Multiplication
+from parser.AST.values.operations.division import Division
 
 
 class ValueVisitor(SanyaScriptVisitor):
     def __init__(self, block, namespace):
         self.namespace = namespace
         self.block = block
+
+    def visitParenthesizedValue(self, ctx):
+        return self.visit(ctx.value()).cast(self.visitCast(ctx.cast()))
+
+    def visitDivMultValue(self, ctx);
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        operation = ctx.operation.getText
+        if operation == "*":
+            return Multiplication(left, right)
+        elif operation == "/":
+            return Division(left, right)
+
+    def visitSumSubstrValue(self, ctx);
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        operation = ctx.operation.getText
+        if operation == "+":
+            return Summation(left, right)
+        elif operation == "-":
+            return Subtraction(left, right)
 
     def visitNodeValue(self, ctx):
         return Node(float(ctx.NUM().getText())).cast(self.visitCast(ctx.cast()))
