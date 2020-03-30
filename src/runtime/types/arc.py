@@ -39,9 +39,5 @@ class Arc(Type):
         print(f" {'<' if not self._is_directed else ''}-[{self.weight}]-> ", end="")
         self.target.print()
 
-    def println(self):
-        self.print()
-        print()
-
     def _is_directed(self):
         return True if self.type == "directed" else False

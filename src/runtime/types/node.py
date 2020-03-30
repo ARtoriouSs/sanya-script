@@ -21,7 +21,3 @@ class Node(Type):
 
     def print(self):
         print(f"^{self.value}", end='')
-
-    def println(self):
-        self.print()
-        print()

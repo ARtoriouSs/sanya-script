@@ -24,10 +24,6 @@ class Graph(Type):
             if i != 0: print(", ", end="")
             node.print()
 
-    def println(self):
-        self.print()
-        print()
-
     def _resolve_elements(self, elements):
         for element in elements:
             if element.__class__.__name__ == "Node":

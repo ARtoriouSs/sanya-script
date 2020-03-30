@@ -5,3 +5,6 @@ class Type:
     def println(self):
         self.print()
         print()
+
+    def cast(self, type_):
+        pass
