@@ -1,2 +1,8 @@
-arc a = <(^1) -> (^1 + 2 * 2)>
-println(a)
+node n = ^1
+
+arc a = <n -> (^1 + 2 * 2)>
+
+graph g = (graph) a
+graph c = g - [n]
+
+println(c)

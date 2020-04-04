@@ -17,6 +17,9 @@ class Graph(Type):
         else:
             RuntimeError.cast_error("graph", type_)
 
+    def all_elements(self):
+        return self.nodes.union(self.arcs)
+
     def print(self):
         for arc in self.arcs:
             arc.println()
@@ -25,10 +28,10 @@ class Graph(Type):
             node.print()
 
     def summation(self, value):
-        return self.__class__(self.elements.union(value.elements))
+        return self.__class__(self.all_elements().union(value.all_elements()))
 
     def subtraction(self, value):
-        return self.__class__(self.elements.difference(value.elements))
+        return self.__class__(self.all_elements().difference(value.all_elements()))
 
     def multiplication(self, value):
         pass
