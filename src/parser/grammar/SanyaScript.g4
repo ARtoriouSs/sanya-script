@@ -40,7 +40,7 @@ value: cast? '(' value ')'                          # parenthesizedValue
      | left=value operation=('/' | '*') right=value # divMultValue
      | left=value operation=('+' | '-') right=value # sumSubtrValue
      | cast? '^' NUM                                # nodeValue
-     | cast? '<' target=value arc source=value '>'  # arcValue
+     | cast? '<' source=value arc target=value '>'  # arcValue
      | cast? '[' (value ',')* value ']'             # graphValue
      | cast? NUM                                    # numValue
      | cast? ID                                     # idValue

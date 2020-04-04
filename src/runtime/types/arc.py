@@ -22,7 +22,7 @@ class Arc(Type):
         self.source = source
         return self
 
-    def setTarger(self, target):
+    def setTarget(self, target):
         self.target = target
         return self
 
