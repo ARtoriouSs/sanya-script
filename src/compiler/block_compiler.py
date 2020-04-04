@@ -73,6 +73,10 @@ class BlockCompiler:
             string = self._resolve_graph_value(value)
         elif value.kind() == "num":
             string = f"Num({value.value})"
+        elif value.kind() == "logic":
+            string = f"Logic({value.value})"
+        elif value.kind() == "nope":
+            string = "Nope()"
         elif value.kind() == "fun_call":
             string = self._resolve_fun_call(value.fun_call)
         elif value.kind() == "binary_operation.summation":

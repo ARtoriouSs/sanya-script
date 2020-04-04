@@ -20,3 +20,5 @@ class Compiler:
         file_.write("from src.runtime.types.node import Node\n")
         file_.write("from src.runtime.types.arc import Arc\n")
         file_.write("from src.runtime.types.graph import Graph\n")
+        file_.write("from src.runtime.types.logic import Logic\n")
+        file_.write("from src.runtime.types.nope import Nope\n")

@@ -1,6 +1,5 @@
 from .type import Type
 from .graph import Graph
-from .num import Num
 from ..runtime_error import RuntimeError
 
 
@@ -13,6 +12,8 @@ class Node(Type):
         return self
 
     def cast(self, type_):
+        from .num import Num
+
         if type_ == "node":
             return self
         elif type_ == "graph":

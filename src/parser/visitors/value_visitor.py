@@ -7,6 +7,8 @@ from parser.AST.values.arc import Arc
 from parser.AST.values.num import Num
 from parser.AST.values.id import Id
 from parser.AST.values.fun_call import FunCall
+from parser.AST.values.logic import Logic
+from parser.AST.values.nope import Nope
 from parser.AST.values.operations.summation import Summation
 from parser.AST.values.operations.subtraction import Subtraction
 from parser.AST.values.operations.multiplication import Multiplication
@@ -26,7 +28,8 @@ class ValueVisitor(SanyaScriptVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.text
-        if not Validator(operation, left, right): ParseError.incompatible_operation(operation, left, right)
+        if not Validator(operation, left, right):
+            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
         if operation == "*":
             return Multiplication(left, right)
         elif operation == "/":
@@ -36,7 +39,8 @@ class ValueVisitor(SanyaScriptVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.text
-        if not Validator(operation, left, right): ParseError.incompatible_operation(operation, left, right)
+        if not Validator(operation, left, right):
+            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
         if operation == "+":
             return Summation(left, right)
         elif operation == "-":
@@ -71,6 +75,13 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
         return FunCall(fun_call).cast(self.visitCast(ctx.cast()))
+
+    def visitLogicValue(self, ctx):
+        value = True if ctx.yes else False
+        return Logic(value).cast(self.visitCast(ctx.cast()))
+
+    def visitNopeValue(self, ctx):
+        return Nope()
 
     def visitArcPart(self, ctx):
         if ctx.ID():

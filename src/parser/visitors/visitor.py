@@ -39,10 +39,13 @@ class Visitor(SanyaScriptVisitor):
     def visitDefnum(self, ctx):
         return self._add_var("num", ctx.ID().getText())
 
+    def visitDeflogic(self, ctx):
+        return self._add_var("logic", ctx.ID().getText())
+
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
         value = self._value_visitor().visit(ctx.value())
-        if target.type != value.return_type():
+        if target.type != value.return_type() and value.return_type() != "nope":
             ParseError.type_error(target.name, value.return_type(), target.type)
         return Assignment(target, value)
 

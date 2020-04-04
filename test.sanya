@@ -1,1 +1,2 @@
-num a = 1
+node a = ^1 + 2 + nope
+println(a)

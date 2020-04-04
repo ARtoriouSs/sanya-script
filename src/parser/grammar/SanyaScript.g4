@@ -20,7 +20,7 @@ defvar: 'node' ID  # defnode
       | 'arc' ID   # defarc
       | 'graph' ID # defgraph
       | 'num' ID   # defnum
-      | 'logic' ID # deflogic
+      | 'logic' ID # deflogic;
 
 deffun: type_ ID '(' funArg? ')' block
       | ID '(' funArg? ')' block;
@@ -45,7 +45,9 @@ value: cast? '(' value ')'                          # parenthesizedValue
      | cast? '[' (value ',')* value ']'             # graphValue
      | cast? NUM                                    # numValue
      | cast? ID                                     # idValue
-     | cast? funCall                                # funCallValue;
+     | cast? funCall                                # funCallValue
+     | cast? (yes='yes' | no='no')                  # logicValue
+     | 'nope'                                       # nopeValue;
 
 arc: '->'               # simpleArc
    | '<->'              # simpleUndirectedArc
