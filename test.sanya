@@ -1,2 +1,2 @@
-node a = ^1 + 2 + nope
-println(a)
+node a
+println((logic) a)

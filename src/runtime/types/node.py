@@ -13,6 +13,7 @@ class Node(Type):
 
     def cast(self, type_):
         from .num import Num
+        from .logic import Logic
 
         if type_ == "node":
             return self
@@ -20,6 +21,8 @@ class Node(Type):
             return Graph(tuple([self]))
         elif type_ == "num":
             return Num(self.value)
+        elif type_ == "logic":
+            return Logic(True)
         else:
             RuntimeError.cast_error("node", type_)
 

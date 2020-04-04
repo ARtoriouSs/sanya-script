@@ -12,8 +12,12 @@ class Graph(Type):
         self._resolve_elements(elements)
 
     def cast(self, type_):
+        from .logic import Logic
+
         if type_ == "graph":
             return self
+        elif type_ == "logic":
+            return Logic(True)
         else:
             RuntimeError.cast_error("graph", type_)
 

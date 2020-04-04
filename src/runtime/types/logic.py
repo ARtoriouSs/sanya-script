@@ -14,6 +14,8 @@ class Logic(Type):
     def cast(self, type_):
         if type_ == "num":
             return Num(1.0) if self.value else Num(0.0)
+        elif type_ == "logic":
+            return self
         else:
             RuntimeError.cast_error("logic", type_)
 

@@ -28,6 +28,7 @@ class Arc(Type):
 
     def cast(self, type_):
         from .num import Num
+        from .logic import Logic
 
         if type_ == "arc":
             return self
@@ -35,6 +36,8 @@ class Arc(Type):
             return Graph(tuple([self]))
         elif type_ == "num":
             return Num(self.weight)
+        elif type_ == "logic":
+            return Logic(True) if self.source and self.target else Logic(False)
         else:
             RuntimeError.cast_error("arc", type_)
 
