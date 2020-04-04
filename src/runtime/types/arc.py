@@ -1,5 +1,6 @@
 from .type import Type
 from .graph import Graph
+from .num import Num
 from ..runtime_error import RuntimeError
 
 
@@ -31,6 +32,8 @@ class Arc(Type):
             return self
         elif type_ == "graph":
             return Graph(tuple([self]))
+        elif type_ == "num":
+            return Num(self.weight)
         else:
             RuntimeError.cast_error("arc", type_)
 

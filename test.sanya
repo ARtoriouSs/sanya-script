@@ -1,8 +1,1 @@
-node n = ^1
-
-arc a = <n -> (^1 + 2 * 2)>
-
-graph g = (graph) a
-graph c = g - [n]
-
-println(c)
+num a = 1

@@ -19,7 +19,8 @@ cast: '(' type_ ')';
 defvar: 'node' ID  # defnode
       | 'arc' ID   # defarc
       | 'graph' ID # defgraph
-      | 'num' ID   # defnum;
+      | 'num' ID   # defnum
+      | 'logic' ID # deflogic
 
 deffun: type_ ID '(' funArg? ')' block
       | ID '(' funArg? ')' block;
@@ -54,8 +55,8 @@ arc: '->'               # simpleArc
 type_: 'node'
      | 'arc'
      | 'graph'
-     | 'int'
-     | 'float';
+     | 'num'
+     | 'logic';
 
 printStat: 'print' '(' value ')';
 println: 'println' '(' value ')';

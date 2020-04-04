@@ -13,7 +13,9 @@ class Num(Type):
         return self
 
     def cast(self, type_):
-        if type_ == "node":
+        if type_ == "num":
+            return self
+        elif type_ == "node":
             return Node(self.value)
         elif type_ == "graph":
             return Graph(tuple([Node(self.value)]))
