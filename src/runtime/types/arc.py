@@ -39,5 +39,17 @@ class Arc(Type):
         print(f" {'<' if not self._is_directed else ''}-[{self.weight}]-> ", end="")
         self.target.print()
 
+    def summation(self, value):
+        return self.__class__(self.weight + value.value)
+
+    def subtraction(self, value):
+        return self.__class__(self.weight - value.value)
+
+    def multiplication(self, value):
+        return self.__class__(self.weight * value.value)
+
+    def division(self, value):
+        return self.__class__(self.weight / value.value)
+
     def _is_directed(self):
         return True if self.type == "directed" else False

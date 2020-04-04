@@ -1,3 +1,2 @@
-graph g = [1, 2, < ^1 -> ^2 >, < ^3 -> ^4 >]
-
-println(g)
+node n = (node) (1 + (2 + 4 * (2 / 2)))
+println(n)

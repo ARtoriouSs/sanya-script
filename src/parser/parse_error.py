@@ -16,6 +16,10 @@ class ParseError:
         cls._halt(f"only nodes can be a part of arc, but {given} given")
 
     @classmethod
+    def incompatible_operation(self, operation, left, right):
+        cls._halt(f"operation {operation} cannot be performed with {left.return_type()} and {right.return_type()}")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)

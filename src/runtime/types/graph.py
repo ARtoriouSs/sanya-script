@@ -24,6 +24,18 @@ class Graph(Type):
             if i != 0: print(", ", end="")
             node.print()
 
+    def summation(self, value):
+        return self.__class__(self.elements.union(value.elements))
+
+    def subtraction(self, value):
+        return self.__class__(self.elements.difference(value.elements))
+
+    def multiplication(self, value):
+        pass
+
+    def division(self, value):
+        pass
+
     def _resolve_elements(self, elements):
         for element in elements:
             if element.__class__.__name__ == "Node":

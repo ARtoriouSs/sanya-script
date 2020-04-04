@@ -43,6 +43,21 @@ class BlockCompiler:
     def _compile_fun_call(self, statement):
         self.file.write(f"{statement.name}({self._resolve_array(statement.args)})\n")
 
+    def _resolve_fun_call(self, statement):
+        return f"{statement.name}({self._resolve_array(statement.args)})"
+
+    def _resolve_summation(self, statement):
+        return f"{self._resolve_value(statement.left)}.summation({self._resolve_value(statement.right)})"
+
+    def _resolve_subtraction(self, statement):
+        return f"{self._resolve_value(statement.left)}.subtraction({self._resolve_value(statement.right)})"
+
+    def _resolve_multiplication(self, statement):
+        return f"{self._resolve_value(statement.left)}.multiplication({self._resolve_value(statement.right)})"
+
+    def _resolve_division(self, statement):
+        return f"{self._resolve_value(statement.left)}.division({self._resolve_value(statement.right)})"
+
     def _resolve_fun_args(self, args):
         args = [arg.name for arg in args]
         return ", ".join(args)
@@ -59,7 +74,16 @@ class BlockCompiler:
         elif value.kind() == "num":
             string = f"Num({value.value})"
         elif value.kind() == "fun_call":
-            string = self._compile_fun_call(value.fun_call)
+            string = self._resolve_fun_call(value.fun_call)
+        elif value.kind() == "binary_operation.summation":
+            string = self._resolve_summation(value)
+        elif value.kind() == "binary_operation.subtraction":
+            string = self._resolve_subtraction(value)
+        elif value.kind() == "binary_operation.multiplication":
+            string = self._resolve_multiplication(value)
+        elif value.kind() == "binary_operation.division":
+            string = self._resolve_division(value)
+
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
         return string
 

@@ -22,3 +22,15 @@ class Num(Type):
 
     def print(self):
         print(self.value)
+
+    def summation(self, value):
+        return self.__class__(self.value + value.value)
+
+    def subtraction(self, value):
+        return self.__class__(self.value - value.value)
+
+    def multiplication(self, value):
+        return self.__class__(self.value * value.value)
+
+    def division(self, value):
+        return self.__class__(self.value / value.value)

@@ -11,6 +11,7 @@ from parser.AST.values.operations.summation import Summation
 from parser.AST.values.operations.subtraction import Subtraction
 from parser.AST.values.operations.multiplication import Multiplication
 from parser.AST.values.operations.division import Division
+from parser.AST.values.operations.validator import Validator
 
 
 class ValueVisitor(SanyaScriptVisitor):
@@ -24,16 +25,18 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitDivMultValue(self, ctx):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
-        operation = ctx.operation.getText
+        operation = ctx.operation.text
+        if not Validator(operation, left, right): ParseError.incompatible_operation(operation, left, right)
         if operation == "*":
             return Multiplication(left, right)
         elif operation == "/":
             return Division(left, right)
 
-    def visitSumSubstrValue(self, ctx):
+    def visitSumSubtrValue(self, ctx):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
-        operation = ctx.operation.getText
+        operation = ctx.operation.text
+        if not Validator(operation, left, right): ParseError.incompatible_operation(operation, left, right)
         if operation == "+":
             return Summation(left, right)
         elif operation == "-":
