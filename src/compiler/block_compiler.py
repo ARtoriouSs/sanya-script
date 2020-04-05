@@ -20,6 +20,8 @@ class BlockCompiler:
                 self._compile_deffun(statement)
             elif statement.kind() == "fun_call":
                 self._compile_fun_call(statement)
+            elif statement.kind() == "if_stat":
+                self._compile_if(statement)
 
     def _compile_defvar(self, statement):
         self.file.write(f"{statement.name} = {statement.type.capitalize()}()\n")
@@ -38,10 +40,17 @@ class BlockCompiler:
 
     def _compile_deffun(self, statement):
         self.file.write(f"def {statement.name}({self._resolve_fun_args(statement.args)}):\n")
-        self.__class__(self.file, self.indent + 1).compile(statement.body)
+        self._compile_nested_block(statement.body)
 
     def _compile_fun_call(self, statement):
         self.file.write(f"{statement.name}({self._resolve_array(statement.args)})\n")
+
+    def _compile_if(self, statement):
+        self.file.write(f"if {self._resolve_value(statement.condition)}.cast('logic'):\n")
+        self._compile_nested_block(statement.then)
+        if statement.else_ is not None:
+            self.file.write(f"else:\n")
+            self._compile_nested_block(statement.else_)
 
     def _resolve_fun_call(self, statement):
         return f"{statement.name}({self._resolve_array(statement.args)})"
@@ -66,6 +75,24 @@ class BlockCompiler:
 
     def _resolve_not(self, statement):
         return f"{self._resolve_value(statement.target)}.not_()"
+
+    def _resolve_equal(self, statement):
+        return f"{self._resolve_value(statement.left)}.equal({self._resolve_value(statement.right)})"
+
+    def _resolve_not_equal(self, statement):
+        return f"{self._resolve_value(statement.left)}.not_equal({self._resolve_value(statement.right)})"
+
+    def _resolve_greater_or_equal(self, statement):
+        return f"{self._resolve_value(statement.left)}.greater_or_equal({self._resolve_value(statement.right)})"
+
+    def _resolve_less_or_equal(self, statement):
+        return f"{self._resolve_value(statement.left)}.less_or_equal({self._resolve_value(statement.right)})"
+
+    def _resolve_greater(self, statement):
+        return f"{self._resolve_value(statement.left)}.greater({self._resolve_value(statement.right)})"
+
+    def _resolve_less(self, statement):
+        return f"{self._resolve_value(statement.left)}.less({self._resolve_value(statement.right)})"
 
     def _resolve_fun_args(self, args):
         args = [arg.name for arg in args]
@@ -102,6 +129,18 @@ class BlockCompiler:
             string = self._resolve_or(value)
         elif value.kind() == "unary_operation.not":
             string = self._resolve_not(value)
+        elif value.kind() == "binary_operation.equal":
+            string = self._resolve_equal(value)
+        elif value.kind() == "binary_operation.not_equal":
+            string = self._resolve_not_equal(value)
+        elif value.kind() == "binary_operation.greater_or_equal":
+            string = self._resolve_greater_or_equal(value)
+        elif value.kind() == "binary_operation.less_or_equal":
+            string = self._resolve_less_or_equal(value)
+        elif value.kind() == "binary_operation.greater":
+            string = self._resolve_greater(value)
+        elif value.kind() == "binary_operation.less":
+            string = self._resolve_less(value)
 
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
         return string
@@ -112,3 +151,9 @@ class BlockCompiler:
     def _resolve_array(self, values):
         values_ = [self._resolve_value(value) for value in values]
         return ", ".join(values_)
+
+    def _compile_nested_block(self, block):
+        if any(block.statements):
+            self.__class__(self.file, self.indent + 1).compile(block)
+        else:
+            self.file.write(f"    pass\n")

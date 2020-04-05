@@ -9,7 +9,8 @@ statement: defvar
          | assignment
          | printStat
          | println
-         | returnStat;
+         | returnStat
+         | ifStat;
 
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
@@ -26,7 +27,11 @@ deffun: type_ ID '(' funArg? ')' block
       | ID '(' funArg? ')' block;
 
 block: 'go' statement* 'end';
-ifBlock: 'go' thenBlock=statement* ('else' elseBlock=statement*) 'end';
+
+ifBlock: 'go' then=ifBlockPart 'else' else_=ifBlockPart 'end' # ifThenElseBlock
+       | 'go' then=ifBlockPart 'end'                          # ifThenBlock;
+
+ifBlockPart: statement*;
 
 funArg: type_ ID
       | type_ ID ',' funArg;
@@ -40,20 +45,21 @@ returnStat: 'return' value;
 
 ifStat: 'if' value ifBlock;
 
-value: cast? '(' value ')'                          # parenthesizedValue
-     | 'not' value                                  # notValue
-     | left=value 'and' right=value                 # andValue
-     | left=value 'or' right=value                  # orValue
-     | left=value operation=('/' | '*') right=value # divMultValue
-     | left=value operation=('+' | '-') right=value # sumSubtrValue
-     | cast? '^' NUM                                # nodeValue
-     | cast? '<' source=value arc target=value '>'  # arcValue
-     | cast? '[' (value ',')* value ']'             # graphValue
-     | cast? NUM                                    # numValue
-     | cast? ID                                     # idValue
-     | cast? funCall                                # funCallValue
-     | cast? (yes='yes' | no='no')                  # logicValue
-     | 'nope'                                       # nopeValue;
+value: cast? '(' value ')'                                                      # parenthesizedValue
+     | 'not' value                                                              # notValue
+     | left=value 'and' right=value                                             # andValue
+     | left=value 'or' right=value                                              # orValue
+     | left=value operation=('==' | '!=' | '>=' | '<=' | '>' | '<') right=value # comparisonValue
+     | left=value operation=('/' | '*') right=value                             # divMultValue
+     | left=value operation=('+' | '-') right=value                             # sumSubtrValue
+     | cast? '^' NUM                                                            # nodeValue
+     | cast? '<' source=value arc target=value '>'                              # arcValue
+     | cast? '[' (value ',')* value ']'                                         # graphValue
+     | cast? NUM                                                                # numValue
+     | cast? ID                                                                 # idValue
+     | cast? funCall                                                            # funCallValue
+     | cast? (yes='yes' | no='no')                                              # logicValue
+     | 'nope'                                                                   # nopeValue;
 
 arc: '->'               # simpleArc
    | '<->'              # simpleUndirectedArc

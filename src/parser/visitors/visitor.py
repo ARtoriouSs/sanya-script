@@ -12,6 +12,7 @@ from parser.AST.statements.print_stat import PrintStat
 from parser.AST.statements.println import Println
 from parser.AST.statements.return_stat import ReturnStat
 from parser.AST.statements.id import Id
+from parser.AST.statements.ifStat import IfStat
 
 
 class Visitor(SanyaScriptVisitor):
@@ -76,7 +77,18 @@ class Visitor(SanyaScriptVisitor):
         return self._funciton_visitor().visit(ctx)
 
     def visitIfStat(self, ctx):
-        pass # TODO
+        condition = self._value_visitor().visit(ctx.value())
+        then, else_ = self.visit(ctx.ifBlock())
+        return IfStat(condition, then, else_)
+
+    def visitIfThenBlock(self, ctx):
+        then = self._visitor().visitSanyaScript(ctx.then)
+        return [then, None]
+
+    def visitIfThenElseBlock(self, ctx):
+        then = self._visitor().visitSanyaScript(ctx.then)
+        else_ = self._visitor().visitSanyaScript(ctx.else_)
+        return [then, else_]
 
     def _add_var(self, type_, name):
         self.namespace.add_var(name, type_)
@@ -87,3 +99,6 @@ class Visitor(SanyaScriptVisitor):
 
     def _funciton_visitor(self):
         return FunctionVisitior(self.block, self.namespace)
+
+    def _visitor(self):
+        return self.__class__(self.namespace)

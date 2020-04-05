@@ -1,5 +1,5 @@
-from parser.AST.values.operations.unary_operation import UnaryOperation
+from parser.AST.values.operations.logical_operation import LogicalOperation
 
 
-class Not(UnaryOperation):
+class Not(LogicalOperation):
     pass

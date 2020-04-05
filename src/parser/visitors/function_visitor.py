@@ -44,7 +44,7 @@ class FunctionVisitior(SanyaScriptVisitor):
 
     def _visitor(self):
         from parse.visitors.visitor import Visitor
-        return Visitor(self.block, self.namespace)
+        return Visitor(self.namespace)
 
     def _arg_types(self, args):
         return [arg.return_type() for arg in args]

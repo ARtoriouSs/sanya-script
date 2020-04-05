@@ -8,7 +8,7 @@ class Validator:
     def is_valid(self):
         if self.operation in ["+", "-", "*", "/"]:
             self.validate_arithmetic()
-        elif self.operation in ["and", "or", "not"]:
+        elif self.operation in ["and", "or", "not", "==", "!=", ">=", "<=", ">", "<"]:
             self.validate_logical()
 
     def validate_arithmetic(self):

@@ -1,6 +1,5 @@
-from parser.AST.values.operations.binary_operation import BinaryOperation
+from parser.AST.values.operations.logical_operation import LogicalOperation
 
 
-class Or(BinaryOperation):
-    def return_type(self):
-        return self.cast_type if self.cast_type is not None else "logic"
+class Or(LogicalOperation):
+    pass

@@ -16,6 +16,12 @@ from parser.AST.values.operations.division import Division
 from parser.AST.values.operations.not_ import Not
 from parser.AST.values.operations.or_ import Or
 from parser.AST.values.operations.and_ import And
+from parser.AST.values.operations.equal import Equal
+from parser.AST.values.operations.not_equal import NotEqual
+from parser.AST.values.operations.greater_or_equal import GreaterOrEqual
+from parser.AST.values.operations.less_or_equal import LessOrEqual
+from parser.AST.values.operations.greater import Greater
+from parser.AST.values.operations.less import Less
 from parser.AST.values.operations.validator import Validator
 
 
@@ -68,6 +74,25 @@ class ValueVisitor(SanyaScriptVisitor):
         if not Validator("not", target=target):
             ParseError.incompatible_unary_operation("not", target.return_type())
         return Not(target)
+
+    def visitComparisonValue(self, ctx):
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        operation = ctx.operation.text
+        if not Validator(operation, left, right):
+            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
+        if operation == "==":
+            return Equal(left, right)
+        elif operation == "!=":
+            return NotEqual(left, right)
+        elif operation == ">=":
+            return GreaterOrEqual(left, right)
+        elif operation == "<=":
+            return LessOrEqual(left, right)
+        elif operation == ">":
+            return Greater(left, right)
+        elif operation == "<":
+            return Less(left, right)
 
     def visitNodeValue(self, ctx):
         return Node(float(ctx.NUM().getText())).cast(self.visitCast(ctx.cast()))

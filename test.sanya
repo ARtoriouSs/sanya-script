@@ -1,6 +1,5 @@
-logic t = yes
-logic f = no
-
-logic a = not (((f or t and t) and no) or yes)
-
-println(a)
+if 2 > 1 go
+  println(1)
+else
+  println(2)
+end
