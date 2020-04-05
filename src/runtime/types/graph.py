@@ -37,11 +37,24 @@ class Graph(Type):
     def subtraction(self, value):
         return self.__class__(self.all_elements().difference(value.all_elements()))
 
+    # TODO: operations
     def multiplication(self, value):
         pass
 
     def division(self, value):
         pass
+
+    def greater_or_equal(self, value):
+        from .logic import Logic
+
+    def less_or_equal(self, value):
+        from .logic import Logic
+
+    def greater(self, value):
+        from .logic import Logic
+
+    def less(self, value):
+        from .logic import Logic
 
     def _resolve_elements(self, elements):
         for element in elements:

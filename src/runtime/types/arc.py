@@ -58,5 +58,21 @@ class Arc(Type):
     def division(self, value):
         return self.__class__(self.weight / value.value)
 
+    def greater_or_equal(self, value):
+        from .logic import Logic
+        return Logic(self.weight >= value.cast("arc").weight)
+
+    def less_or_equal(self, value):
+        from .logic import Logic
+        return Logic(self.weight <= value.cast("arc").weight)
+
+    def greater(self, value):
+        from .logic import Logic
+        return Logic(self.weight > value.cast("arc").weight)
+
+    def less(self, value):
+        from .logic import Logic
+        return Logic(self.weight < value.cast("arc").weight)
+
     def _is_directed(self):
         return True if self.type == "directed" else False

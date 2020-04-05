@@ -46,7 +46,7 @@ class BlockCompiler:
         self.file.write(f"{statement.name}({self._resolve_array(statement.args)})\n")
 
     def _compile_if(self, statement):
-        self.file.write(f"if {self._resolve_value(statement.condition)}.cast('logic'):\n")
+        self.file.write(f"if {self._resolve_value(statement.condition)}.cast('logic').value:\n")
         self._compile_nested_block(statement.then)
         if statement.else_ is not None:
             self.file.write(f"else:\n")

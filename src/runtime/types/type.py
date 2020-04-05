@@ -35,24 +35,20 @@ class Type:
 
     def equal(self, value):
         from .logic import Logic
-        return Logic(self.cast("logic").value == value.cast("logic").value)
+        return Logic(self.value == value.value)
 
     def not_equal(self, value):
         from .logic import Logic
-        return Logic(self.cast("logic").value != value.cast("logic").value)
+        return Logic(self.value != value.value)
 
     def greater_or_equal(self, value):
-        from .logic import Logic
-        return Logic(self.cast("logic").value >= value.cast("logic").value)
+        pass
 
     def less_or_equal(self, value):
-        from .logic import Logic
-        return Logic(self.cast("logic").value <= value.cast("logic").value)
+        pass
 
     def greater(self, value):
-        from .logic import Logic
-        return Logic(self.cast("logic").value > value.cast("logic").value)
+        pass
 
     def less(self, value):
-        from .logic import Logic
-        return Logic(self.cast("logic").value < value.cast("logic").value)
+        pass

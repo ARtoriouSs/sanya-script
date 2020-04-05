@@ -19,6 +19,22 @@ class Logic(Type):
         else:
             RuntimeError.cast_error("logic", type_)
 
+    def greater_or_equal(self, value):
+        from .logic import Logic
+        return Logic(self.value >= value.cast("logic").value)
+
+    def less_or_equal(self, value):
+        from .logic import Logic
+        return Logic(self.value <= value.cast("logic").value)
+
+    def greater(self, value):
+        from .logic import Logic
+        return Logic(self.value > value.cast("logic").value)
+
+    def less(self, value):
+        from .logic import Logic
+        return Logic(self.value < value.cast("logic").value)
+
     def print(self):
         string = "yes" if self.value else "no"
         print(string)

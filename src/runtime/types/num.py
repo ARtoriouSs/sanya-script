@@ -40,3 +40,19 @@ class Num(Type):
 
     def division(self, value):
         return self.__class__(self.value / value.value)
+
+    def greater_or_equal(self, value):
+        from .logic import Logic
+        return Logic(self.value >= value.cast("num").value)
+
+    def less_or_equal(self, value):
+        from .logic import Logic
+        return Logic(self.value <= value.cast("num").value)
+
+    def greater(self, value):
+        from .logic import Logic
+        return Logic(self.value > value.cast("num").value)
+
+    def less(self, value):
+        from .logic import Logic
+        return Logic(self.value < value.cast("num").value)

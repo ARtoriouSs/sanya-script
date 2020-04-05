@@ -1,4 +1,7 @@
-if 2 > 1 go
+node n = ^3
+arc a = <^1 -[5]-> ^3>
+
+if <^1 -[2]-> ^2> < a go
   println(1)
 else
   println(2)
