@@ -37,7 +37,7 @@ class ValueVisitor(SanyaScriptVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.text
-        if not Validator(operation, left, right):
+        if not Validator(operation, left, right).is_valid():
             ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
         if operation == "*":
             return Multiplication(left, right)
@@ -48,7 +48,7 @@ class ValueVisitor(SanyaScriptVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.text
-        if not Validator(operation, left, right):
+        if not Validator(operation, left, right).is_valid():
             ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
         if operation == "+":
             return Summation(left, right)
@@ -58,20 +58,20 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitAndValue(self, ctx):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
-        if not Validator("and", left, right):
+        if not Validator("and", left, right).is_valid():
             ParseError.incompatible_operation("not", left.return_type(), right.return_type())
         return And(left, right)
 
     def visitOrValue(self, ctx):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
-        if not Validator("or", left, right):
+        if not Validator("or", left, right).is_valid():
             ParseError.incompatible_operation("or", left.return_type(), right.return_type())
         return Or(left, right)
 
     def visitNotValue(self, ctx):
         target = self.visit(ctx.value())
-        if not Validator("not", target=target):
+        if not Validator("not", target=target).is_valid():
             ParseError.incompatible_unary_operation("not", target.return_type())
         return Not(target)
 
@@ -79,7 +79,7 @@ class ValueVisitor(SanyaScriptVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.text
-        if not Validator(operation, left, right):
+        if not Validator(operation, left, right).is_valid():
             ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
         if operation == "==":
             return Equal(left, right)

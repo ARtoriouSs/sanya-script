@@ -7,9 +7,11 @@ class Validator:
 
     def is_valid(self):
         if self.operation in ["+", "-", "*", "/"]:
-            self.validate_arithmetic()
-        elif self.operation in ["and", "or", "not", "==", "!=", ">=", "<=", ">", "<"]:
-            self.validate_logical()
+            return self.validate_arithmetic()
+        elif self.operation in ["and", "or", "not"]:
+            return self.validate_logical()
+        elif self.operation in ["==", "!=", ">=", "<=", ">", "<"]:
+            return self.validate_comparison()
 
     def validate_arithmetic(self):
         if self.right.return_type() == "graph" and self.left.return_type() == "graph":
@@ -21,3 +23,6 @@ class Validator:
 
     def validate_logical(self):
         return True
+
+    def validate_comparison(self):
+        return True if self.left.return_type() == self.right.return_type() else False
