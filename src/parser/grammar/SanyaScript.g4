@@ -1,8 +1,12 @@
 grammar SanyaScript;
 
+//
 // parser rules
+//
+
 sanyaScript: statement* EOF;
 
+// definitions
 statement: defvar
          | deffun
          | funCall
@@ -15,26 +19,20 @@ statement: defvar
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
 
-cast: '(' type_ ')';
-
 defvar: 'node' ID  # defnode
       | 'arc' ID   # defarc
       | 'graph' ID # defgraph
       | 'num' ID   # defnum
       | 'logic' ID # deflogic;
 
+// functions
 deffun: type_ ID '(' funArg? ')' block
       | ID '(' funArg? ')' block;
 
-block: 'go' statement* 'end';
-
-ifBlock: 'go' then=ifBlockPart 'else' else_=ifBlockPart 'end' # ifThenElseBlock
-       | 'go' then=ifBlockPart 'end'                          # ifThenBlock;
-
-ifBlockPart: statement*;
-
 funArg: type_ ID
       | type_ ID ',' funArg;
+
+block: 'go' statement* 'end';
 
 funCall: ID '(' paramValue? ')';
 
@@ -43,8 +41,15 @@ paramValue: value
 
 returnStat: 'return' value;
 
+// ifs
 ifStat: 'if' value ifBlock;
 
+ifBlock: 'go' then=ifBlockPart 'else' else_=ifBlockPart 'end' # ifThenElseBlock
+       | 'go' then=ifBlockPart 'end'                          # ifThenBlock;
+
+ifBlockPart: statement*;
+
+// values
 value: cast? '(' value ')'                                                      # parenthesizedValue
      | 'not' value                                                              # notValue
      | left=value operation='and' right=value                                   # andValue
@@ -61,10 +66,7 @@ value: cast? '(' value ')'                                                      
      | cast? (yes='yes' | no='no')                                              # logicValue
      | 'nope'                                                                   # nopeValue;
 
-arc: '->'               # simpleArc
-   | '<->'              # simpleUndirectedArc
-   | '-[' NUM ']->'     # weightedArc
-   | '<-[' NUM ']->'    # weightedUndirectedArc;
+cast: '(' type_ ')';
 
 type_: 'node'
      | 'arc'
@@ -72,10 +74,19 @@ type_: 'node'
      | 'num'
      | 'logic';
 
+arc: '->'            # simpleArc
+   | '<->'           # simpleUndirectedArc
+   | '-[' NUM ']->'  # weightedArc
+   | '<-[' NUM ']->' # weightedUndirectedArc;
+
+// builtins
 printStat: 'print' '(' value ')';
 println: 'println' '(' value ')';
 
+//
 // lexer rules
+//
+
 NUM: '-'?([1-9][0-9]*|'0')(.[0-9]+)? ;
 
 ID: [a-z][a-zA-Z0-9]* ;
