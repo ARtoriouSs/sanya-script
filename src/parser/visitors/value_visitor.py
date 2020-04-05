@@ -13,6 +13,9 @@ from parser.AST.values.operations.summation import Summation
 from parser.AST.values.operations.subtraction import Subtraction
 from parser.AST.values.operations.multiplication import Multiplication
 from parser.AST.values.operations.division import Division
+from parser.AST.values.operations.not_ import Not
+from parser.AST.values.operations.or_ import Or
+from parser.AST.values.operations.and_ import And
 from parser.AST.values.operations.validator import Validator
 
 
@@ -45,6 +48,26 @@ class ValueVisitor(SanyaScriptVisitor):
             return Summation(left, right)
         elif operation == "-":
             return Subtraction(left, right)
+
+    def visitAndValue(self, ctx):
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        if not Validator("and", left, right):
+            ParseError.incompatible_operation("not", left.return_type(), right.return_type())
+        return And(left, right)
+
+    def visitOrValue(self, ctx):
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        if not Validator("or", left, right):
+            ParseError.incompatible_operation("or", left.return_type(), right.return_type())
+        return Or(left, right)
+
+    def visitNotValue(self, ctx):
+        target = self.visit(ctx.value())
+        if not Validator("not", target=target):
+            ParseError.incompatible_unary_operation("not", target.return_type())
+        return Not(target)
 
     def visitNodeValue(self, ctx):
         return Node(float(ctx.NUM().getText())).cast(self.visitCast(ctx.cast()))

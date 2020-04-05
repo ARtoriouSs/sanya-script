@@ -20,6 +20,10 @@ class ParseError:
         cls._halt(f"operation {operation} cannot be performed with {left} and {right}")
 
     @classmethod
+    def incompatible_unary_operation(cls, operation, target):
+        cls._halt(f"operation {operation} cannot be performed with {target}")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)

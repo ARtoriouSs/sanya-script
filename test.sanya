@@ -1,2 +1,6 @@
-node a
-println((logic) a)
+logic t = yes
+logic f = no
+
+logic a = not (((f or t and t) and no) or yes)
+
+println(a)

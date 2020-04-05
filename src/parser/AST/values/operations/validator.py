@@ -1,8 +1,9 @@
 class Validator:
-    def __init__(self, operation, left, right):
+    def __init__(self, operation, left=None, right=None, target=None):
         self.operation = operation
         self.left = left
         self.right = right
+        self.target = target
 
     def is_valid(self):
         if self.operation in ["+", "-", "*", "/"]:
@@ -19,7 +20,4 @@ class Validator:
             return False
 
     def validate_logical(self):
-        if self.right.return_type() != "nope" and self.left.return_type() != "nope":
-            return True
-        else:
-            return False
+        return True

@@ -20,3 +20,15 @@ class Type:
 
     def division(self, value):
         pass
+
+    def and_(self, value):
+        from .logic import Logic
+        return Logic(self.cast("logic").value and value.cast("logic").value)
+
+    def or_(self, value):
+        from .logic import Logic
+        return Logic(self.cast("logic").value or value.cast("logic").value)
+
+    def not_(self):
+        from .logic import Logic
+        return Logic(not self.cast("logic").value)

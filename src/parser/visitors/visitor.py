@@ -75,6 +75,9 @@ class Visitor(SanyaScriptVisitor):
     def visitFunCall(self, ctx):
         return self._funciton_visitor().visit(ctx)
 
+    def visitIfStat(self, ctx):
+        pass # TODO
+
     def _add_var(self, type_, name):
         self.namespace.add_var(name, type_)
         return Defvar(type_, name)

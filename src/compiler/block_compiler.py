@@ -58,6 +58,15 @@ class BlockCompiler:
     def _resolve_division(self, statement):
         return f"{self._resolve_value(statement.left)}.division({self._resolve_value(statement.right)})"
 
+    def _resolve_and(self, statement):
+        return f"{self._resolve_value(statement.left)}.and_({self._resolve_value(statement.right)})"
+
+    def _resolve_or(self, statement):
+        return f"{self._resolve_value(statement.left)}.or_({self._resolve_value(statement.right)})"
+
+    def _resolve_not(self, statement):
+        return f"{self._resolve_value(statement.target)}.not_()"
+
     def _resolve_fun_args(self, args):
         args = [arg.name for arg in args]
         return ", ".join(args)
@@ -87,6 +96,12 @@ class BlockCompiler:
             string = self._resolve_multiplication(value)
         elif value.kind() == "binary_operation.division":
             string = self._resolve_division(value)
+        elif value.kind() == "binary_operation.and":
+            string = self._resolve_and(value)
+        elif value.kind() == "binary_operation.or":
+            string = self._resolve_or(value)
+        elif value.kind() == "unary_operation.not":
+            string = self._resolve_not(value)
 
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
         return string
