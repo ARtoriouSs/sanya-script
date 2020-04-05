@@ -11,7 +11,7 @@ from parser.AST.statements.assignment import Assignment
 from parser.AST.statements.print_stat import PrintStat
 from parser.AST.statements.println import Println
 from parser.AST.statements.return_stat import ReturnStat
-from parser.AST.statements.id import Id
+from parser.AST.id import Id
 from parser.AST.statements.ifStat import IfStat
 
 
