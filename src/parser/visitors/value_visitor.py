@@ -34,40 +34,16 @@ class ValueVisitor(SanyaScriptVisitor):
         return self.visit(ctx.value()).cast(self.visitCast(ctx.cast()))
 
     def visitDivMultValue(self, ctx):
-        left = self.visit(ctx.left)
-        right = self.visit(ctx.right)
-        operation = ctx.operation.text
-        if not Validator(operation, left, right).is_valid():
-            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
-        if operation == "*":
-            return Multiplication(left, right)
-        elif operation == "/":
-            return Division(left, right)
+        return self._visit_binary_operation(ctx)
 
     def visitSumSubtrValue(self, ctx):
-        left = self.visit(ctx.left)
-        right = self.visit(ctx.right)
-        operation = ctx.operation.text
-        if not Validator(operation, left, right).is_valid():
-            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
-        if operation == "+":
-            return Summation(left, right)
-        elif operation == "-":
-            return Subtraction(left, right)
+        return self._visit_binary_operation(ctx)
 
     def visitAndValue(self, ctx):
-        left = self.visit(ctx.left)
-        right = self.visit(ctx.right)
-        if not Validator("and", left, right).is_valid():
-            ParseError.incompatible_operation("not", left.return_type(), right.return_type())
-        return And(left, right)
+        return self._visit_binary_operation(ctx)
 
     def visitOrValue(self, ctx):
-        left = self.visit(ctx.left)
-        right = self.visit(ctx.right)
-        if not Validator("or", left, right).is_valid():
-            ParseError.incompatible_operation("or", left.return_type(), right.return_type())
-        return Or(left, right)
+        return self._visit_binary_operation(ctx)
 
     def visitNotValue(self, ctx):
         target = self.visit(ctx.value())
@@ -76,23 +52,7 @@ class ValueVisitor(SanyaScriptVisitor):
         return Not(target)
 
     def visitComparisonValue(self, ctx):
-        left = self.visit(ctx.left)
-        right = self.visit(ctx.right)
-        operation = ctx.operation.text
-        if not Validator(operation, left, right).is_valid():
-            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
-        if operation == "==":
-            return Equal(left, right)
-        elif operation == "!=":
-            return NotEqual(left, right)
-        elif operation == ">=":
-            return GreaterOrEqual(left, right)
-        elif operation == "<=":
-            return LessOrEqual(left, right)
-        elif operation == ">":
-            return Greater(left, right)
-        elif operation == "<":
-            return Less(left, right)
+        return self._visit_binary_operation(ctx)
 
     def visitNodeValue(self, ctx):
         return Node(float(ctx.NUM().getText())).cast(self.visitCast(ctx.cast()))
@@ -156,6 +116,37 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitCast(self, ctx):
         return ctx.type_().getText() if ctx else None
+
+    def _visit_binary_operation(self, ctx):
+        left = self.visit(ctx.left)
+        right = self.visit(ctx.right)
+        operation = ctx.operation.text
+        if not Validator(operation, left, right).is_valid():
+            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
+        if operation == "*":
+            return Multiplication(left, right)
+        elif operation == "/":
+            return Division(left, right)
+        elif operation == "+":
+            return Summation(left, right)
+        elif operation == "-":
+            return Subtraction(left, right)
+        elif operation == "==":
+            return Equal(left, right)
+        elif operation == "!=":
+            return NotEqual(left, right)
+        elif operation == ">=":
+            return GreaterOrEqual(left, right)
+        elif operation == "<=":
+            return LessOrEqual(left, right)
+        elif operation == ">":
+            return Greater(left, right)
+        elif operation == "<":
+            return Less(left, right)
+        elif operation == "and":
+            return And(left, right)
+        elif operation == "or":
+            return Or(left, right)
 
     def _function_visitor(self):
         return FunctionVisitior(self.block, self.namespace)

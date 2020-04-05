@@ -47,8 +47,8 @@ ifStat: 'if' value ifBlock;
 
 value: cast? '(' value ')'                                                      # parenthesizedValue
      | 'not' value                                                              # notValue
-     | left=value 'and' right=value                                             # andValue
-     | left=value 'or' right=value                                              # orValue
+     | left=value operation='and' right=value                                   # andValue
+     | left=value operation='or' right=value                                    # orValue
      | left=value operation=('==' | '!=' | '>=' | '<=' | '>' | '<') right=value # comparisonValue
      | left=value operation=('/' | '*') right=value                             # divMultValue
      | left=value operation=('+' | '-') right=value                             # sumSubtrValue
