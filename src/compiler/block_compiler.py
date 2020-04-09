@@ -26,6 +26,8 @@ class BlockCompiler:
                 self._compile_if(statement)
             elif statement.kind() == "push_to_array":
                 self._compile_push_to_array(statement)
+            elif statement.kind() == "while_cycle":
+                self._compile_while_cycle(statement)
 
     def _compile_defvar(self, statement):
         self.file.write(f"{statement.name} = ")
@@ -59,6 +61,10 @@ class BlockCompiler:
         if statement.else_ is not None:
             self.file.write(f"else:\n")
             self._compile_nested_block(statement.else_)
+
+    def _compile_while_cycle(self, statement):
+        self.file.write(f"while {self._resolve_value(statement.condition)}.cast('logic').value:\n")
+        self._compile_nested_block(statement.block)
 
     def _compile_push_to_array(self, statement):
         self.file.write(f"{statement.name}.append({self._resolve_value(statement.value)})\n")

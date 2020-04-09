@@ -76,9 +76,10 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitIdValue(self, ctx):
         name = ctx.ID().getText()
+        index = ctx.index.text if ctx.index is not None else None
         var = self.namespace.find_var(name)
         if var is None: ParseError.undef(name)
-        return Id(name, var.type, ctx.index.text).cast(self.visitCast(ctx.cast()))
+        return Id(name, var.type, index).cast(self.visitCast(ctx.cast()))
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())

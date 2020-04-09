@@ -15,6 +15,7 @@ statement: defvar
          | println
          | pushToArray
          | returnStat
+         | whileCycle
          | ifStat;
 
 assignment: defvar '=' value # assign
@@ -49,6 +50,10 @@ ifBlock: 'go' then=ifBlockPart 'else' else_=ifBlockPart 'end' # ifThenElseBlock
        | 'go' then=ifBlockPart 'end'                          # ifThenBlock;
 
 ifBlockPart: statement*;
+
+// cycles
+/*forCycle: 'for' defvar 'in' array=ID block*/
+whileCycle: 'while' value block;
 
 // values
 value: cast? '(' value ')'                                                      # parenthesizedValue

@@ -39,11 +39,11 @@ class FunctionVisitior(SanyaScriptVisitor):
         return [value] + rest
 
     def _value_visitor(self):
-        from parse.visitors.value_visitor import ValueVisitor
+        from parser.visitors.value_visitor import ValueVisitor
         return ValueVisitor(self.block, self.namespace)
 
     def _visitor(self):
-        from parse.visitors.visitor import Visitor
+        from parser.visitors.visitor import Visitor
         return Visitor(self.namespace)
 
     def _arg_types(self, args):

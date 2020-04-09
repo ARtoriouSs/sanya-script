@@ -13,6 +13,7 @@ from parser.AST.statements.println import Println
 from parser.AST.statements.return_stat import ReturnStat
 from parser.AST.statements.if_stat import IfStat
 from parser.AST.statements.push_to_array import PushToArray
+from parser.AST.statements.while_cycle import WhileCycle
 from parser.AST.id import Id
 
 
@@ -102,6 +103,11 @@ class Visitor(SanyaScriptVisitor):
         then = self._visitor().visitSanyaScript(ctx.then)
         else_ = self._visitor().visitSanyaScript(ctx.else_)
         return [then, else_]
+
+    def visitWhileCycle(self, ctx):
+        condition = self._value_visitor().visit(ctx.value())
+        block = self._funciton_visitor().visit(ctx.block())
+        return WhileCycle(condition, block)
 
     def _add_var(self, type_, name, is_array=False):
         if is_array: type_ = "array." + type_
