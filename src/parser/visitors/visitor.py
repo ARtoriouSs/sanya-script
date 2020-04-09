@@ -11,8 +11,9 @@ from parser.AST.statements.assignment import Assignment
 from parser.AST.statements.print_stat import PrintStat
 from parser.AST.statements.println import Println
 from parser.AST.statements.return_stat import ReturnStat
+from parser.AST.statements.if_stat import IfStat
+from parser.AST.statements.push_to_array import PushToArray
 from parser.AST.id import Id
-from parser.AST.statements.ifStat import IfStat
 
 
 class Visitor(SanyaScriptVisitor):
@@ -29,19 +30,19 @@ class Visitor(SanyaScriptVisitor):
         return self.visit(ctx.getChild(0))
 
     def visitDefnode(self, ctx):
-        return self._add_var("node", ctx.ID().getText())
+        return self._add_var("node", ctx.ID().getText(), ctx.ARRAY_MARK())
 
     def visitDefarc(self, ctx):
-        return self._add_var("arc", ctx.ID().getText())
+        return self._add_var("arc", ctx.ID().getText(), ctx.ARRAY_MARK())
 
     def visitDefgraph(self, ctx):
-        return self._add_var("graph", ctx.ID().getText())
+        return self._add_var("graph", ctx.ID().getText(), ctx.ARRAY_MARK())
 
     def visitDefnum(self, ctx):
-        return self._add_var("num", ctx.ID().getText())
+        return self._add_var("num", ctx.ID().getText(), ctx.ARRAY_MARK())
 
     def visitDeflogic(self, ctx):
-        return self._add_var("logic", ctx.ID().getText())
+        return self._add_var("logic", ctx.ID().getText(), ctx.ARRAY_MARK())
 
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
@@ -57,7 +58,8 @@ class Visitor(SanyaScriptVisitor):
 
         var = self.namespace.find_var(name)
         if var is None: ParseError.undef(name)
-        if var.type != value.return_type(): ParseError.type_error(name, value.return_type(), var.type)
+        if var.type != value.return_type() and value.return_type() != "nope":
+            ParseError.type_error(name, value.return_type(), var.type)
 
         return Assignment(target, value)
 
@@ -66,6 +68,17 @@ class Visitor(SanyaScriptVisitor):
 
     def visitPrintln(self, ctx):
         return Println(self._value_visitor().visit(ctx.value()))
+
+    def visitPushToArray(self, ctx):
+        value = self._value_visitor().visit(ctx.value())
+        name = ctx.ID().getText()
+
+        var = self.namespace.find_var(name)
+        if var is None: ParseError.undef(name)
+        if var.type != "array." + value.return_type() and value.return_type() != "nope":
+            ParseError.array_value_error(name, value.return_type(), var.type)
+
+        return PushToArray(name, value)
 
     def visitReturnStat(self, ctx):
         return ReturnStat(self._value_visitor().visit(ctx.value()))
@@ -90,7 +103,8 @@ class Visitor(SanyaScriptVisitor):
         else_ = self._visitor().visitSanyaScript(ctx.else_)
         return [then, else_]
 
-    def _add_var(self, type_, name):
+    def _add_var(self, type_, name, is_array=False):
+        if is_array: type_ = "array." + type_
         self.namespace.add_var(name, type_)
         return Defvar(type_, name)
 

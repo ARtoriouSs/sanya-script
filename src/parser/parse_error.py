@@ -8,6 +8,10 @@ class ParseError:
         cls._halt(f"\"{target}\" expected to be {expected}, but it was {given}")
 
     @classmethod
+    def array_value_error(cls, target, given, expected):
+        cls._halt(f"{given} is pushed to \"{target}\" wich is {expected}")
+
+    @classmethod
     def signature_not_found(cls, name, arg_types):
         cls._halt(f"function with name \"{name}\" and args ({', '.join(arg_types)}) is undefined")
 

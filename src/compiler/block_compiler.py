@@ -1,3 +1,5 @@
+import re
+
 class BlockCompiler:
     def __init__(self, target, indent=0):
         self.file = target
@@ -22,9 +24,15 @@ class BlockCompiler:
                 self._compile_fun_call(statement)
             elif statement.kind() == "if_stat":
                 self._compile_if(statement)
+            elif statement.kind() == "push_to_array":
+                self._compile_push_to_array(statement)
 
     def _compile_defvar(self, statement):
-        self.file.write(f"{statement.name} = {statement.type.capitalize()}()\n")
+        self.file.write(f"{statement.name} = ")
+        if re.match(r"array.", statement.type):
+            self.file.write("[]\n")
+        else:
+            self.file.write(f"{statement.type.capitalize()}()\n")
 
     def _compile_print(self, statement):
         self.file.write(f"{self._resolve_value(statement.value)}.print()\n")
@@ -51,6 +59,9 @@ class BlockCompiler:
         if statement.else_ is not None:
             self.file.write(f"else:\n")
             self._compile_nested_block(statement.else_)
+
+    def _compile_push_to_array(self, statement):
+        self.file.write(f"{statement.name}.append({self._resolve_value(statement.value)})\n")
 
     def _resolve_fun_call(self, statement):
         return f"{statement.name}({self._resolve_array(statement.args)})"

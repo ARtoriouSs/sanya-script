@@ -78,7 +78,7 @@ class ValueVisitor(SanyaScriptVisitor):
         name = ctx.ID().getText()
         var = self.namespace.find_var(name)
         if var is None: ParseError.undef(name)
-        return Id(name, var.type).cast(self.visitCast(ctx.cast()))
+        return Id(name, var.type, ctx.index.text).cast(self.visitCast(ctx.cast()))
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
@@ -101,6 +101,11 @@ class ValueVisitor(SanyaScriptVisitor):
                 ParseError.undef(name)
         else:
             return Node(float(ctx.NUM().getText()))
+
+    def visitArrayPart(self, ctx):
+        value = self.visit(ctx.value())
+        rest = self.visit(ctx.arrayPart()) if ctx.paramValue() else []
+        return [value] + rest
 
     def visitSimpleArc(self, ctx):
         return ["directed", 0]

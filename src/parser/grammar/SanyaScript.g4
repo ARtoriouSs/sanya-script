@@ -13,17 +13,18 @@ statement: defvar
          | assignment
          | printStat
          | println
+         | pushToArray
          | returnStat
          | ifStat;
 
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
 
-defvar: 'node' ID  # defnode
-      | 'arc' ID   # defarc
-      | 'graph' ID # defgraph
-      | 'num' ID   # defnum
-      | 'logic' ID # deflogic;
+defvar: 'node' ARRAY_MARK? ID  # defnode
+      | 'arc' ARRAY_MARK? ID   # defarc
+      | 'graph' ARRAY_MARK? ID # defgraph
+      | 'num' ARRAY_MARK? ID   # defnum
+      | 'logic' ARRAY_MARK? ID # deflogic;
 
 // functions
 deffun: type_ ID '(' funArg? ')' block
@@ -61,7 +62,7 @@ value: cast? '(' value ')'                                                      
      | cast? '<' source=value arc target=value '>'                              # arcValue
      | cast? '[' (value ',')* value ']'                                         # graphValue
      | cast? NUM                                                                # numValue
-     | cast? ID                                                                 # idValue
+     | cast? ID ('[' index=INT ']')?                                            # idValue
      | cast? funCall                                                            # funCallValue
      | cast? (yes='yes' | no='no')                                              # logicValue
      | 'nope'                                                                   # nopeValue;
@@ -82,12 +83,16 @@ arc: '->'            # simpleArc
 // builtins
 printStat: 'print' '(' value ')';
 println: 'println' '(' value ')';
+pushToArray: ID '<<' value;
 
 //
 // lexer rules
 //
 
+ARRAY_MARK: '{}' ;
+
 NUM: '-'?([1-9][0-9]*|'0')(.[0-9]+)? ;
+INT: [1-9][0-9]*|'0' ;
 
 ID: [a-z][a-zA-Z0-9]* ;
 WS: [ \t\r\n]+ -> skip ;
