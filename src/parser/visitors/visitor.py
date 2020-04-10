@@ -30,20 +30,8 @@ class Visitor(SanyaScriptVisitor):
     def visitStatement(self, ctx):
         return self.visit(ctx.getChild(0))
 
-    def visitDefnode(self, ctx):
-        return self._add_var("node", ctx.ID().getText(), ctx.ARRAY_MARK())
-
-    def visitDefarc(self, ctx):
-        return self._add_var("arc", ctx.ID().getText(), ctx.ARRAY_MARK())
-
-    def visitDefgraph(self, ctx):
-        return self._add_var("graph", ctx.ID().getText(), ctx.ARRAY_MARK())
-
-    def visitDefnum(self, ctx):
-        return self._add_var("num", ctx.ID().getText(), ctx.ARRAY_MARK())
-
-    def visitDeflogic(self, ctx):
-        return self._add_var("logic", ctx.ID().getText(), ctx.ARRAY_MARK())
+    def visitDefvar(self, ctx):
+        return self._add_var(ctx.type_().getText(), ctx.ID().getText())
 
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
@@ -76,7 +64,7 @@ class Visitor(SanyaScriptVisitor):
 
         var = self.namespace.find_var(name)
         if var is None: ParseError.undef(name)
-        if var.type != "array." + value.return_type() and value.return_type() != "nope":
+        if var.type != value.return_type() + "{}" and value.return_type() != "nope":
             ParseError.array_value_error(name, value.return_type(), var.type)
 
         return PushToArray(name, value)
@@ -109,8 +97,7 @@ class Visitor(SanyaScriptVisitor):
         block = self._funciton_visitor().visit(ctx.block())
         return WhileCycle(condition, block)
 
-    def _add_var(self, type_, name, is_array=False):
-        if is_array: type_ = "array." + type_
+    def _add_var(self, type_, name):
         self.namespace.add_var(name, type_)
         return Defvar(type_, name)
 

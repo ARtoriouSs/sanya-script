@@ -31,7 +31,7 @@ class BlockCompiler:
 
     def _compile_defvar(self, statement):
         self.file.write(f"{statement.name} = ")
-        if re.match(r"array.", statement.type):
+        if statement.is_array:
             self.file.write("[]\n")
         else:
             self.file.write(f"{statement.type.capitalize()}()\n")

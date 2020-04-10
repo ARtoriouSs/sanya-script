@@ -15,17 +15,14 @@ statement: defvar
          | println
          | pushToArray
          | returnStat
+         | forCycle
          | whileCycle
          | ifStat;
 
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
 
-defvar: 'node' ARRAY_MARK? ID  # defnode
-      | 'arc' ARRAY_MARK? ID   # defarc
-      | 'graph' ARRAY_MARK? ID # defgraph
-      | 'num' ARRAY_MARK? ID   # defnum
-      | 'logic' ARRAY_MARK? ID # deflogic;
+defvar: type_ ID;
 
 // functions
 deffun: type_ ID '(' funArg? ')' block
@@ -52,7 +49,7 @@ ifBlock: 'go' then=ifBlockPart 'else' else_=ifBlockPart 'end' # ifThenElseBlock
 ifBlockPart: statement*;
 
 // cycles
-/*forCycle: 'for' defvar 'in' array=ID block*/
+forCycle: 'for' defvar 'in' value block;
 whileCycle: 'while' value block;
 
 // values
@@ -78,7 +75,12 @@ type_: 'node'
      | 'arc'
      | 'graph'
      | 'num'
-     | 'logic';
+     | 'logic'
+     | 'node{}'
+     | 'arc{}'
+     | 'graph{}'
+     | 'num{}'
+     | 'logic{}';
 
 arc: '->'            # simpleArc
    | '<->'           # simpleUndirectedArc
@@ -93,8 +95,6 @@ pushToArray: ID '<<' value;
 //
 // lexer rules
 //
-
-ARRAY_MARK: '{}' ;
 
 NUM: '-'?([1-9][0-9]*|'0')(.[0-9]+)? ;
 INT: [1-9][0-9]*|'0' ;
