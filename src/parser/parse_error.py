@@ -36,6 +36,10 @@ class ParseError:
         cls._halt(f"index for {name} must be num, but {given} given")
 
     @classmethod
+    def for_to_type_error(cls):
+        cls._halt("for-to cycle arguments must both be num")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)

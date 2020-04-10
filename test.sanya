@@ -4,6 +4,6 @@ n << ^1
 n << ^2
 n << ^3
 
-for node i in n go
-  println(n[(num) i])
+for num i to 5 go
+  println(n[i])
 end

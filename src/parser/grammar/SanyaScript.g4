@@ -49,8 +49,9 @@ ifBlock: 'go' then=ifBlockPart 'else' else_=ifBlockPart 'end' # ifThenElseBlock
 ifBlockPart: statement*;
 
 // cycles
-forCycle: 'for' defvar 'in' value block;
 whileCycle: 'while' value block;
+forCycle: 'for' defvar 'in' value block # forInCycle
+        | 'for' defvar 'to' value block # forToCycle;
 
 // values
 value: cast? '(' value ')'                                                      # parenthesizedValue

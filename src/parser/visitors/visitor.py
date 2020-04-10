@@ -15,7 +15,8 @@ from parser.AST.statements.return_stat import ReturnStat
 from parser.AST.statements.if_stat import IfStat
 from parser.AST.statements.push_to_array import PushToArray
 from parser.AST.statements.while_cycle import WhileCycle
-from parser.AST.statements.for_cycle import ForCycle
+from parser.AST.statements.for_in_cycle import ForInCycle
+from parser.AST.statements.for_to_cycle import ForToCycle
 from parser.AST.id import Id
 
 
@@ -101,7 +102,7 @@ class Visitor(SanyaScriptVisitor):
         block = self._visitor().visitSanyaScript(ctx.block())
         return WhileCycle(condition, block)
 
-    def visitForCycle(self, ctx):
+    def visitForInCycle(self, ctx):
         var = self.visit(ctx.defvar())
         block = self._visitor([var]).visitSanyaScript(ctx.block())
         value = self._value_visitor().visit(ctx.value())
@@ -109,7 +110,15 @@ class Visitor(SanyaScriptVisitor):
             ParseError.cycle_enumerator_error(value.return_type())
         if var.type + "{}" != value.return_type():
             ParseError.type_error(var.name, var.type, re.sub("{}", "", value.return_type()))
-        return ForCycle(var.name, value, block)
+        return ForInCycle(var.name, value, block)
+
+    def visitForToCycle(self, ctx):
+        var = self.visit(ctx.defvar())
+        block = self._visitor([var]).visitSanyaScript(ctx.block())
+        value = self._value_visitor().visit(ctx.value())
+        if value.return_type() != "num" or var.type != "num":
+            ParseError.for_to_type_error()
+        return ForToCycle(var.name, value, block)
 
     def _add_var(self, type_, name):
         self.namespace.add_var(name, type_)

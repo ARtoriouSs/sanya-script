@@ -26,8 +26,10 @@ class BlockCompiler:
                 self._compile_if(statement)
             elif statement.kind() == "push_to_array":
                 self._compile_push_to_array(statement)
-            elif statement.kind() == "for_cycle":
-                self._compile_for_cycle(statement)
+            elif statement.kind() == "for_in_cycle":
+                self._compile_for_in_cycle(statement)
+            elif statement.kind() == "for_to_cycle":
+                self._compile_for_to_cycle(statement)
             elif statement.kind() == "while_cycle":
                 self._compile_while_cycle(statement)
 
@@ -68,8 +70,13 @@ class BlockCompiler:
         self.file.write(f"while {self._resolve_value(statement.condition)}.cast('logic').value:\n")
         self._compile_nested_block(statement.block)
 
-    def _compile_for_cycle(self, statement):
+    def _compile_for_in_cycle(self, statement):
         self.file.write(f"for {statement.var_name} in {self._resolve_value(statement.enumerable)}:\n")
+        self._compile_nested_block(statement.block)
+
+    def _compile_for_to_cycle(self, statement):
+        self.file.write(f"for {statement.var_name} in range(int({self._resolve_value(statement.to)}.value)):\n")
+        self.file.write(f"    {statement.var_name} = Num({statement.var_name})\n")
         self._compile_nested_block(statement.block)
 
     def _compile_push_to_array(self, statement):
