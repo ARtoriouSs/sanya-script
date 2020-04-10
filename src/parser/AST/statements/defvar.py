@@ -9,4 +9,4 @@ class Defvar(Statement):
         self.name = name
 
     def is_array(self):
-        return True if re.match(r"{}", self.type) else False
+        return True if re.match(r".*{}", self.type) else False

@@ -14,7 +14,7 @@ class FunctionVisitior(SanyaScriptVisitor):
         return_type = ctx.type_().getText() if ctx.type_() else None
         name = ctx.ID().getText()
         args = self.visit(ctx.funArg()) if ctx.funArg() else []
-        body = self.visit(ctx.block())
+        body = self._visitor(args).visitSanyaScript(ctx.block())
         self.namespace.add_fun(name, return_type, args)
         return Deffun(name, args, body)
 
@@ -22,9 +22,6 @@ class FunctionVisitior(SanyaScriptVisitor):
         value = FunArg(ctx.type_().getText(), ctx.ID().getText())
         rest = self.visit(ctx.funArg()) if ctx.funArg() else []
         return [value] + rest
-
-    def visitBlock(self, ctx):
-        return self._visitor().visitSanyaScript(ctx)
 
     def visitFunCall(self, ctx):
         name = ctx.ID().getText()
@@ -42,9 +39,9 @@ class FunctionVisitior(SanyaScriptVisitor):
         from parser.visitors.value_visitor import ValueVisitor
         return ValueVisitor(self.block, self.namespace)
 
-    def _visitor(self):
+    def _visitor(self, locals_=()):
         from parser.visitors.visitor import Visitor
-        return Visitor(self.namespace)
+        return Visitor(self.namespace, locals_)
 
     def _arg_types(self, args):
         return [arg.return_type() for arg in args]

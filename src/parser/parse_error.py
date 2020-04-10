@@ -28,6 +28,10 @@ class ParseError:
         cls._halt(f"operation {operation} cannot be performed with {target}")
 
     @classmethod
+    def cycle_enumerator_error(cls, given):
+        cls._halt(f"cycle argument must be an array, but {given} given")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)

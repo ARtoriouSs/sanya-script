@@ -1,4 +1,5 @@
 import copy
+import re
 
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parser.visitors.value_visitor import ValueVisitor
@@ -14,12 +15,15 @@ from parser.AST.statements.return_stat import ReturnStat
 from parser.AST.statements.if_stat import IfStat
 from parser.AST.statements.push_to_array import PushToArray
 from parser.AST.statements.while_cycle import WhileCycle
+from parser.AST.statements.for_cycle import ForCycle
 from parser.AST.id import Id
 
 
 class Visitor(SanyaScriptVisitor):
-    def __init__(self, namespace=None):
+    def __init__(self, namespace=None, locals_=()):
         self.namespace = copy.copy(namespace) or Namespace()
+        for local in list(locals_):
+            self.namespace.add_var(local.name, local.type)
         self.block = Block()
 
     def visitSanyaScript(self, ctx):
@@ -94,8 +98,18 @@ class Visitor(SanyaScriptVisitor):
 
     def visitWhileCycle(self, ctx):
         condition = self._value_visitor().visit(ctx.value())
-        block = self._funciton_visitor().visit(ctx.block())
+        block = self._visitor().visitSanyaScript(ctx.block())
         return WhileCycle(condition, block)
+
+    def visitForCycle(self, ctx):
+        var = self.visit(ctx.defvar())
+        block = self._visitor([var]).visitSanyaScript(ctx.block())
+        value = self._value_visitor().visit(ctx.value())
+        if not re.match(r".*{}", value.return_type()):
+            ParseError.cycle_enumerator_error(value.return_type())
+        if var.type + "{}" != value.return_type():
+            ParseError.type_error(var.name, var.type, re.sub("{}", "", value.return_type()))
+        return ForCycle(var.name, value, block)
 
     def _add_var(self, type_, name):
         self.namespace.add_var(name, type_)
@@ -107,5 +121,5 @@ class Visitor(SanyaScriptVisitor):
     def _funciton_visitor(self):
         return FunctionVisitior(self.block, self.namespace)
 
-    def _visitor(self):
-        return self.__class__(self.namespace)
+    def _visitor(self, locals_=()):
+        return self.__class__(self.namespace, locals_)
