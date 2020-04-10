@@ -32,6 +32,10 @@ class ParseError:
         cls._halt(f"cycle argument must be an array, but {given} given")
 
     @classmethod
+    def index_error(cls, name, given):
+        cls._halt(f"index for {name} must be num, but {given} given")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)

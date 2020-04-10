@@ -117,13 +117,19 @@ class BlockCompiler:
     def _resolve_less(self, statement):
         return f"{self._resolve_value(statement.left)}.less({self._resolve_value(statement.right)})"
 
+    def _resolve_id_value(self, statement):
+        if statement.index is not None:
+            return statement.name + f"[int({self._resolve_value(statement.index)}.value)]"
+        else:
+            return statement.name
+
     def _resolve_fun_args(self, args):
         args = [arg.name for arg in args]
         return ", ".join(args)
 
     def _resolve_value(self, value):
         if value.kind() == "id":
-            string = value.name
+            string = self._resolve_id_value(value)
         elif value.kind() == "node":
             string = f"Node({value.value})"
         elif value.kind() == "arc":

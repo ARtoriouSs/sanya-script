@@ -64,7 +64,7 @@ value: cast? '(' value ')'                                                      
      | cast? '<' source=value arc target=value '>'                              # arcValue
      | cast? '[' (value ',')* value ']'                                         # graphValue
      | cast? NUM                                                                # numValue
-     | cast? ID ('[' index=INT ']')?                                            # idValue
+     | cast? ID ('[' value ']')?                                                # idValue
      | cast? funCall                                                            # funCallValue
      | cast? (yes='yes' | no='no')                                              # logicValue
      | 'nope'                                                                   # nopeValue;
@@ -97,7 +97,6 @@ pushToArray: ID '<<' value;
 //
 
 NUM: '-'?([1-9][0-9]*|'0')(.[0-9]+)? ;
-INT: [1-9][0-9]*|'0' ;
 
 ID: [a-z][a-zA-Z0-9]* ;
 WS: [ \t\r\n]+ -> skip ;

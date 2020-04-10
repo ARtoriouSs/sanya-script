@@ -5,5 +5,5 @@ n << ^2
 n << ^3
 
 for node i in n go
-  println(i)
+  println(n[(num) i])
 end
