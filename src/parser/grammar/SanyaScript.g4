@@ -22,7 +22,7 @@ statement: defvar
 assignment: defvar '=' value # assign
           | ID '=' value     # reassign;
 
-defvar: type_ ID;
+defvar: CONST? type_ ID;
 
 // functions
 deffun: type_ ID '(' funArg? ')' block
@@ -96,6 +96,8 @@ pushToArray: ID '<<' value;
 //
 // lexer rules
 //
+
+CONST: 'const' ;
 
 NUM: '-'?([1-9][0-9]*|'0')(.[0-9]+)? ;
 

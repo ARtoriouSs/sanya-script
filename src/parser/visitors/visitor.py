@@ -36,7 +36,7 @@ class Visitor(SanyaScriptVisitor):
         return self.visit(ctx.getChild(0))
 
     def visitDefvar(self, ctx):
-        return self._add_var(ctx.type_().getText(), ctx.ID().getText())
+        return self._add_var(ctx.type_().getText(), ctx.ID().getText(), bool(ctx.CONST()))
 
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
@@ -52,6 +52,7 @@ class Visitor(SanyaScriptVisitor):
 
         var = self.namespace.find_var(name)
         if var is None: ParseError.undef(name)
+        if var.is_const: ParseError.const_reassignment(name)
         if var.type != value.return_type() and value.return_type() != "nope":
             ParseError.type_error(name, value.return_type(), var.type)
 
@@ -120,9 +121,9 @@ class Visitor(SanyaScriptVisitor):
             ParseError.for_to_type_error()
         return ForToCycle(var.name, value, block)
 
-    def _add_var(self, type_, name):
-        self.namespace.add_var(name, type_)
-        return Defvar(type_, name)
+    def _add_var(self, type_, name, is_const=False):
+        self.namespace.add_var(name, type_, is_const)
+        return Defvar(type_, name, is_const)
 
     def _value_visitor(self):
         return ValueVisitor(self.block, self.namespace)

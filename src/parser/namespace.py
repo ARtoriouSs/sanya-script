@@ -11,8 +11,8 @@ class Namespace:
             self.vars = []
             self.funs = []
 
-    def add_var(self, name, type_):
-        var = Var(type_, name)
+    def add_var(self, name, type_, is_const=False):
+        var = Var(type_, name, is_const)
         self._remove_if_exist(var)
         self.vars.append(var)
 

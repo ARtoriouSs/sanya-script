@@ -40,6 +40,10 @@ class ParseError:
         cls._halt("for-to cycle arguments must both be num")
 
     @classmethod
+    def const_reassignment(cls, name):
+        cls._halt(f"reassignment of const {name} not allowed")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)
