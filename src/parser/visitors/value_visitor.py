@@ -96,11 +96,6 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitNopeValue(self, ctx):
         return Nope()
 
-    def visitArrayPart(self, ctx):
-        value = self.visit(ctx.value())
-        rest = self.visit(ctx.arrayPart()) if ctx.paramValue() else []
-        return [value] + rest
-
     def visitSimpleArc(self, ctx):
         return ["directed", 0]
 

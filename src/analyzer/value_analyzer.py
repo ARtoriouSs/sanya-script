@@ -18,7 +18,7 @@ class ValueAnalyzer:
         elif value.kind() == "graph":
             self._check_graph_value(value)
         elif value.kind() == "fun_call":
-            self._check_fun_call_value()
+            self._check_fun_call_value(value)
         elif value.kind() == "unary_operation.not":
             self._check_not_value(value)
         elif re.match(r"binary_operation\..*", value.kind()):

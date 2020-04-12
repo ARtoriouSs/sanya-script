@@ -1,12 +1,13 @@
 from .type import Type
+from .node import Node
 from .graph import Graph
 from ..runtime_error import RuntimeError
 
 
 class Arc(Type):
     def __init__(self, source=None, target=None, weight=0.0, type_="directed"):
-        self.source = source
-        self.target = target
+        self.source = source or Node(0.0)
+        self.target = target or Node(0.0)
         self.weight = weight
         self.type = type_
 

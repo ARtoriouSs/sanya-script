@@ -1,1 +1,7 @@
-graph g = [1]
+arc a
+
+graph g = [a]
+
+for arc i in arcs(g) go
+  puts(i)
+end

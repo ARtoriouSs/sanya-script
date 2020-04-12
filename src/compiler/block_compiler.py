@@ -6,7 +6,7 @@ class BlockCompiler:
         self.indent = indent
 
     def compile(self, ast):
-        for statement in ast.statements:
+         for statement in ast.statements:
             self.file.write("    " * self.indent)
             if statement.kind() == "defvar":
                 self._compile_defvar(statement)
@@ -31,7 +31,7 @@ class BlockCompiler:
 
     def _compile_defvar(self, statement):
         self.file.write(f"{statement.name} = ")
-        if statement.is_array:
+        if statement.is_array():
             self.file.write("[]\n")
         else:
             self.file.write(f"{statement.type.capitalize()}()\n")

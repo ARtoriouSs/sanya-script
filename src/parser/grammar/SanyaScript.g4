@@ -86,10 +86,10 @@ type_: 'node'
      | 'num{}'
      | 'logic{}';
 
-arc: '->'            # simpleArc
-   | '<->'           # simpleUndirectedArc
-   | '-[' NUM ']->'  # weightedArc // ref
-   | '<-[' NUM ']->' # weightedUndirectedArc;
+arc: '->'              # simpleArc
+   | '<->'             # simpleUndirectedArc
+   | '-[' value ']->'  # weightedArc
+   | '<-[' value ']->' # weightedUndirectedArc;
 
 // builtins
 pushToArray: ID '<<' value;
