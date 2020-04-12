@@ -11,8 +11,6 @@ statement: defvar
          | deffun
          | funCall
          | assignment
-         | printStat
-         | println
          | pushToArray
          | returnStat
          | forCycle
@@ -89,8 +87,6 @@ arc: '->'            # simpleArc
    | '<-[' NUM ']->' # weightedUndirectedArc;
 
 // builtins
-printStat: 'print' '(' value ')';
-println: 'println' '(' value ')';
 pushToArray: ID '<<' value;
 
 //

@@ -1,10 +1,11 @@
 from .types.num import Num
 
-# def print(obj):
-    # obj.print()
 
-# def println(obj):
-    # obj.println()
+def print(obj):
+    obj.print()
+
+def println(obj):
+    obj.println()
 
 def source(arc):
     return arc.source

@@ -14,12 +14,12 @@ class Namespace:
 
     def add_var(self, name, type_, is_const=False):
         var = Var(type_, name, is_const)
-        self._remove_if_exist(var)
+        self._remove_var_if_exist(var)
         self.vars.append(var)
 
     def add_fun(self, name, return_type, args):
         fun = Fun(return_type, name, args)
-        self._remove_if_exist(fun)
+        self._remove_fun_if_exist(fun)
         self.funs.append(fun)
 
     def find_var(self, name):
@@ -40,14 +40,21 @@ class Namespace:
     def has_fun(self, name, return_type=None, args=None):
         return bool(self.find_fun(name, return_type, args))
 
-    def _remove_if_exist(self, targer):
+    def _remove_var_if_exist(self, target):
         for var in self.vars:
-            if var.name == targer.name:
+            if var.name == target.name:
                 self.vars.remove(var)
 
+    def _remove_fun_if_exist(self, target):
         for fun in self.funs:
-            if fun.name == targer.name:
+            if fun.name == target.name and fun.return_type == target.return_type and self._compare_fun_args(fun, target):
                 self.funs.remove(fun)
+
+    def _compare_fun_args(self, first, second):
+        if not len(first.args) == len(second.args): return False
+        for i, arg in enumerate(first.args):
+            if not arg.type == second.args[i].type: return False
+        return True
 
     def _compare_args(self, fun, args):
         if not len(fun.args) == len(args): return False

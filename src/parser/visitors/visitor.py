@@ -9,8 +9,6 @@ from parser.namespace import Namespace
 from parser.AST.block import Block
 from parser.AST.statements.defvar import Defvar
 from parser.AST.statements.assignment import Assignment
-from parser.AST.statements.print_stat import PrintStat
-from parser.AST.statements.println import Println
 from parser.AST.statements.return_stat import ReturnStat
 from parser.AST.statements.if_stat import IfStat
 from parser.AST.statements.push_to_array import PushToArray
@@ -57,12 +55,6 @@ class Visitor(SanyaScriptVisitor):
             ParseError.type_error(name, value.return_type(), var.type)
 
         return Assignment(target, value)
-
-    def visitPrintStat(self, ctx):
-        return PrintStat(self._value_visitor().visit(ctx.value()))
-
-    def visitPrintln(self, ctx):
-        return Println(self._value_visitor().visit(ctx.value()))
 
     def visitPushToArray(self, ctx):
         value = self._value_visitor().visit(ctx.value())

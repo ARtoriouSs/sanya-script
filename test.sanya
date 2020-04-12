@@ -1,8 +1,3 @@
 graph g = [^1, ^2]
 
-node{} n
-n = nodes(g)
-
-for node c in n go
-  println(c)
-end
+println(nodes(g)[1])

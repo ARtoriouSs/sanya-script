@@ -10,10 +10,6 @@ class BlockCompiler:
             self.file.write("    " * self.indent)
             if statement.kind() == "defvar":
                 self._compile_defvar(statement)
-            elif statement.kind() == "print_stat":
-                self._compile_print(statement)
-            elif statement.kind() == "println":
-                self._compile_println(statement)
             elif statement.kind() == "assignment":
                 self._compile_assignment(statement)
             elif statement.kind() == "return_stat":
@@ -39,12 +35,6 @@ class BlockCompiler:
             self.file.write("[]\n")
         else:
             self.file.write(f"{statement.type.capitalize()}()\n")
-
-    def _compile_print(self, statement):
-        self.file.write(f"{self._resolve_value(statement.value)}.print()\n")
-
-    def _compile_println(self, statement):
-        self.file.write(f"{self._resolve_value(statement.value)}.println()\n")
 
     def _compile_assignment(self, statement):
         self.file.write(f"{statement.target.name} = {self._resolve_value(statement.value)}\n")
