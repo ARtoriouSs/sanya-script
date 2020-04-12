@@ -1,5 +1,4 @@
 from parser.AST.values.value import Value
-from parser.parse_error import ParseError
 
 
 class BinaryOperation(Value):

@@ -1,7 +1,6 @@
 import re
 
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
-from parser.parse_error import ParseError
 from parser.visitors.function_visitor import FunctionVisitior
 from parser.AST.values.graph import Graph
 from parser.AST.values.node import Node

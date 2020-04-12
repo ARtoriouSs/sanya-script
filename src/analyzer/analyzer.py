@@ -39,7 +39,7 @@ class Analyzer:
     def _check_deffun(self, statement):
         arg_names = [arg.name for arg in statement.args]
         if len(arg_names) != len(set(arg_names)):
-            ParseError.duplicate_args(statement.name)
+            self._error().duplicate_args(statement.name)
 
         self.validate(statement.body)
 
@@ -49,17 +49,17 @@ class Analyzer:
 
         self._value_analyzer().validate(value)
 
-        if target.undef: ParseError.undef(target.name)
-        if target.is_const: ParseError.const_reassignment(target.name)
+        if target.undef: self._error().undef(target.name)
+        if target.is_const: self._error().const_reassignment(target.name)
         if target.type != value.return_type() and value.return_type() != "nope":
-            ParseError.type_error(target.name, value.return_type(), target.type)
+            self._error().type_error(target.name, value.return_type(), target.type)
 
     def _check_return_stat(self, statement):
         self._value_analyzer().validate(statement.value)
 
     def _check_fun_call(self, statement):
         if statement.fun.undef:
-            ParseError.signature_not_found(statement.name, statement.args)
+            self._error().signature_not_found(statement.name, statement.args)
 
         for arg in statement.args:
             self._value_analyzer().validate(arg)
@@ -76,9 +76,9 @@ class Analyzer:
         self._value_analyzer().validate(enumerable)
 
         if not re.match(r".*{}", enumerable.return_type()):
-            ParseError.cycle_enumerator_error(enumerable.return_type())
+            self._error().cycle_enumerator_error(enumerable.return_type())
         if var.type + "{}" != enumerable.return_type():
-            ParseError.type_error(var.name, var.type, re.sub("{}", "", enumerable.return_type()))
+            self._error().type_error(var.name, var.type, re.sub("{}", "", enumerable.return_type()))
 
         self.validate(statement.block)
 
@@ -86,7 +86,7 @@ class Analyzer:
         self._value_analyzer().validate(statement.to)
 
         if statement.to.return_type() != "num" or statement.target.type != "num":
-            ParseError.for_to_type_error()
+            self._error().for_to_type_error()
 
         self.validate(statement.block)
 
@@ -100,9 +100,12 @@ class Analyzer:
 
         self._value_analyzer().validate(value)
 
-        if target.undef: ParseError.undef(target.name)
+        if target.undef: self._error().undef(target.name)
         if target.type != value.return_type() + "{}" and value.return_type() != "nope":
-            ParseError.array_value_error(target.name, value.return_type(), target.type)
+            self._error().array_value_error(target.name, value.return_type(), target.type)
 
     def _value_analyzer(self):
-        return ValueAnalyzer(ParseError(self.current_line))
+        return ValueAnalyzer(self._error())
+
+    def _error(self):
+        return ParseError(self.current_line)

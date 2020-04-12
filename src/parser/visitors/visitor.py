@@ -4,7 +4,6 @@ import re
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parser.visitors.value_visitor import ValueVisitor
 from parser.visitors.function_visitor import FunctionVisitior
-from parser.parse_error import ParseError
 from parser.namespace import Namespace
 from parser.AST.block import Block
 from parser.AST.statements.defvar import Defvar

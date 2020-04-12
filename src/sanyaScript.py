@@ -17,6 +17,3 @@ if __name__ == '__main__':
     ast = Parser(code_file, [BUILTINS_FILE]).parse()
     if Analyzer().validate(ast):
         Compiler(targer_file).compile(ast)
-    else:
-        print("\nFiled to compile")
-        exit(1)

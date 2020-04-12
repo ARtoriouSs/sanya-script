@@ -1,5 +1,4 @@
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
-from parser.parse_error import ParseError
 from parser.AST.fun_arg import FunArg
 from parser.AST.statements.deffun import Deffun
 from parser.AST.statements.fun_call import FunCall
