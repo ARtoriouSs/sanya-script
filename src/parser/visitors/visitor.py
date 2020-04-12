@@ -41,33 +41,17 @@ class Visitor(SanyaScriptVisitor):
     def visitAssign(self, ctx):
         target = self.visit(ctx.defvar())
         value = self._value_visitor().visit(ctx.value())
-        if target.type != value.return_type() and value.return_type() != "nope":
-            ParseError.type_error(target.name, value.return_type(), target.type)
         return Assignment(target, value)
 
     def visitReassign(self, ctx):
-        name = ctx.ID().getText()
-        target = Id(name)
         value = self._value_visitor().visit(ctx.value())
-
-        var = self.namespace.find_var(name)
-        if var is None: ParseError.undef(name)
-        if var.is_const: ParseError.const_reassignment(name)
-        if var.type != value.return_type() and value.return_type() != "nope":
-            ParseError.type_error(name, value.return_type(), var.type)
-
+        target = self.namespace.find_var(ctx.ID().getText())
         return Assignment(target, value)
 
     def visitPushToArray(self, ctx):
         value = self._value_visitor().visit(ctx.value())
-        name = ctx.ID().getText()
-
-        var = self.namespace.find_var(name)
-        if var is None: ParseError.undef(name)
-        if var.type != value.return_type() + "{}" and value.return_type() != "nope":
-            ParseError.array_value_error(name, value.return_type(), var.type)
-
-        return PushToArray(name, value)
+        var = self.namespace.find_var(ctx.ID().getText())
+        return PushToArray(var, value)
 
     def visitReturnStat(self, ctx):
         return ReturnStat(self._value_visitor().visit(ctx.value()))
@@ -101,23 +85,17 @@ class Visitor(SanyaScriptVisitor):
         var = self.visit(ctx.defvar())
         block = self._visitor([var]).visitSanyaScript(ctx.block())
         value = self._value_visitor().visit(ctx.value())
-        if not re.match(r".*{}", value.return_type()):
-            ParseError.cycle_enumerator_error(value.return_type())
-        if var.type + "{}" != value.return_type():
-            ParseError.type_error(var.name, var.type, re.sub("{}", "", value.return_type()))
-        return ForInCycle(var.name, value, block)
+        return ForInCycle(var, value, block)
 
     def visitForToCycle(self, ctx):
         var = self.visit(ctx.defvar())
         block = self._visitor([var]).visitSanyaScript(ctx.block())
         value = self._value_visitor().visit(ctx.value())
-        if value.return_type() != "num" or var.type != "num":
-            ParseError.for_to_type_error()
-        return ForToCycle(var.name, value, block)
+        return ForToCycle(var, value, block)
 
     def _add_var(self, type_, name, is_const=False):
-        self.namespace.add_var(name, type_, is_const)
-        return Defvar(type_, name, is_const)
+        var = self.namespace.add_var(name, type_, is_const)
+        return Defvar(var)
 
     def _value_visitor(self):
         return ValueVisitor(self.block, self.namespace)

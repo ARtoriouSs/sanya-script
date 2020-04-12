@@ -61,16 +61,16 @@ class BlockCompiler:
         self._compile_nested_block(statement.block)
 
     def _compile_for_in_cycle(self, statement):
-        self.file.write(f"for {statement.var_name} in {self._resolve_value(statement.enumerable)}:\n")
+        self.file.write(f"for {statement.target.name} in {self._resolve_value(statement.enumerable)}:\n")
         self._compile_nested_block(statement.block)
 
     def _compile_for_to_cycle(self, statement):
-        self.file.write(f"for {statement.var_name} in range(int({self._resolve_value(statement.to)}.value)):\n")
-        self.file.write(f"    {statement.var_name} = Num({statement.var_name})\n")
+        self.file.write(f"for {statement.target.name} in range(int({self._resolve_value(statement.to)}.value)):\n")
+        self.file.write(f"    {statement.target.name} = Num({statement.target.name})\n")
         self._compile_nested_block(statement.block)
 
     def _compile_push_to_array(self, statement):
-        self.file.write(f"{statement.name}.append({self._resolve_value(statement.value)})\n")
+        self.file.write(f"{statement.target.name}.append({self._resolve_value(statement.value)})\n")
 
     def _resolve_fun_call(self, statement):
         return f"{statement.name}({self._resolve_array(statement.args)})"

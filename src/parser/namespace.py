@@ -16,23 +16,25 @@ class Namespace:
         var = Var(type_, name, is_const)
         self._remove_var_if_exist(var)
         self.vars.append(var)
+        return var
 
     def add_fun(self, name, return_type, args):
         fun = Fun(return_type, name, args)
         self._remove_fun_if_exist(fun)
         self.funs.append(fun)
+        return fun
 
     def find_var(self, name):
         vars_ = [var for var in self.vars if var.name == name]
-        return vars_[0] if any(vars_) else None
+        return vars_[0] if any(vars_) else Var('nope', name, undef=True)
 
     def find_fun(self, name, return_type=None, args=None):
         funs = [fun for fun in self.funs if fun.name == name]
-        if return_type:
+        if return_type is not None:
             funs = [fun for fun in funs if fun.return_type == return_type]
         if args is not None:
             funs = [fun for fun in funs if self._compare_args(fun, args)]
-        return funs[0] if any(funs) else None
+        return funs[0] if any(funs) else Fun(name, return_type, args, undef=True)
 
     def has_var(self, name):
         return bool(self.find_var(name))

@@ -2,7 +2,7 @@ from parser.AST.statements.statement import Statement
 
 
 class ForInCycle(Statement):
-    def __init__(self, var_name, enumerable, block):
-        self.var_name = var_name
+    def __init__(self, target, enumerable, block):
+        self.target = target
         self.enumerable = enumerable
         self.block = block

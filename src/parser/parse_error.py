@@ -12,8 +12,8 @@ class ParseError:
         cls._halt(f"{given} is pushed to \"{target}\" wich is {expected}")
 
     @classmethod
-    def signature_not_found(cls, name, arg_types):
-        cls._halt(f"function with name \"{name}\" and args ({', '.join(arg_types)}) is undefined")
+    def signature_not_found(cls, name, args):
+        cls._halt(f"function with name \"{name}\" and args ({', '.join(cls._arg_types(args))}) is undefined")
 
     @classmethod
     def arc_error(cls, given):
@@ -48,6 +48,14 @@ class ParseError:
         cls._halt(f"value of type {type_} cannot be used as index, only num allowed")
 
     @classmethod
+    def duplicate_args(cls, name):
+        cls._halt(f"duplicate argument name in fun {name} definition")
+
+    @classmethod
     def _halt(cls, message):
         print(message)
         exit(1)
+
+    @classmethod
+    def _arg_types(self, args):
+        return [arg.return_type() for arg in args]
