@@ -54,17 +54,18 @@ forCycle: 'for' defvar 'in' value block # forInCycle
 // values
 value: cast value                                                               # castValue
      | '(' value ')'                                                            # parenthesizedValue
+     | target=value '[' index=value ']'                                                # indexValue
      | 'not' value                                                              # notValue
      | left=value operation='and' right=value                                   # andValue
      | left=value operation='or' right=value                                    # orValue
      | left=value operation=('==' | '!=' | '>=' | '<=' | '>' | '<') right=value # comparisonValue
      | left=value operation=('/' | '*') right=value                             # divMultValue
      | left=value operation=('+' | '-') right=value                             # sumSubtrValue
-     | '^' NUM                                                                  # nodeValue
+     | '^' NUM                                                                  # nodeValue // ref
      | '<' source=value arc target=value '>'                                    # arcValue
-     | '[' (value ',')* value ']'                                               # graphValue
+     | '[' (value ',')* value ']'                                               # graphValue // ref
      | NUM                                                                      # numValue
-     | ID ('[' value ']')?                                                      # idValue
+     | ID                                                                       # idValue
      | funCall                                                                  # funCallValue
      | (yes='yes' | no='no')                                                    # logicValue
      | 'nope'                                                                   # nopeValue;
@@ -84,7 +85,7 @@ type_: 'node'
 
 arc: '->'            # simpleArc
    | '<->'           # simpleUndirectedArc
-   | '-[' NUM ']->'  # weightedArc
+   | '-[' NUM ']->'  # weightedArc // ref
    | '<-[' NUM ']->' # weightedUndirectedArc;
 
 // builtins

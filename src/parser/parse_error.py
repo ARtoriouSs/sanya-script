@@ -32,16 +32,20 @@ class ParseError:
         cls._halt(f"cycle argument must be an array, but {given} given")
 
     @classmethod
-    def index_error(cls, name, given):
-        cls._halt(f"index for {name} must be num, but {given} given")
-
-    @classmethod
     def for_to_type_error(cls):
         cls._halt("for-to cycle arguments must both be num")
 
     @classmethod
     def const_reassignment(cls, name):
         cls._halt(f"reassignment of const {name} not allowed")
+
+    @classmethod
+    def cannot_be_indexed(cls, type_):
+        cls._halt(f"value of type {type_} cannot be indexed, only arrays allowed")
+
+    @classmethod
+    def incorrect_index_type(cls, type_):
+        cls._halt(f"value of type {type_} cannot be used as index, only num allowed")
 
     @classmethod
     def _halt(cls, message):

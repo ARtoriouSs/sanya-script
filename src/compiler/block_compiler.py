@@ -169,6 +169,7 @@ class BlockCompiler:
             string = self._resolve_less(value)
 
         string += f".cast(\"{value.cast_type}\")" if value.cast_type else ""
+        string += f"[{int(value.index.value)}]" if value.index else ""
         return string
 
     def _resolve_graph_value(self, value):

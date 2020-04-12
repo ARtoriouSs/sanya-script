@@ -1,3 +1,5 @@
+import re
+
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parser.parse_error import ParseError
 from parser.visitors.function_visitor import FunctionVisitior
@@ -35,6 +37,15 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitParenthesizedValue(self, ctx):
         return self.visit(ctx.value())
+
+    def visitIndexValue(self, ctx):
+        value = self.visit(ctx.target)
+        index = self.visit(ctx.index)
+        if not re.match(r".*{}", value.return_type()):
+            ParseError.cannot_be_indexed(value.return_type())
+        if index.return_type() != "num":
+            ParseError.incorrect_index_type(index.return_type())
+        return value.set_index(index)
 
     def visitDivMultValue(self, ctx):
         return self._visit_binary_operation(ctx)
@@ -81,12 +92,7 @@ class ValueVisitor(SanyaScriptVisitor):
         name = ctx.ID().getText()
         var = self.namespace.find_var(name)
         if var is None: ParseError.undef(name)
-        if ctx.value() is not None:
-            index = self.visit(ctx.value())
-            if index.return_type() != "num": ParseError.index_error(var.name, index.return_type())
-        else:
-            index = None
-        return Id(name, var.type, index)
+        return Id(name, var.type)
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
