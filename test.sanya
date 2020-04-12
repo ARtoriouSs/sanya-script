@@ -1,4 +1,8 @@
-const node n = ^1
+graph g = [^1, ^2]
 
-n = ^2
+node{} n
+n = nodes(g)
 
+for node c in n go
+  println(c)
+end

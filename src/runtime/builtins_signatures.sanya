@@ -1,0 +1,14 @@
+#print(node _)  go end
+#print(arc _)   go end
+#print(graph _) go end
+#print(num _)   go end
+#print(logic _) go end
+
+node source(arc _) go end
+node target(arc _) go end
+
+num weight(arc _) go end
+num value(node _) go end
+
+node{} nodes(graph _) go end
+arc{} arcs(graph _)   go end

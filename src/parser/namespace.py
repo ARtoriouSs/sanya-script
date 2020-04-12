@@ -3,13 +3,14 @@ from parser.fun import Fun
 
 
 class Namespace:
-    def __init__(self, parent = None):
-        if parent:
-            self.vars = parent.vars
-            self.funs = parent.funs
-        else:
-            self.vars = []
-            self.funs = []
+    def __init__(self, parent=None):
+        self.vars = []
+        self.funs = []
+        if parent: self.merge(parent)
+
+    def merge(self, namespace):
+        self.vars += namespace.vars
+        self.funs += namespace.funs
 
     def add_var(self, name, type_, is_const=False):
         var = Var(type_, name, is_const)

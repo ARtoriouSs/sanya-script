@@ -22,3 +22,4 @@ class Compiler:
         file_.write("from src.runtime.types.graph import Graph\n")
         file_.write("from src.runtime.types.logic import Logic\n")
         file_.write("from src.runtime.types.nope import Nope\n")
+        file_.write("from src.runtime.builtins import *\n")

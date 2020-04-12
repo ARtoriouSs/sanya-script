@@ -7,4 +7,4 @@ class FunCall(Value):
         super().__init__(cast)
 
     def return_type(self):
-        return self.cast_type or self.fun_call.ret_type
+        return self.cast_type or self.fun_call.return_type
