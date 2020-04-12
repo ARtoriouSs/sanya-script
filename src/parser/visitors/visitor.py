@@ -31,7 +31,9 @@ class Visitor(SanyaScriptVisitor):
         return self.block
 
     def visitStatement(self, ctx):
-        return self.visit(ctx.getChild(0))
+        statement = self.visit(ctx.getChild(0))
+        statement.set_line(ctx.start.line)
+        return statement
 
     def visitDefvar(self, ctx):
         return self._add_var(ctx.type_().getText(), ctx.ID().getText(), bool(ctx.CONST()))
