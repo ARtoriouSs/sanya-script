@@ -5,6 +5,7 @@ from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parser.visitors.value_visitor import ValueVisitor
 from parser.visitors.function_visitor import FunctionVisitior
 from parser.namespace import Namespace
+from parser.AST.values.nope import Nope
 from parser.AST.block import Block
 from parser.AST.statements.defvar import Defvar
 from parser.AST.statements.assignment import Assignment
@@ -53,7 +54,8 @@ class Visitor(SanyaScriptVisitor):
         return PushToArray(var, value)
 
     def visitReturnStat(self, ctx):
-        return ReturnStat(self._value_visitor().visit(ctx.value()))
+        value = self._value_visitor().visit(ctx.value()) if ctx.value() is not None else Nope()
+        return ReturnStat(value)
 
     def visitDeffun(self, ctx):
         return self._funciton_visitor().visit(ctx)

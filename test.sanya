@@ -1,7 +1,5 @@
 num sum(num a, num b) go
-  return a + b
+  return
 end
 
-puts(sum(1, 2))
-
-puts(a)
+sum(1, 2)

@@ -1,6 +1,7 @@
 import copy
 
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
+from parser.AST.values.nope import Nope
 from parser.AST.fun_arg import FunArg
 from parser.AST.statements.deffun import Deffun
 from parser.AST.statements.fun_call import FunCall
@@ -12,7 +13,7 @@ class FunctionVisitior(SanyaScriptVisitor):
         self.block = block
 
     def visitDeffun(self, ctx):
-        return_type = ctx.type_().getText() if ctx.type_() else None
+        return_type = ctx.type_().getText() if ctx.type_() else "nope"
         name = ctx.ID().getText()
         args = self.visit(ctx.funArg()) if ctx.funArg() else []
         body = self._visitor(args).visitSanyaScript(ctx.block())

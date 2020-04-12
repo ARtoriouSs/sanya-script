@@ -36,7 +36,7 @@ funCall: ID '(' paramValue? ')';
 paramValue: value
           | value ',' paramValue;
 
-returnStat: 'return' value;
+returnStat: 'return' value?;
 
 // ifs
 ifStat: 'if' value ifBlock;
