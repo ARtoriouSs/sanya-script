@@ -30,8 +30,11 @@ class ValueVisitor(SanyaScriptVisitor):
         self.namespace = namespace
         self.block = block
 
-    def visitParenthesizedValue(self, ctx):
+    def visitCastValue(self, ctx):
         return self.visit(ctx.value()).cast(self.visitCast(ctx.cast()))
+
+    def visitParenthesizedValue(self, ctx):
+        return self.visit(ctx.value())
 
     def visitDivMultValue(self, ctx):
         return self._visit_binary_operation(ctx)
@@ -55,7 +58,7 @@ class ValueVisitor(SanyaScriptVisitor):
         return self._visit_binary_operation(ctx)
 
     def visitNodeValue(self, ctx):
-        return Node(float(ctx.NUM().getText())).cast(self.visitCast(ctx.cast()))
+        return Node(float(ctx.NUM().getText()))
 
     def visitArcValue(self, ctx):
         source = self.visit(ctx.source)
@@ -63,10 +66,10 @@ class ValueVisitor(SanyaScriptVisitor):
         type_, weight = self.visit(ctx.arc())
         if source.return_type() != "node": ParseError.arc_error(source.return_type())
         if target.return_type() != "node": ParseError.arc_error(target.return_type())
-        return Arc(source, target, weight, type_).cast(self.visitCast(ctx.cast()))
+        return Arc(source, target, weight, type_)
 
     def visitGraphValue(self, ctx):
-        graph = Graph().cast(self.visitCast(ctx.cast()))
+        graph = Graph()
         for value in ctx.value():
             graph.elements.append(self.visit(value))
         return graph
@@ -83,15 +86,15 @@ class ValueVisitor(SanyaScriptVisitor):
             if index.return_type() != "num": ParseError.index_error(var.name, index.return_type())
         else:
             index = None
-        return Id(name, var.type, index).cast(self.visitCast(ctx.cast()))
+        return Id(name, var.type, index)
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
-        return FunCall(fun_call).cast(self.visitCast(ctx.cast()))
+        return FunCall(fun_call)
 
     def visitLogicValue(self, ctx):
         value = True if ctx.yes else False
-        return Logic(value).cast(self.visitCast(ctx.cast()))
+        return Logic(value)
 
     def visitNopeValue(self, ctx):
         return Nope()

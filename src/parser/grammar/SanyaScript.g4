@@ -52,20 +52,21 @@ forCycle: 'for' defvar 'in' value block # forInCycle
         | 'for' defvar 'to' value block # forToCycle;
 
 // values
-value: cast? '(' value ')'                                                      # parenthesizedValue
+value: cast value                                                               # castValue
+     | '(' value ')'                                                            # parenthesizedValue
      | 'not' value                                                              # notValue
      | left=value operation='and' right=value                                   # andValue
      | left=value operation='or' right=value                                    # orValue
      | left=value operation=('==' | '!=' | '>=' | '<=' | '>' | '<') right=value # comparisonValue
      | left=value operation=('/' | '*') right=value                             # divMultValue
      | left=value operation=('+' | '-') right=value                             # sumSubtrValue
-     | cast? '^' NUM                                                            # nodeValue
-     | cast? '<' source=value arc target=value '>'                              # arcValue
-     | cast? '[' (value ',')* value ']'                                         # graphValue
-     | cast? NUM                                                                # numValue
-     | cast? ID ('[' value ']')?                                                # idValue
-     | cast? funCall                                                            # funCallValue
-     | cast? (yes='yes' | no='no')                                              # logicValue
+     | '^' NUM                                                                  # nodeValue
+     | '<' source=value arc target=value '>'                                    # arcValue
+     | '[' (value ',')* value ']'                                               # graphValue
+     | NUM                                                                      # numValue
+     | ID ('[' value ']')?                                                      # idValue
+     | funCall                                                                  # funCallValue
+     | (yes='yes' | no='no')                                                    # logicValue
      | 'nope'                                                                   # nopeValue;
 
 cast: '(' type_ ')';
