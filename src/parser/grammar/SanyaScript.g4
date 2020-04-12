@@ -54,7 +54,7 @@ forCycle: 'for' defvar 'in' value block # forInCycle
 // values
 value: cast value                                                               # castValue
      | '(' value ')'                                                            # parenthesizedValue
-     | target=value '[' index=value ']'                                                # indexValue
+     | target=value '[' index=value ']'                                         # indexValue
      | 'not' value                                                              # notValue
      | left=value operation='and' right=value                                   # andValue
      | left=value operation='or' right=value                                    # orValue

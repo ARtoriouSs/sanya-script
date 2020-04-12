@@ -11,8 +11,13 @@ class ValueAnalyzer:
     def validate(self, value):
         if value.kind() == "id":
             self._check_id_value(value)
+        # elif value.kind() == "node":
         elif value.kind() == "arc":
             self._check_arc_value(value)
+        elif value.kind() == "graph":
+            self._check_graph_value(value)
+        elif value.kind() == "fun_call":
+            self._check_fun_call_value()
         elif value.kind() == "unary_operation.not":
             self._check_not_value(value)
         elif re.match(r"binary_operation\..*", value.kind()):
@@ -27,10 +32,18 @@ class ValueAnalyzer:
         if value.var.undef: self.error().undef(value.name)
 
     def _check_arc_value(self, value):
-        if value.source.return_type() != "node": self.error.arc_error(value.source.return_type())
-        if value.target.return_type() != "node": self.error.arc_error(value.target.return_type())
+        source = value.source
+        target = value.target
+
+        self.validate(source)
+        self.validate(target)
+
+        if source.return_type() != "node": self.error.arc_error(source.return_type())
+        if target.return_type() != "node": self.error.arc_error(target.return_type())
 
     def _check_not_value(self, value):
+        self.validate(value.target)
+
         if not OperationsValidator("not", target=value.target).is_valid():
             self.error.incompatible_unary_operation("not", value.target.return_type())
 
@@ -38,8 +51,20 @@ class ValueAnalyzer:
         operation = value.operation
         left = value.left
         right = value.right
+
+        self.validate(left)
+        self.validate(right)
+
         if not OperationsValidator(operation, left, right).is_valid():
             self.error.incompatible_operation(operation, left.return_type(), right.return_type())
+
+    def _check_fun_call_value(self, value):
+        for arg in value.fun_call.args:
+            self.validate(arg)
+
+    def _check_graph_value(self, value):
+        for element in value.elements:
+            self.validate(element)
 
     def _check_cast_type(self, value):
         pass
