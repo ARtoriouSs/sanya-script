@@ -97,16 +97,16 @@ class ValueVisitor(SanyaScriptVisitor):
         return Nope()
 
     def visitSimpleArc(self, ctx):
-        return ["directed", 0]
+        return ["directed", Num(0.0)]
 
     def visitSimpleUndirectedArc(self, ctx):
-        return ["undirected", 0]
+        return ["undirected", Num(0.0)]
 
     def visitWeightedArc(self, ctx):
-        return ["directed", float(ctx.NUM().getText())]
+        return ["directed", self.visit(ctx.value())]
 
     def visitWeightedUndirectedArc(self, ctx):
-        return ["undirected", float(ctx.NUM().getText())]
+        return ["undirected", self.visit(ctx.value())]
 
     def visitCast(self, ctx):
         return ctx.type_().getText() if ctx else None

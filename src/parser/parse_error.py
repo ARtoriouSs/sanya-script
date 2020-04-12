@@ -15,7 +15,10 @@ class ParseError:
         self._halt(f"function with name \"{name}\" and args ({', '.join(self._arg_types(args))}) is undefined")
 
     def arc_error(self, given):
-        self._halt(f"only nodes can be a part of arc, but {given} given")
+        self._halt(f"only nodes can be a part of the arc, but {given} given")
+
+    def arc_weight_error(self, given):
+        self._halt(f"only num can be a weight of the arc, but {given} given")
 
     def incompatible_operation(self, operation, left, right):
         self._halt(f"operation {operation} cannot be performed with {left} and {right}")

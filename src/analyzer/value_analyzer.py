@@ -35,12 +35,15 @@ class ValueAnalyzer:
     def _check_arc_value(self, value):
         source = value.source
         target = value.target
+        weight = value.weight
 
         self.validate(source)
         self.validate(target)
+        self.validate(weight)
 
         if source.return_type() != "node": self.error.arc_error(source.return_type())
         if target.return_type() != "node": self.error.arc_error(target.return_type())
+        if weight.return_type() != "num": self.error.arc_weight_error(weight.return_type())
 
     def _check_not_value(self, value):
         self.validate(value.target)

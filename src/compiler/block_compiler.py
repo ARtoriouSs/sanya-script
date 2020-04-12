@@ -130,7 +130,7 @@ class BlockCompiler:
         elif value.kind() == "node":
             string = f"Node({self._resolve_value(value.value)}.value)"
         elif value.kind() == "arc":
-            string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
+            string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {self._resolve_value(value.weight)}.value, \"{value.type}\")"
         elif value.kind() == "graph":
             string = self._resolve_graph_value(value)
         elif value.kind() == "num":
