@@ -3,7 +3,7 @@ class Type:
         pass
 
     def puts(self):
-        self.print()
+        self.put()
         print()
 
     def cast(self, type_):

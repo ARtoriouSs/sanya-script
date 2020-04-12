@@ -1,2 +1,3 @@
-num n = scan()
-put(n)
+arc a = (^1 -> (node) 2) + 2 * 2
+
+puts(a)

@@ -47,16 +47,20 @@ class Arc(Type):
         self.target.put()
 
     def summation(self, value):
-        return self.__class__(self.weight + value.value)
+        self.weight += value.value
+        return self
 
     def subtraction(self, value):
-        return self.__class__(self.weight - value.value)
+        self.weight -= value.value
+        return self
 
     def multiplication(self, value):
-        return self.__class__(self.weight * value.value)
+        self.weight *= value.value
+        return self
 
     def division(self, value):
-        return self.__class__(self.weight / value.value)
+        self.weight /= value.value
+        return self
 
     def greater_or_equal(self, value):
         from .logic import Logic

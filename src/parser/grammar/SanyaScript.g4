@@ -62,7 +62,7 @@ value: cast value                                                               
      | left=value operation=('/' | '*') right=value                             # divMultValue
      | left=value operation=('+' | '-') right=value                             # sumSubtrValue
      | '^' NUM                                                                  # nodeValue // ref
-     | '<' source=value arc target=value '>'                                    # arcValue
+     | source=value arc target=value                                            # arcValue
      | '[' (value ',')* value ']'                                               # graphValue // ref
      | NUM                                                                      # numValue
      | ID                                                                       # idValue
