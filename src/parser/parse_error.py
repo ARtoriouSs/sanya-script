@@ -8,6 +8,9 @@ class ParseError:
     def type_error(self, target, given, expected):
         self._halt(f"\"{target}\" expected to be {expected}, but it was {given}")
 
+    def cast_error(self, type_, cast):
+        self._halt(f"cannot cast {type_} to {cast}")
+
     def array_value_error(self, target, given, expected):
         self._halt(f"{given} is pushed to \"{target}\" wich is {expected}")
 

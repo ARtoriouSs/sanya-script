@@ -1,3 +1,1 @@
-arc a = ^1 -[^2]-> ^2
-
-puts(a)
+arc a = (arc) 1

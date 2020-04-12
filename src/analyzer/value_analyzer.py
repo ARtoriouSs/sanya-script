@@ -2,6 +2,7 @@ import re
 
 from parser.parse_error import ParseError
 from analyzer.operations_validator import OperationsValidator
+from analyzer.cast_validator import CastValidator
 
 
 class ValueAnalyzer:
@@ -24,7 +25,7 @@ class ValueAnalyzer:
         elif re.match(r"binary_operation\..*", value.kind()):
             self._check_binary_operation_value(value)
 
-        if value.cast is not None: self._check_cast_type(value)
+        if value.cast_type is not None: self._check_cast_type(value)
         if value.index is not None: self._check_index(value)
 
         return True
@@ -78,7 +79,8 @@ class ValueAnalyzer:
             self.error.node_value_error(value.value.return_type())
 
     def _check_cast_type(self, value):
-        pass
+        if not CastValidator(value).is_valid():
+            self.error.cast_error(value.kind(), value.cast_type)
 
     def _check_index(self, value):
         if not re.match(r".*{}", value.ret_type):
