@@ -4,13 +4,14 @@ from compiler.value_resolver import ValueResolver
 
 
 class BlockCompiler:
+    INDENT_SPACES = "    "
+
     def __init__(self, target, indent=0):
         self.file = target
         self.indent = indent
 
     def compile(self, ast):
          for statement in ast.statements:
-            self.file.write("    " * self.indent)
             if statement.kind() == "defvar":
                 self._compile_defvar(statement)
             elif statement.kind() == "assignment":
@@ -33,53 +34,53 @@ class BlockCompiler:
                 self._compile_while_cycle(statement)
 
     def _compile_defvar(self, statement):
-        self.file.write(f"{statement.name} = ")
+        name = f"{statement.name} = "
         if statement.is_array():
-            self.file.write("[]\n")
+            self._compile(name + "[]\n")
         else:
-            self.file.write(f"{statement.type.capitalize()}()\n")
+            self._compile(name + f"{statement.type.capitalize()}()\n")
 
     def _compile_assignment(self, statement):
-        self.file.write(f"{statement.target.name} = {self._resolve_value(statement.value)}\n")
+        self._compile(f"{statement.target.name} = {self._resolve_value(statement.value)}\n")
 
     def _compile_return_stat(self, statement):
-        self.file.write(f"return {self._resolve_value(statement.value)}\n")
+        self._compile(f"return {self._resolve_value(statement.value)}\n")
 
     def _compile_deffun(self, statement):
-        self.file.write(f"def {statement.name}({self._resolve_fun_args(statement.args)}):\n")
+        self._compile(f"def {statement.name}({self._resolve_fun_args(statement.args)}):\n")
         self._compile_nested_block(statement.body)
 
     def _compile_fun_call(self, statement):
-        self.file.write(f"{statement.name}({self._resolve_array(statement.args)})\n")
+        self._compile(f"{statement.name}({self._resolve_array(statement.args)})\n")
 
     def _compile_if(self, statement):
-        self.file.write(f"if {self._resolve_value(statement.condition)}.cast('logic').value:\n")
+        self._compile(f"if {self._resolve_value(statement.condition)}.cast('logic').value:\n")
         self._compile_nested_block(statement.then)
         if statement.else_ is not None:
-            self.file.write("    " * self.indent + f"else:\n")
+            self._compile("else:\n")
             self._compile_nested_block(statement.else_)
 
     def _compile_while_cycle(self, statement):
-        self.file.write(f"while {self._resolve_value(statement.condition)}.cast('logic').value:\n")
+        self._compile(f"while {self._resolve_value(statement.condition)}.cast('logic').value:\n")
         self._compile_nested_block(statement.block)
 
     def _compile_for_in_cycle(self, statement):
-        self.file.write(f"for {statement.target.name} in {self._resolve_value(statement.enumerable)}:\n")
+        self._compile(f"for {statement.target.name} in {self._resolve_value(statement.enumerable)}:\n")
         self._compile_nested_block(statement.block)
 
     def _compile_for_to_cycle(self, statement):
-        self.file.write(f"for {statement.target.name} in range(int({self._resolve_value(statement.to)}.value)):\n")
-        self.file.write("    " * self.indent + f"    {statement.target.name} = Num({statement.target.name})\n")
+        self._compile(f"for {statement.target.name} in range(int({self._resolve_value(statement.to)}.value)):\n")
+        self._compile(self.INDENT_SPACES + f"{statement.target.name} = Num({statement.target.name})\n")
         self._compile_nested_block(statement.block)
 
     def _compile_push_to_array(self, statement):
-        self.file.write(f"{statement.target.name}.append({self._resolve_value(statement.value)})\n")
+        self._compile(f"{statement.target.name}.append({self._resolve_value(statement.value)})\n")
 
     def _compile_nested_block(self, block):
         if any(block.statements):
             self.__class__(self.file, self.indent + 1).compile(block)
         else:
-            self.file.write(f"    pass\n")
+            self._compile(self.INDENT_SPACES + "pass\n")
 
     def _resolve_value(self, value):
         return ValueResolver().resolve(value)
@@ -91,3 +92,6 @@ class BlockCompiler:
     def _resolve_array(self, values):
         values_ = [self._resolve_value(value) for value in values]
         return ", ".join(values_)
+
+    def _compile(self, string):
+        self.file.write(self.INDENT_SPACES * self.indent + string)
