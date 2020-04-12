@@ -11,5 +11,5 @@ class Nope(Type):
         else:
             RuntimeError.cast_error("nope", type_)
 
-    def print(self):
+    def put(self):
         print("nope")

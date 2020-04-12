@@ -1,8 +1,8 @@
 class Type:
-    def print(self):
+    def put(self):
         pass
 
-    def println(self):
+    def puts(self):
         self.print()
         print()
 

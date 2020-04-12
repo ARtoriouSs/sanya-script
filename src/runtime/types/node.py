@@ -26,7 +26,7 @@ class Node(Type):
         else:
             RuntimeError.cast_error("node", type_)
 
-    def print(self):
+    def put(self):
         print(f"^{self.value}", end='')
 
     def summation(self, value):

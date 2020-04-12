@@ -26,7 +26,7 @@ class Num(Type):
         else:
             RuntimeError.cast_error("num", type_)
 
-    def print(self):
+    def put(self):
         print(self.value)
 
     def summation(self, value):

@@ -1,16 +1,16 @@
 num scan() go end
 
-print(node _)  go end
-print(arc _)   go end
-print(graph _) go end
-print(num _)   go end
-print(logic _) go end
+put(node _)  go end
+put(arc _)   go end
+put(graph _) go end
+put(num _)   go end
+put(logic _) go end
 
-println(node _)  go end
-println(arc _)   go end
-println(graph _) go end
-println(num _)   go end
-println(logic _) go end
+puts(node _)  go end
+puts(arc _)   go end
+puts(graph _) go end
+puts(num _)   go end
+puts(logic _) go end
 
 node source(arc _) go end
 node target(arc _) go end

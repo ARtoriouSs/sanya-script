@@ -35,6 +35,6 @@ class Logic(Type):
         from .logic import Logic
         return Logic(self.value < value.cast("logic").value)
 
-    def print(self):
+    def put(self):
         string = "yes" if self.value else "no"
         print(string)

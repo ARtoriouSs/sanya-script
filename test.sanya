@@ -1,2 +1,2 @@
 num n = scan()
-println(n)
+put(n)

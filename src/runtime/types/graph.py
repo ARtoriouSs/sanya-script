@@ -24,12 +24,12 @@ class Graph(Type):
     def all_elements(self):
         return self.nodes.union(self.arcs)
 
-    def print(self):
+    def put(self):
         for arc in self.arcs:
             arc.println()
         for i, node in enumerate(self.nodes):
             if i != 0: print(", ", end="")
-            node.print()
+            node.put()
 
     def summation(self, value):
         return self.__class__(self.all_elements().union(value.all_elements()))

@@ -4,11 +4,11 @@ from .types.num import Num
 def scan():
     return Num(input())
 
-def print(obj):
-    obj.print()
+def put(obj):
+    obj.put()
 
-def println(obj):
-    obj.println()
+def puts(obj):
+    obj.puts()
 
 def source(arc):
     return arc.source

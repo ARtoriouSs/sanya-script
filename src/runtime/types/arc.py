@@ -41,10 +41,10 @@ class Arc(Type):
         else:
             RuntimeError.cast_error("arc", type_)
 
-    def print(self):
-        self.source.print()
+    def put(self):
+        self.source.put()
         print(f" {'<' if not self._is_directed else ''}-[{self.weight}]-> ", end="")
-        self.target.print()
+        self.target.put()
 
     def summation(self, value):
         return self.__class__(self.weight + value.value)
