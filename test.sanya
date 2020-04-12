@@ -4,7 +4,9 @@ num sum(num a, num b) go
     if no go
       return 2
     else
-      return (num) ^3
+      for num a to 5 go
+        return 1
+      end
     end
   else
     return a + b

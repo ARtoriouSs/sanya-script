@@ -56,7 +56,7 @@ class BlockCompiler:
         self.file.write(f"if {self._resolve_value(statement.condition)}.cast('logic').value:\n")
         self._compile_nested_block(statement.then)
         if statement.else_ is not None:
-            self.file.write(f"else:\n")
+            self.file.write("    " * self.indent + f"else:\n")
             self._compile_nested_block(statement.else_)
 
     def _compile_while_cycle(self, statement):
@@ -69,7 +69,7 @@ class BlockCompiler:
 
     def _compile_for_to_cycle(self, statement):
         self.file.write(f"for {statement.target.name} in range(int({self._resolve_value(statement.to)}.value)):\n")
-        self.file.write(f"    {statement.target.name} = Num({statement.target.name})\n")
+        self.file.write("    " * self.indent + f"    {statement.target.name} = Num({statement.target.name})\n")
         self._compile_nested_block(statement.block)
 
     def _compile_push_to_array(self, statement):
