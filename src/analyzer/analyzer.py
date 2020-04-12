@@ -1,6 +1,6 @@
 import re
 
-from parser.parse_error import ParseError
+from parser.compilation_error import CompilationError
 from analyzer.value_analyzer import ValueAnalyzer
 
 
@@ -108,4 +108,4 @@ class Analyzer:
         return ValueAnalyzer(self._error())
 
     def _error(self):
-        return ParseError(self.current_line)
+        return CompilationError(self.current_line)

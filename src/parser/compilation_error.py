@@ -1,4 +1,4 @@
-class ParseError:
+class CompilationError:
     def __init__(self, line=None):
         self.line_prefix = f"Line: {line}: " if line is not None else ""
 

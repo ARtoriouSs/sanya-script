@@ -1,6 +1,6 @@
 import re
 
-from parser.parse_error import ParseError
+from parser.compilation_error import CompilationError
 from analyzer.operations_validator import OperationsValidator
 from analyzer.cast_validator import CastValidator
 
