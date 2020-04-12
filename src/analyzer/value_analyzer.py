@@ -66,6 +66,8 @@ class ValueAnalyzer:
     def _check_graph_value(self, value):
         for element in value.elements:
             self.validate(element)
+            if element.return_type() not in ["node", "arc", "graph"]:
+                self.error.graph_value_error(element.return_type())
 
     def _check_node_value(self, value):
         self.validate(value.value)

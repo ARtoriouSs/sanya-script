@@ -44,6 +44,9 @@ class ParseError:
     def node_value_error(self, given):
         self._halt(f"node value can only be num, but {given} given")
 
+    def graph_value_error(self, given):
+        self._halt(f"graph value can only be node, arc or graph, but {given} given")
+
     def _halt(self, message):
         print(self.line_prefix + message)
         print("Compilation failed!")

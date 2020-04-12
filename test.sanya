@@ -1,5 +1,1 @@
-num n = 1
-
-node a = ^(^1 -> ^2)
-
-puts(a)
+graph g = [1]

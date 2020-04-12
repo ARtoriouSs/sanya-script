@@ -63,12 +63,15 @@ value: cast value                                                               
      | left=value operation=('+' | '-') right=value                             # sumSubtrValue
      | '^' value                                                                # nodeValue
      | source=value arc target=value                                            # arcValue
-     | '[' (value ',')* value ']'                                               # graphValue // ref
+     | '[' graphPart? ']'                                                       # graphValue
      | NUM                                                                      # numValue
      | ID                                                                       # idValue
      | funCall                                                                  # funCallValue
      | (yes='yes' | no='no')                                                    # logicValue
      | 'nope'                                                                   # nopeValue;
+
+graphPart: value
+         | value ',' graphPart;
 
 cast: '(' type_ ')';
 

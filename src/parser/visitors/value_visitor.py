@@ -70,10 +70,13 @@ class ValueVisitor(SanyaScriptVisitor):
         return Arc(source, target, weight, type_)
 
     def visitGraphValue(self, ctx):
-        graph = Graph()
-        for value in ctx.value():
-            graph.elements.append(self.visit(value))
-        return graph
+        elements = self.visit(ctx.graphPart()) if ctx.graphPart() is not None else []
+        return Graph(elements)
+
+    def visitGraphPart(self, ctx):
+        value = self.visit(ctx.value())
+        rest = self.visit(ctx.graphPart()) if ctx.graphPart() is not None else []
+        return [value] + rest
 
     def visitNumValue(self, ctx):
         return Num(float(ctx.NUM().getText()))
