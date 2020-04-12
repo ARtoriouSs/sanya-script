@@ -1,5 +1,14 @@
 num sum(num a, num b) go
-  return ^2
+  if yes go
+    return 1
+    if no go
+      return 2
+    else
+      return (num) ^3
+    end
+  else
+    return a + b
+  end
 end
 
 puts(sum(1, 2))

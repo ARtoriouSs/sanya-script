@@ -15,7 +15,7 @@ class FunctionVisitior(SanyaScriptVisitor):
         args = self.visit(ctx.funArg()) if ctx.funArg() else []
         body = self._visitor(args).visitSanyaScript(ctx.block())
         self.namespace.add_fun(name, return_type, args)
-        return Deffun(name, args, body)
+        return Deffun(return_type, name, args, body)
 
     def visitFunArg(self, ctx):
         value = FunArg(ctx.type_().getText(), ctx.ID().getText())

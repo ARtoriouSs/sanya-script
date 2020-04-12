@@ -43,6 +43,8 @@ class Analyzer:
 
         self.validate(statement.body)
 
+        self._fun_return_check(statement.body, statement)
+
     def _check_assignment(self, statement):
         target = statement.target
         value = statement.value
@@ -103,6 +105,16 @@ class Analyzer:
         if target.undef: self._error().undef(target.name)
         if target.type != value.return_type() + "{}" and value.return_type() != "nope":
             self._error().array_value_error(target.name, value.return_type(), target.type)
+
+    def _fun_return_check(self, block, fun):
+        for statement in block.statements:
+            if statement.kind() == "return_stat" and statement.value.return_type() != fun.ret_type:
+                self._error().return_error(fun.name, statement.value.return_type(), fun.ret_type)
+            if statement.kind() in ["for_to_cycle", "for_in_cycle", "while_cycle"]:
+                self._fun_return_check(statement.block, fun)
+            if statement.kind() == "if_stat":
+                self._fun_return_check(statement.then, fun)
+                if statement.else_ is not None: self._fun_return_check(statement.else_, fun)
 
     def _value_analyzer(self):
         return ValueAnalyzer(self._error())

@@ -53,6 +53,9 @@ class CompilationError:
     def graph_value_error(self, given):
         self._halt(f"graph value can only be node, arc or graph, but {given} given")
 
+    def return_error(self, name, given, expected):
+        self._halt(f"function {name} should return {expected}, but {given} given")
+
     def _halt(self, message):
         print(self.line_prefix + message)
         print("Compilation failed!")
