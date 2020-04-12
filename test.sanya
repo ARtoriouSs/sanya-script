@@ -1,3 +1,2 @@
-graph g = [^1, ^2]
-
-println(nodes(g)[1])
+num n = scan()
+println(n)

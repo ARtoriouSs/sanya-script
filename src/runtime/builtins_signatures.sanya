@@ -1,3 +1,5 @@
+num scan() go end
+
 print(node _)  go end
 print(arc _)   go end
 print(graph _) go end

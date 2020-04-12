@@ -1,6 +1,9 @@
 from .types.num import Num
 
 
+def scan():
+    return Num(input())
+
 def print(obj):
     obj.print()
 
