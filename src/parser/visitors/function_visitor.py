@@ -1,3 +1,5 @@
+import copy
+
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parser.AST.fun_arg import FunArg
 from parser.AST.statements.deffun import Deffun
@@ -6,7 +8,7 @@ from parser.AST.statements.fun_call import FunCall
 
 class FunctionVisitior(SanyaScriptVisitor):
     def __init__(self, block, namespace):
-        self.namespace = namespace
+        self.namespace = copy.copy(namespace)
         self.block = block
 
     def visitDeffun(self, ctx):

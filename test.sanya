@@ -1,16 +1,7 @@
 num sum(num a, num b) go
-  if yes go
-    return 1
-    if no go
-      return 2
-    else
-      for num a to 5 go
-        return 1
-      end
-    end
-  else
-    return a + b
-  end
+  return a + b
 end
 
 puts(sum(1, 2))
+
+puts(a)

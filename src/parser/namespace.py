@@ -34,7 +34,7 @@ class Namespace:
             funs = [fun for fun in funs if fun.return_type == return_type]
         if args is not None:
             funs = [fun for fun in funs if self._compare_args(fun, args)]
-        return funs[0] if any(funs) else Fun(name, return_type, args, undef=True)
+        return funs[0] if any(funs) else Fun(return_type, name, args, undef=True)
 
     def has_var(self, name):
         return bool(self.find_var(name))
