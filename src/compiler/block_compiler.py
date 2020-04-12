@@ -128,7 +128,7 @@ class BlockCompiler:
         if value.kind() == "id":
             string = self._resolve_id_value(value)
         elif value.kind() == "node":
-            string = f"Node({value.value})"
+            string = f"Node({self._resolve_value(value.value)}.value)"
         elif value.kind() == "arc":
             string = f"Arc({self._resolve_value(value.source)}, {self._resolve_value(value.target)}, {value.weight}, \"{value.type}\")"
         elif value.kind() == "graph":

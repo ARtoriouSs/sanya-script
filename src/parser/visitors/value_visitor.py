@@ -61,7 +61,7 @@ class ValueVisitor(SanyaScriptVisitor):
         return self._visit_binary_operation(ctx)
 
     def visitNodeValue(self, ctx):
-        return Node(float(ctx.NUM().getText()))
+        return Node(self.visit(ctx.value()))
 
     def visitArcValue(self, ctx):
         source = self.visit(ctx.source)

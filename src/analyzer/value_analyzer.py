@@ -11,7 +11,8 @@ class ValueAnalyzer:
     def validate(self, value):
         if value.kind() == "id":
             self._check_id_value(value)
-        # elif value.kind() == "node":
+        elif value.kind() == "node":
+            self._check_node_value(value)
         elif value.kind() == "arc":
             self._check_arc_value(value)
         elif value.kind() == "graph":
@@ -65,6 +66,11 @@ class ValueAnalyzer:
     def _check_graph_value(self, value):
         for element in value.elements:
             self.validate(element)
+
+    def _check_node_value(self, value):
+        self.validate(value.value)
+        if value.value.return_type() != "num":
+            self.error.node_value_error(value.value.return_type())
 
     def _check_cast_type(self, value):
         pass

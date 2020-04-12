@@ -41,6 +41,9 @@ class ParseError:
     def duplicate_args(self, name):
         self._halt(f"duplicate argument name in fun {name} definition")
 
+    def node_value_error(self, given):
+        self._halt(f"node value can only be num, but {given} given")
+
     def _halt(self, message):
         print(self.line_prefix + message)
         print("Compilation failed!")
