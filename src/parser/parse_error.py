@@ -1,4 +1,7 @@
 class ParseError:
+    def __init__(self, line=None):
+        self.line_prefix = f"line: {line}" if line is not None else ""
+
     @classmethod
     def undef(cls, name):
         cls._halt(f"name \"{name}\" is undefined")

@@ -1,4 +1,4 @@
-class Validator:
+class OperationsValidator:
     def __init__(self, operation, left=None, right=None, target=None):
         self.operation = operation
         self.left = left

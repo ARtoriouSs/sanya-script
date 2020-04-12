@@ -24,7 +24,6 @@ from parser.AST.values.operations.greater_or_equal import GreaterOrEqual
 from parser.AST.values.operations.less_or_equal import LessOrEqual
 from parser.AST.values.operations.greater import Greater
 from parser.AST.values.operations.less import Less
-from parser.AST.values.operations.validator import Validator
 
 
 class ValueVisitor(SanyaScriptVisitor):
@@ -41,10 +40,6 @@ class ValueVisitor(SanyaScriptVisitor):
     def visitIndexValue(self, ctx):
         value = self.visit(ctx.target)
         index = self.visit(ctx.index)
-        if not re.match(r".*{}", value.return_type()):
-            ParseError.cannot_be_indexed(value.return_type())
-        if index.return_type() != "num":
-            ParseError.incorrect_index_type(index.return_type())
         return value.set_index(index)
 
     def visitDivMultValue(self, ctx):
@@ -61,8 +56,6 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitNotValue(self, ctx):
         target = self.visit(ctx.value())
-        if not Validator("not", target=target).is_valid():
-            ParseError.incompatible_unary_operation("not", target.return_type())
         return Not(target)
 
     def visitComparisonValue(self, ctx):
@@ -75,8 +68,6 @@ class ValueVisitor(SanyaScriptVisitor):
         source = self.visit(ctx.source)
         target = self.visit(ctx.target)
         type_, weight = self.visit(ctx.arc())
-        if source.return_type() != "node": ParseError.arc_error(source.return_type())
-        if target.return_type() != "node": ParseError.arc_error(target.return_type())
         return Arc(source, target, weight, type_)
 
     def visitGraphValue(self, ctx):
@@ -89,10 +80,8 @@ class ValueVisitor(SanyaScriptVisitor):
         return Num(float(ctx.NUM().getText()))
 
     def visitIdValue(self, ctx):
-        name = ctx.ID().getText()
-        var = self.namespace.find_var(name)
-        if var is None: ParseError.undef(name)
-        return Id(name, var.type)
+        var = self.namespace.find_var(ctx.ID().getText())
+        return Id(var)
 
     def visitFunCallValue(self, ctx):
         fun_call = self._function_visitor().visit(ctx.funCall())
@@ -104,17 +93,6 @@ class ValueVisitor(SanyaScriptVisitor):
 
     def visitNopeValue(self, ctx):
         return Nope()
-
-    def visitArcPart(self, ctx):
-        if ctx.ID():
-            name = ctx.ID().getText()
-            var = self.namespace.find_var(name)
-            if var is not None:
-                return Id(name) if var.type == "node" else ParseError.type_error(var.name, var.type, "node")
-            else:
-                ParseError.undef(name)
-        else:
-            return Node(float(ctx.NUM().getText()))
 
     def visitArrayPart(self, ctx):
         value = self.visit(ctx.value())
@@ -140,8 +118,6 @@ class ValueVisitor(SanyaScriptVisitor):
         left = self.visit(ctx.left)
         right = self.visit(ctx.right)
         operation = ctx.operation.text
-        if not Validator(operation, left, right).is_valid():
-            ParseError.incompatible_operation(operation, left.return_type(), right.return_type())
         if operation == "*":
             return Multiplication(left, right)
         elif operation == "/":

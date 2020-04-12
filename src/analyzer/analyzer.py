@@ -1,14 +1,13 @@
 import re
 
 from parser.parse_error import ParseError
+from analyzer.value_analyzer import ValueAnalyzer
 
 
 class Analyzer:
-    def __init__(self, ast):
-        self.ast = ast
-
-    def validate(self):
-        for statement in self.ast.statements:
+    def validate(self, ast):
+        for statement in ast.statements:
+            self.current_line = statement.line
             self._check(statement)
         return True
 
@@ -42,9 +41,13 @@ class Analyzer:
         if len(arg_names) != len(set(arg_names)):
             ParseError.duplicate_args(statement.name)
 
+        self.validate(statement.body)
+
     def _check_assignment(self, statement):
         target = statement.target
         value = statement.value
+
+        self._value_analyzer().validate(value)
 
         if target.undef: ParseError.undef(target.name)
         if target.is_const: ParseError.const_reassignment(target.name)
@@ -52,35 +55,54 @@ class Analyzer:
             ParseError.type_error(target.name, value.return_type(), target.type)
 
     def _check_return_stat(self, statement):
-        pass
+        self._value_analyzer().validate(statement.value)
 
     def _check_fun_call(self, statement):
         if statement.fun.undef:
             ParseError.signature_not_found(statement.name, statement.args)
 
+        for arg in statement.args:
+            self._value_analyzer().validate(arg)
+
     def _check_if_stat(self, statement):
-        pass
+        self._value_analyzer().validate(statement.condition)
+        self.validate(statement.then)
+        if statement.else_ is not None: self.validate(statement.else_)
 
     def _check_for_in_cycle(self, statement):
         var = statement.target
         enumerable = statement.enumerable
+
+        self._value_analyzer().validate(enumerable)
 
         if not re.match(r".*{}", enumerable.return_type()):
             ParseError.cycle_enumerator_error(enumerable.return_type())
         if var.type + "{}" != enumerable.return_type():
             ParseError.type_error(var.name, var.type, re.sub("{}", "", enumerable.return_type()))
 
+        self.validate(statement.block)
+
     def _check_for_to_cycle(self, statement):
+        self._value_analyzer().validate(statement.to)
+
         if statement.to.return_type() != "num" or statement.target.type != "num":
             ParseError.for_to_type_error()
 
+        self.validate(statement.block)
+
     def _check_while_cycle(self, statement):
-        pass
+        self._value_analyzer().validate(statement.condition)
+        self.validate(statement.block)
 
     def _check_push_to_array(self, statement):
         target = statement.target
         value = statement.value
 
+        self._value_analyzer().validate(value)
+
         if target.undef: ParseError.undef(target.name)
         if target.type != value.return_type() + "{}" and value.return_type() != "nope":
             ParseError.array_value_error(target.name, value.return_type(), target.type)
+
+    def _value_analyzer(self):
+        return ValueAnalyzer(ParseError(self.current_line))

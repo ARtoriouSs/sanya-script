@@ -15,7 +15,7 @@ if __name__ == '__main__':
     code_file = sys.argv[1]
     targer_file = sys.argv[2]
     ast = Parser(code_file, [BUILTINS_FILE]).parse()
-    if Analyzer(ast).validate():
+    if Analyzer().validate(ast):
         Compiler(targer_file).compile(ast)
     else:
         print("\nFiled to compile")

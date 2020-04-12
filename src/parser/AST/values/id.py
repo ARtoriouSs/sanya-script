@@ -1,10 +1,13 @@
+import re
+
 from parser.AST.values.value import Value
 
 
 class Id(Value):
-    def __init__(self, name, ret_type, cast=None, index=None):
-        self.name = name
-        self.ret_type = ret_type
+    def __init__(self, var, cast=None, index=None):
+        self.var = var
+        self.name = var.name
+        self.ret_type = var.type
         super().__init__(cast, index)
 
     def return_type(self):

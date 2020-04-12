@@ -22,5 +22,3 @@ class BinaryOperation(Value):
             return "node"
         elif self.left.return_type() == "graph" and self.right.return_type() == "graph":
             return "graph"
-        else:
-            ParseError.incompatible_operation(super().kind(), self.left.return_type(), self.right.return_type())
