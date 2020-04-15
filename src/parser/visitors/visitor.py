@@ -20,7 +20,7 @@ from parser.AST.id import Id
 
 class Visitor(SanyaScriptVisitor):
     def __init__(self, namespace=None, locals_=()):
-        self.namespace = copy.copy(namespace) or Namespace()
+        self.namespace = copy.deepcopy(namespace) or Namespace()
         for local in list(locals_):
             self.namespace.add_var(local.name, local.type)
         self.block = Block()

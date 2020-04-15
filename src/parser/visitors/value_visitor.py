@@ -1,5 +1,4 @@
 import re
-import copy
 
 from parser.grammar.SanyaScriptVisitor import SanyaScriptVisitor
 from parser.visitors.function_visitor import FunctionVisitior
@@ -28,7 +27,7 @@ from parser.AST.values.operations.less import Less
 
 class ValueVisitor(SanyaScriptVisitor):
     def __init__(self, block, namespace):
-        self.namespace = copy.copy(namespace)
+        self.namespace = namespace
         self.block = block
 
     def visitCastValue(self, ctx):

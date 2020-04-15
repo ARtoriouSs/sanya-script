@@ -1,5 +1,9 @@
 num sum(num a, num b) go
-  return
+  num keks(num a, num b) go
+    return a - b
+  end
+  puts(keks(a, b))
+  return a + b
 end
 
-sum(1, 2)
+puts(sum(1, 2))

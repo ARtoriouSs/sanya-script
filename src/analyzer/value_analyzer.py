@@ -31,7 +31,7 @@ class ValueAnalyzer:
         return True
 
     def _check_id_value(self, value):
-        if value.var.undef: self.error().undef(value.name)
+        if value.var.undef: self.error.undef(value.name)
 
     def _check_arc_value(self, value):
         source = value.source
