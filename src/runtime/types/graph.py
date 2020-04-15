@@ -26,7 +26,7 @@ class Graph(Type):
 
     def put(self):
         for arc in self.arcs:
-            arc.println()
+            arc.puts()
         for i, node in enumerate(self.nodes):
             if i != 0: print(", ", end="")
             node.put()

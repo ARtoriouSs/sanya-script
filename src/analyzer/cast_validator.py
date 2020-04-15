@@ -3,7 +3,7 @@ class CastValidator:
         self.value = value
 
     def is_valid(self):
-        type_ = self.value.kind()
+        type_ = self.value.return_type()
         cast_type = self.value.cast_type
 
         if type_ == "node" and cast_type in ["node", "graph", "num", "logic"]: return True
@@ -14,4 +14,3 @@ class CastValidator:
         if type_ == "logic" and cast_type in ["num", "logic"]: return True
 
         return False
-

@@ -1,9 +1,21 @@
-num sum(num a, num b) go
-  num keks(num a, num b) go
-    return a - b
+graph g = [
+  ^1 -> ^2,
+  ^2 -> ^3,
+  ^1 -> ^5,
+  ^3 -> ^6,
+  ^0 -> ^-3
+]
+
+node biggest_node(graph g) go
+  node maxx = ^-9999
+
+  for node n in nodes(g) go
+    if n > maxx go
+      maxx = n
+    end
   end
-  puts(keks(a, b))
-  return a + b
+
+  return maxx
 end
 
-puts(sum(1, 2))
+puts(biggest_node(a))
