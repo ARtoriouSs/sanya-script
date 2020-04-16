@@ -1,21 +1,23 @@
-graph g = [
-  ^1 -> ^2,
-  ^2 -> ^3,
-  ^1 -> ^5,
-  ^3 -> ^6,
-  ^0 -> ^-3
-]
-
-node biggest_node(graph g) go
-  node maxx = ^-9999
-
-  for node n in nodes(g) go
-    if n > maxx go
-      maxx = n
+arc max_arc(graph g) go
+  num max_weight = -999999
+  arc max_arc
+  for arc a in arcs(g) go
+    if (num) source(a) + (num) target(a) > max_weight go
+      max_arc = a
+      max_weight = (num) source(a) + (num) target(a)
     end
   end
 
-  return maxx
+  return max_arc
 end
 
-puts(biggest_node(a))
+graph g = [
+  ^1 -> ^2,
+  ^2 -> ^4,
+  ^3 -> ^6,
+  ^3 -> ^4,
+  ^1 -> ^3,
+  ^7 -> ^1
+]
+
+puts(max_arc(g))

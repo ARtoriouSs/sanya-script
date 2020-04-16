@@ -56,11 +56,11 @@ value: cast value                                                               
      | '(' value ')'                                                            # parenthesizedValue
      | target=value '[' index=value ']'                                         # indexValue
      | 'not' value                                                              # notValue
+     | left=value operation=('/' | '*') right=value                             # divMultValue
+     | left=value operation=('+' | '-') right=value                             # sumSubtrValue
      | left=value operation='and' right=value                                   # andValue
      | left=value operation='or' right=value                                    # orValue
      | left=value operation=('==' | '!=' | '>=' | '<=' | '>' | '<') right=value # comparisonValue
-     | left=value operation=('/' | '*') right=value                             # divMultValue
-     | left=value operation=('+' | '-') right=value                             # sumSubtrValue
      | '^' value                                                                # nodeValue
      | source=value arc target=value                                            # arcValue
      | '[' graphPart? ']'                                                       # graphValue

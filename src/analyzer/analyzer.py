@@ -60,11 +60,11 @@ class Analyzer:
         self._value_analyzer().validate(statement.value)
 
     def _check_fun_call(self, statement):
-        if statement.fun.undef:
-            self._error().signature_not_found(statement.name, statement.args)
-
         for arg in statement.args:
             self._value_analyzer().validate(arg)
+
+        if statement.fun.undef:
+            self._error().signature_not_found(statement.name, statement.args)
 
     def _check_if_stat(self, statement):
         self._value_analyzer().validate(statement.condition)
