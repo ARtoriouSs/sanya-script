@@ -1,0 +1,11 @@
+#!/bin/bash
+
+code_file=$1
+target_file=$2
+
+if [ -z "$code_file" ] || [ -z "$target_file" ]; then
+  echo -e "\e[31mError! Provide source and target files as argunents\e[0m"
+  exit 1
+fi
+
+python3 src/runner.py $code_file $target_file

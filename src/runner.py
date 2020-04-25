@@ -13,7 +13,8 @@ if __name__ == '__main__':
         exit(1)
 
     code_file = sys.argv[1]
-    targer_file = sys.argv[2]
+    target_file = sys.argv[2]
+
     ast = Parser(code_file, [BUILTINS_FILE]).parse()
     if Analyzer().validate(ast):
-        Compiler(targer_file).compile(ast)
+        Compiler(target_file).compile(ast)
