@@ -23,4 +23,9 @@ Then generate parser:
 antlr4 -Dlanguage=Python3 -visitor -no-listener src/grammar/SanyaScript.g4
 ```
 
-That's all, now it is ready to run with `python3 parser.py test.sanya`
+That's all, now you can compile SanyaScript to Python and run it with:
+
+```bash
+./sanya example.sanya result
+./result
+```
