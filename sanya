@@ -8,4 +8,6 @@ if [ -z "$code_file" ] || [ -z "$target_file" ]; then
   exit 1
 fi
 
-python3 src/runner.py $code_file $target_file
+directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+python3 $directory/src/runner.py $code_file $target_file $directory
