@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This is an executable to run SanyaScript
+
 code_file=$1
 target_file=$2
 
