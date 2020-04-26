@@ -2,30 +2,25 @@
 
 Crutched graph language compilable into Python :)
 
-Also check out the [runtime repo](https://github.com/ARtoriouSs/sanya-script-runtime).
-
 ## Install
 
-First you need to install [ANTLR](https://github.com/antlr/antlr4). Then clone the project:
+First, you need to install [ANTLR](https://github.com/antlr/antlr4).
+
+Then clone the project and install dependencies:
 
 ```bash
 git clone https://github.com/ARtoriouSs/sanya-script
 cd sanya-script
-```
-
-Install dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
-Then generate parser:
+Generate parser with ANTLR:
 
 ```bash
 antlr4 -Dlanguage=Python3 -visitor -no-listener src/grammar/SanyaScript.g4
 ```
 
-That's all, now you can compile SanyaScript to Python and run it with:
+Now you can compile SanyaScript to Python and run it with:
 
 ```bash
 ./sanya example.sanya result
@@ -208,9 +203,8 @@ There are some builtin functions which precompiles before the program itself:
 * `num value(graph)` - return value of the node,
 * `puts(any)` and `put(any)` - prints given structure with and without newline respectively.
 
-To add a new function you can simply add it's signature with empty body
-to [builtins_signatures.sanya](src/runtime/builtins_signatures.sanya) and then add Python implementation
-to [builtins.py](src/runtime/builtins.py).
+It searches signatures in [builtins_signatures.sanya](src/runtime/builtins_signatures.sanya) and use their implementations
+from [runtime builtins.py](https://github.com/ARtoriouSs/sanya-script-runtime/blob/master/sanya_script_runtime/builtins.py).
 
 ### 4.3 - Cycles
 
