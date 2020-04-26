@@ -30,8 +30,7 @@ That's all, now you can compile SanyaScript to Python and run it with:
 ./result
 ```
 
-You can also do `PATH=$PWD:$PATH` and run it from anywhere! ...aaaand it will not work as runtime is local package :)
-but it should work if add it to PyPi.
+You can also do `PATH=$PWD:$PATH` to run it from anywhere.
 
 ## Description
 
