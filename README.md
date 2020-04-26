@@ -2,6 +2,8 @@
 
 Crutched graph language compilable into Python :)
 
+Also check out the [runtime repo](https://github.com/ARtoriouSs/sanya-script-runtime).
+
 ## Install
 
 First you need to install [ANTLR](https://github.com/antlr/antlr4). Then clone the project:
@@ -34,8 +36,8 @@ You can also do `PATH=$PWD:$PATH` to run it from anywhere.
 
 ## Description
 
-For better understanding of grammar structure check out [the grammar file](src/parser/grammar/SanyaScript.g4) and
-[example code file](example.sanya).
+For better understanding of grammar structure check out [the grammar file](src/parser/grammar/SanyaScript.g4),
+[example code file](example.sanya) and [runtime repo](https://github.com/ARtoriouSs/sanya-script-runtime).
 
 ### 1 - Types and values:
 
