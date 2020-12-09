@@ -1,5 +1,7 @@
 # SanyaScript
 
+[![License](https://img.shields.io/github/license/ARtoriouSs/sanya-script.svg)](https://github.com/ARtoriouSs/sanya-script/blob/master/LICENSE)
+
 Crutched graph language compilable into Python :)
 
 ## Install
